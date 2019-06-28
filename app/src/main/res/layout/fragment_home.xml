@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#F8F8F8">
+
+        <ImageView
+            android:id="@+id/imageLogoToolbar"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo_kitku"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:contentDescription="@string/main_content_desc_image_toolbar"/>
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:id="@+id/lineMain1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/toolbarMain"
+        android:background="#D6D6D6"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpagerHomeBannerSlider"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/lineMain1"/>
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/circleindicatorHomeBannerSlider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/viewpagerHomeBannerSlider"
+        android:layout_centerHorizontal="true"
+        android:padding="16dp"/>
+
+    <View
+        android:id="@+id/lineMain2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/viewpagerHomeBannerSlider"
+        android:background="#D6D6D6"/>
+
+    <TextView
+        android:id="@+id/txtMain1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lineMain2"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:text="@string/main_message_choose_category"
+        android:textSize="15sp"
+        android:textColor="@color/colorBlack"/>
+
+    <LinearLayout
+        android:id="@+id/layoutCategoryMain1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/txtMain1"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal">
+
+        <android.support.design.card.MaterialCardView
+            android:id="@+id/materialcardviewVegetableButtonMain"
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            app:cardCornerRadius="8dp"
+            android:layout_weight="1"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/iconVegetableMain"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/main_vegetable_icon"
+                android:contentDescription="@string/main_content_desc_vegetable_icon"/>
+
+            <TextView
+                android:id="@+id/txtIconVegetableMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iconVegetableMain"
+                android:layout_marginBottom="10dp"
+                android:text="@string/main_title_vegetable_category"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_gravity="bottom|center_horizontal" />
+
+        </android.support.design.card.MaterialCardView>
+
+        <android.support.design.card.MaterialCardView
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            app:cardCornerRadius="8dp"
+            android:layout_weight="1"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/iconMeatMain"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/main_meat_icon"
+                android:contentDescription="@string/main_content_desc_meat_icon"/>
+
+            <TextView
+                android:id="@+id/txtIconMeatMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iconMeatMain"
+                android:layout_marginBottom="5dp"
+                android:text="@string/main_title_meat_category"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_gravity="bottom|center_horizontal" />
+
+        </android.support.design.card.MaterialCardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutCategoryMain2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/layoutCategoryMain1"
+        android:gravity="center_horizontal">
+
+        <android.support.design.card.MaterialCardView
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            app:cardCornerRadius="8dp"
+            android:layout_weight="1"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/iconFishMain"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/main_fish_icon"
+                android:contentDescription="@string/main_content_desc_fish_icon"/>
+
+            <TextView
+                android:id="@+id/txtIconFishMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iconVegetableMain"
+                android:layout_marginBottom="10dp"
+                android:text="@string/main_title_fish_category"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_gravity="bottom|center_horizontal" />
+
+        </android.support.design.card.MaterialCardView>
+
+        <android.support.design.card.MaterialCardView
+            android:layout_width="150dp"
+            android:layout_height="110dp"
+            app:cardCornerRadius="8dp"
+            android:layout_weight="1"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/iconWheatMain"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/main_wheat_icon"
+                android:contentDescription="@string/main_content_desc_wheat_icon"/>
+
+            <TextView
+                android:id="@+id/txtIconWheatMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iconMeatMain"
+                android:layout_marginBottom="10dp"
+                android:text="@string/main_title_wheat_category"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_gravity="bottom|center_horizontal" />
+
+        </android.support.design.card.MaterialCardView>
+    </LinearLayout>
+
+</RelativeLayout>

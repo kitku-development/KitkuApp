@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="#F8F8F8">
+
+        <ImageView
+            android:id="@+id/imageLogoToolbar"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo_kitku"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:contentDescription="@string/main_content_desc_image_toolbar"/>
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/backbutton_icon"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:id="@+id/lineRegister1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/toolbarRegister"
+        android:background="#D6D6D6"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lineRegister1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtRegister1"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:textSize="14sp"
+                android:textColor="@color/colorBlack"
+                android:text="@string/register_message_1"/>
+
+            <TextView
+                android:id="@+id/txtRegister2"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtRegister1"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:text="@string/register_title"/>
+
+            <android.support.design.card.MaterialCardView
+                android:id="@+id/materialcardviewRegisterName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txtRegister2"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="12dp"
+                card_view:strokeColor="@color/colorPrimary"
+                card_view:strokeWidth="2dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textColorHint="@color/colorSecondary"
+                    android:gravity="center_horizontal">
+
+                    <EditText
+                        android:id="@+id/edittextRegisterName"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/register_name_text"
+                        android:textSize="15sp"
+                        android:inputType="textPersonName"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="10dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </android.support.design.card.MaterialCardView>
+
+            <android.support.design.card.MaterialCardView
+                android:id="@+id/materialcardviewRegisterEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/materialcardviewRegisterName"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="12dp"
+                card_view:strokeColor="@color/colorPrimary"
+                card_view:strokeWidth="2dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textColorHint="@color/colorSecondary"
+                    android:gravity="center_horizontal">
+
+                    <EditText
+                        android:id="@+id/edittextRegisterEmail"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/register_email_text"
+                        android:inputType="textEmailAddress"
+                        android:textSize="15sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="10dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </android.support.design.card.MaterialCardView>
+
+            <android.support.design.card.MaterialCardView
+                android:id="@+id/materialcardviewRegisterPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/materialcardviewRegisterEmail"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="12dp"
+                card_view:strokeColor="@color/colorPrimary"
+                card_view:strokeWidth="2dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textColorHint="@color/colorSecondary"
+                    android:gravity="center_horizontal">
+
+                    <EditText
+                        android:id="@+id/edittextRegisterPassword"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/register_password_text"
+                        android:textSize="15sp"
+                        android:inputType="textPassword"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="10dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </android.support.design.card.MaterialCardView>
+
+            <android.support.design.card.MaterialCardView
+                android:id="@+id/materialcardviewRegisterAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/materialcardviewRegisterPassword"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="12dp"
+                card_view:strokeColor="@color/colorPrimary"
+                card_view:strokeWidth="2dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textColorHint="@color/colorSecondary"
+                    android:gravity="center_horizontal">
+
+                    <EditText
+                        android:id="@+id/edittextRegisterAddress"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/register_address_text"
+                        android:inputType="text"
+                        android:textSize="15sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="10dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </android.support.design.card.MaterialCardView>
+
+            <android.support.design.card.MaterialCardView
+                android:id="@+id/materialcardviewRegisterPhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/materialcardviewRegisterAddress"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="12dp"
+                card_view:strokeColor="@color/colorPrimary"
+                card_view:strokeWidth="2dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textColorHint="@color/colorSecondary"
+                    android:gravity="center_horizontal">
+
+                    <EditText
+                        android:id="@+id/edittextRegisterPhoneNumber"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/register_phonenumber_text"
+                        android:textSize="15sp"
+                        android:inputType="phone"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="10dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </android.support.design.card.MaterialCardView>
+
+            <Button
+                android:id="@+id/buttonregister_Register"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/materialcardviewRegisterPhoneNumber"
+                android:background="@drawable/all_button_rounded_corners"
+                android:layout_marginTop="32dp"
+                android:text="@string/register_button_title_register"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:onClick="goToLoginFragmentClick"/>
+
+            <TextView
+                android:id="@+id/txtRegister3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonregister_Register"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/register_message_2"
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/textviewLoginGoToRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtRegister3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/register_action_tologin_text"
+                android:textColor="@color/colorSecondary"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

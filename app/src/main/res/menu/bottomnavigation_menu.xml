@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/botnav_menu_home"
+        android:title="@string/botnav_title_home"
+        android:icon="@drawable/botnav_home_icon"/>
+
+    <item
+        android:id="@+id/botnav_menu_cart"
+        android:title="@string/botnav_title_cart"
+        android:icon="@drawable/botnav_cart_icon"/>
+
+    <item
+        android:id="@+id/botnav_menu_partner"
+        android:title="@string/botnav_title_partner"
+        android:icon="@drawable/botnav_partner_icon"/>
+
+    <item
+        android:id="@+id/botnav_menu_user"
+        android:title="@string/botnav_title_user"
+        android:icon="@drawable/botnav_user_icon"/>
+
+</menu>

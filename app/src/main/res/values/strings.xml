@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Kitku</string>
+
+    <string name="main_content_desc_image_toolbar">Logo Kitku</string>
+    <string name="main_message_choose_category">Pilih kategori yang anda inginkan</string>
+
+    <string name="main_content_desc_vegetable_icon">Ikon Kategori Sayuran</string>
+    <string name="main_content_desc_meat_icon">Ikon Kategori Daging, Unggas dan Telur</string>
+    <string name="main_content_desc_fish_icon">Ikon Kategori Ikan</string>
+    <string name="main_content_desc_wheat_icon">Ikon Kategori Beras dan Biji-bijian</string>
+
+    <string name="main_title_vegetable_category">Sayur</string>
+    <string name="main_title_meat_category">Daging, Unggas\ndan Telur</string>
+    <string name="main_title_fish_category">Ikan</string>
+    <string name="main_title_wheat_category">Beras dan Biji-bijian</string>
+
+    <string name="botnav_title_home">Home</string>
+    <string name="botnav_title_cart">Pesanan</string>
+    <string name="botnav_title_partner">Mitra</string>
+    <string name="botnav_title_user">Akun</string>
+
+    <string name="fragmentlogin_email_text"><b>Email</b></string>
+    <string name="fragmentlogin_password_text"><b>Password</b></string>
+    <string name="fragmentlogin_message_1">Ayo login untuk dapat memesan bahan makanan yang anda inginkan</string>
+    <string name="fragmentlogin_title_login">Login</string>
+    <string name="fragmentlogin_button_title_login">Login Sekarang</string>
+    <string name="fragmentlogin_message_2">Belum punya akun ?</string>
+    <string name="fragmentlogin_action_toregister_text"><u>Daftar disini !</u></string>
+
+    <string name="register_title">Register</string>
+    <string name="register_name_text">Nama</string>
+    <string name="register_email_text">Email</string>
+    <string name="register_password_text">Password</string>
+    <string name="register_address_text">Alamat</string>
+    <string name="register_phonenumber_text">Nomor HP</string>
+    <string name="register_button_title_register">Register sekarang</string>
+    <string name="register_message_1">Ayo buat akun ada di Kitku untuk memudahkan anda untuk memesan bahan makanan yang anda inginkan</string>
+    <string name="register_message_2">Sudah punya akun ?</string>
+    <string name="register_action_tologin_text"><u>Masuk disini !</u></string>
+
+
+</resources>
