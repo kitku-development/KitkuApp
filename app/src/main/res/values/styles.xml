@@ -7,18 +7,46 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="colorControlActivated">@color/colorSecondary</item>
-        <item name="colorControlHighlight">@color/colorSecondary</item>
-        <item name="colorControlNormal">@color/colorSecondary</item>
+        <item name="colorControlActivated">@color/colorTest2</item>
+        <item name="colorControlHighlight">@color/colorTest2</item>
+        <item name="colorControlNormal">@color/colorTest2</item>
 
     </style>
 
     <style name="SplashScreenNoToolbar" parent="Theme.AppCompat.Light.NoActionBar"/>
-    
-    <style name="TextInputEditTextHintAndBottomLineColor" parent="TextAppearance.Design.Hint">
 
-        
+    <style name="Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:background">@color/colorToolbar</item>
     </style>
+
+    <style name="ImageToolbar">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:src">@drawable/ic_logo_kitku</item>
+    </style>
+
+    <style name="ButtonToolbarBack">
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:background">@drawable/ic_button_back</item>
+    </style>
+
+    <style name="EditTextRegisterLayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">24dp</item>
+    </style>
+
+
     
 
 </resources>

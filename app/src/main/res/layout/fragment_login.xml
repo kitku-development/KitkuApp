@@ -8,148 +8,156 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <RelativeLayout
-        android:id="@+id/layoutLoginFragment"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/layoutLoginFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-        <ImageView
-            android:id="@+id/imgLogin1"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:src="@drawable/logo_kitku"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:contentDescription="@string/main_content_desc_image_toolbar"/>
+            <ImageView
+                android:id="@+id/imgLogin1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_logo_kitku"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:contentDescription="@string/main_content_desc_image_toolbar"/>
 
-        <TextView
-            android:id="@+id/txtLogin1"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imgLogin1"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="12dp"
-            android:textSize="14sp"
-            android:textColor="@color/colorBlack"
-            android:text="@string/fragmentlogin_message_1"/>
+            <TextView
+                android:id="@+id/txtLogin1"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imgLogin1"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp"
+                android:textColor="@color/colorBlack"
+                android:text="@string/fragmentlogin_message_1"/>
 
-        <TextView
-            android:id="@+id/txtLogin2"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtLogin1"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="18dp"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"
-            android:text="@string/fragmentlogin_title_login"/>
+            <TextView
+                android:id="@+id/txtLogin2"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtLogin1"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:text="@string/fragmentlogin_title_login"/>
 
-        <android.support.design.card.MaterialCardView
-            android:id="@+id/materialcardviewLoginEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/txtLogin2"
-            card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="12dp"
-            card_view:strokeColor="@color/colorPrimary"
-            card_view:strokeWidth="2dp">
-
-            <android.support.design.widget.TextInputLayout
+            <android.support.design.card.MaterialCardView
+                android:id="@+id/materialcardviewLoginEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:textColorHint="@color/colorSecondary"
-                android:gravity="center_horizontal">
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txtLogin2"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="12dp"
+                card_view:strokeColor="@color/colorTest"
+                card_view:strokeWidth="2dp">
 
-                <EditText
-                    android:id="@+id/edittextLoginEmail"
-                    android:layout_width="280dp"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/fragmentlogin_email_text"
-                    android:textSize="15sp"
-                    android:inputType="textEmailAddress"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="10dp"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:paddingTop="5dp"
+                    android:textColorHint="@color/colorTest2"
+                    android:gravity="center_horizontal">
 
-        </android.support.design.card.MaterialCardView>
+                    <EditText
+                        android:id="@+id/edittextLoginEmail"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/fragmentlogin_email_text"
+                        android:textSize="15sp"
+                        android:inputType="textEmailAddress"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="10dp"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.card.MaterialCardView
-            android:id="@+id/materialcardviewLoginPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/materialcardviewLoginEmail"
-            card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="12dp"
-            card_view:strokeColor="@color/colorPrimary"
-            card_view:strokeWidth="2dp">
+            </android.support.design.card.MaterialCardView>
 
-            <android.support.design.widget.TextInputLayout
+            <android.support.design.card.MaterialCardView
+                android:id="@+id/materialcardviewLoginPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:textColorHint="@color/colorSecondary"
-                android:gravity="center_horizontal">
+                android:layout_marginTop="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/materialcardviewLoginEmail"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="12dp"
+                card_view:strokeColor="@color/colorTest"
+                card_view:strokeWidth="2dp">
 
-                <EditText
-                    android:id="@+id/edittextLoginPassword"
-                    android:layout_width="280dp"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/fragmentlogin_password_text"
-                    android:inputType="textPassword"
-                    android:textSize="15sp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="10dp"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:paddingTop="5dp"
+                    android:textColorHint="@color/colorTest2"
+                    android:gravity="center_horizontal">
 
-        </android.support.design.card.MaterialCardView>
+                    <EditText
+                        android:id="@+id/edittextLoginPassword"
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/fragmentlogin_password_text"
+                        android:inputType="textPassword"
+                        android:textSize="15sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="10dp"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/buttonfragmentlogin_Login"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/materialcardviewLoginPassword"
-            android:background="@drawable/all_button_rounded_corners"
-            android:layout_marginTop="32dp"
-            android:text="@string/fragmentlogin_button_title_login"
-            android:textColor="@color/colorWhite"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            </android.support.design.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/txtLogin3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonfragmentlogin_Login"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="@string/fragmentlogin_message_2"
-            android:textColor="@color/colorBlack"
-            android:textSize="13sp"/>
+            <Button
+                android:id="@+id/buttonfragmentlogin_Login"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/materialcardviewLoginPassword"
+                android:background="@drawable/all_button_rounded_corners"
+                android:layout_marginTop="32dp"
+                android:text="@string/fragmentlogin_button_title_login"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textviewLoginGoToRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtLogin3"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="@string/fragmentlogin_action_toregister_text"
-            android:textColor="@color/colorSecondary"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/txtLogin3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonfragmentlogin_Login"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/fragmentlogin_message_2"
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"/>
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/textviewLoginGoToRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtLogin3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="@string/fragmentlogin_action_toregister_text"
+                android:textColor="@color/colorTest2"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
 </FrameLayout>

@@ -28,7 +28,8 @@ public class HomeFragment extends Fragment {
     private ViewPager viewpagerHomeBannerSlider;
     private CircleIndicator circleindicatorHomeBannerSlider;
     private HomeBannerSliderPagerAdapter homeBannerSliderPagerAdapter;
-    private MaterialCardView materialcardviewVegetableButtonMain;
+    private MaterialCardView materialcardviewVegetableButtonMain, materialcardviewMeatButtonMain;
+    private MaterialCardView materialcardviewFishButtonMain, materialcardviewWheatButtonMain;
     private ArrayList<HomeBannerSliderPagerDataModel> list = new ArrayList<>();
 
     private Timer timer;
@@ -44,6 +45,9 @@ public class HomeFragment extends Fragment {
         viewpagerHomeBannerSlider = view.findViewById(R.id.viewpagerHomeBannerSlider);
         circleindicatorHomeBannerSlider = view.findViewById(R.id.circleindicatorHomeBannerSlider);
         materialcardviewVegetableButtonMain = view.findViewById(R.id.materialcardviewVegetableButtonMain);
+        materialcardviewMeatButtonMain = view.findViewById(R.id.materialcardviewMeatButtonMain);
+        materialcardviewFishButtonMain = view.findViewById(R.id.materialcardviewFishButtonMain);
+        materialcardviewWheatButtonMain = view.findViewById(R.id.materialcardviewWheatButtonMain);
 
         list.addAll(HomeBannerSliderPagerDataset.getImageData());
 
@@ -60,6 +64,31 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ListItemActivity.class);
+                intent.putExtra("titletextVegetable", "Sayur");
+                startActivity(intent);
+            }
+        });
+        materialcardviewMeatButtonMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListItemActivity.class);
+                intent.putExtra("titletextMeat", "Daging, Unggas dan Telur");
+                startActivity(intent);
+            }
+        });
+        materialcardviewFishButtonMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListItemActivity.class);
+                intent.putExtra("titletextFish", "Ikan");
+                startActivity(intent);
+            }
+        });
+        materialcardviewWheatButtonMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListItemActivity.class);
+                intent.putExtra("titletextWheat", "Beras dan Biji-bijian");
                 startActivity(intent);
             }
         });

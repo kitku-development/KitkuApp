@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,26 +9,16 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:background="#F8F8F8">
+        style="@style/Toolbar">
 
         <ImageView
             android:id="@+id/imageLogoToolbar"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:src="@drawable/logo_kitku"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="16dp"
-            android:layout_gravity="center_horizontal|center_vertical"
+            style="@style/ImageToolbar"
             android:contentDescription="@string/main_content_desc_image_toolbar"/>
 
         <Button
-            android:layout_width="30dp"
-            android:layout_height="35dp"
-            android:layout_marginBottom="3dp"
-            android:background="@drawable/backbutton_icon"/>
+            android:id="@+id/buttonToolbarRegisterBack"
+            style="@style/ButtonToolbarBack"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -47,7 +36,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/txtRegister1"
@@ -75,21 +64,18 @@
 
             <android.support.design.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/txtRegister2"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="12dp"
-                card_view:strokeColor="@color/colorPrimary"
-                card_view:strokeWidth="2dp">
+                card_view:strokeColor="@color/colorTest"
+                card_view:strokeWidth="2dp"
+                style="@style/EditTextRegisterLayout">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
-                    android:textColorHint="@color/colorSecondary"
+                    android:textColorHint="@color/colorTest2"
                     android:gravity="center_horizontal">
 
                     <EditText
@@ -109,21 +95,18 @@
 
             <android.support.design.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/materialcardviewRegisterName"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="12dp"
-                card_view:strokeColor="@color/colorPrimary"
-                card_view:strokeWidth="2dp">
+                card_view:strokeColor="@color/colorTest"
+                card_view:strokeWidth="2dp"
+                style="@style/EditTextRegisterLayout">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
-                    android:textColorHint="@color/colorSecondary"
+                    android:textColorHint="@color/colorTest2"
                     android:gravity="center_horizontal">
 
                     <EditText
@@ -143,21 +126,18 @@
 
             <android.support.design.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/materialcardviewRegisterEmail"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="12dp"
-                card_view:strokeColor="@color/colorPrimary"
-                card_view:strokeWidth="2dp">
+                card_view:strokeColor="@color/colorTest"
+                card_view:strokeWidth="2dp"
+                style="@style/EditTextRegisterLayout">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
-                    android:textColorHint="@color/colorSecondary"
+                    android:textColorHint="@color/colorTest2"
                     android:gravity="center_horizontal">
 
                     <EditText
@@ -177,21 +157,18 @@
 
             <android.support.design.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/materialcardviewRegisterPassword"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="12dp"
-                card_view:strokeColor="@color/colorPrimary"
-                card_view:strokeWidth="2dp">
+                card_view:strokeColor="@color/colorTest"
+                card_view:strokeWidth="2dp"
+                style="@style/EditTextRegisterLayout">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
-                    android:textColorHint="@color/colorSecondary"
+                    android:textColorHint="@color/colorTest2"
                     android:gravity="center_horizontal">
 
                     <EditText
@@ -211,21 +188,18 @@
 
             <android.support.design.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterPhoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/materialcardviewRegisterAddress"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="12dp"
-                card_view:strokeColor="@color/colorPrimary"
-                card_view:strokeWidth="2dp">
+                card_view:strokeColor="@color/colorTest"
+                card_view:strokeWidth="2dp"
+                style="@style/EditTextRegisterLayout">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
-                    android:textColorHint="@color/colorSecondary"
+                    android:textColorHint="@color/colorTest2"
                     android:gravity="center_horizontal">
 
                     <EditText
@@ -275,9 +249,9 @@
                 android:layout_below="@id/txtRegister3"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="32dp"
                 android:text="@string/register_action_tologin_text"
-                android:textColor="@color/colorSecondary"
+                android:textColor="@color/colorTest2"
                 android:textStyle="bold" />
 
         </RelativeLayout>

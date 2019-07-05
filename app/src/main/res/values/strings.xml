@@ -38,5 +38,7 @@
     <string name="register_message_2">Sudah punya akun ?</string>
     <string name="register_action_tologin_text"><u>Masuk disini !</u></string>
 
+    <string name="listitem_content_desc_image">Gambar Item</string>
+
 
 </resources>

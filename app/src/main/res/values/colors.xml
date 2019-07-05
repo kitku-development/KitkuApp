@@ -8,5 +8,10 @@
     <color name="colorSecondary">#77BF6C</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorToolbar">#F8F8F8</color>
+
+
+    <color name="colorTest">#528F6E</color>
+    <color name="colorTest2">#92CBAD</color>
 
 </resources>

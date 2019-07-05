@@ -1,9 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListItemActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarListItem"
+        style="@style/Toolbar">
+
+        <ImageView
+            android:id="@+id/imageLogoToolbar"
+            style="@style/ImageToolbar"
+            android:contentDescription="@string/main_content_desc_image_toolbar"/>
+
+        <Button
+            android:id="@+id/buttonToolbarListItemBack"
+            style="@style/ButtonToolbarBack"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:id="@+id/lineListItem1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/toolbarListItem"
+        android:background="#D6D6D6"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
+        android:layout_below="@id/lineListItem1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textviewListItemCategoryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="12dp"
+                tools:text="Sayur"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorTest"/>
+
+            <View
+                android:id="@+id/lineListItem2"
+                android:layout_width="200dp"
+                android:layout_height="4dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_below="@id/textviewListItemCategoryName"
+                android:background="@color/colorTest2"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerviewListItemCategoryItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lineListItem2"
+                android:layout_marginTop="12dp"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="vertical"/>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>
