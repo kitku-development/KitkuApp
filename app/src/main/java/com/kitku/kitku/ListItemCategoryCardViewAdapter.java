@@ -34,7 +34,7 @@ public class ListItemCategoryCardViewAdapter extends RecyclerView.Adapter<ListIt
 
     @Override
     public void onBindViewHolder(@NonNull ListItemCategoryCardViewAdapter.ListItemCategoryCardViewViewHolder listItemCategoryCardViewViewHolder, int position) {
-        listItemCategoryCardViewViewHolder.imageCategoryItem.setImageResource(listItemCategoryCardViewDataModels.get(position).getImage_category_item());
+        listItemCategoryCardViewViewHolder.imageCategoryItem.setImageBitmap(listItemCategoryCardViewDataModels.get(position).getImage_category_item());
         listItemCategoryCardViewViewHolder.textnameCategoryItem.setText(listItemCategoryCardViewDataModels.get(position).getText_name_category_item());
         listItemCategoryCardViewViewHolder.textpriceCategoryItem.setText(listItemCategoryCardViewDataModels.get(position).getText_price_category_item());
         listItemCategoryCardViewViewHolder.textpackCategoryItem.setText(listItemCategoryCardViewDataModels.get(position).getText_pack_category_item());
