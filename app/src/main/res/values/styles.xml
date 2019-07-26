@@ -7,9 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="colorControlActivated">@color/colorTest2</item>
-        <item name="colorControlHighlight">@color/colorTest2</item>
-        <item name="colorControlNormal">@color/colorTest2</item>
+        <item name="colorControlActivated">@color/colorSecondary</item>
+        <item name="colorControlHighlight">@color/colorSecondary</item>
+        <item name="colorControlNormal">@color/colorSecondary</item>
 
     </style>
 

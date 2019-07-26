@@ -1,32 +1,16 @@
 package com.kitku.kitku;
 
-import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.graphics.drawable.DrawableWrapper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -39,20 +23,20 @@ public class ListItemActivity extends AppCompatActivity {
     private ArrayList<ListItemCategoryCardViewDataModel> listItemCategoryCardViewDataModelArrayList = new ArrayList<>();
     private ListItemCategoryCardViewAdapter listItemCategoryCardViewAdapter;
     String txtTitle;
-    ProgressBar loadingIndicator;
+    private ShimmerFrameLayout shimmerframeListItemSkeletonView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_item);
-        loadingIndicator = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
-        RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
-        relativeLayout.addView(loadingIndicator);
 
         //addCategoryItemData();
         textviewListItemCategoryName = findViewById(R.id.textviewListItemCategoryName);
         recyclerViewListItemCategoryItem = findViewById(R.id.recyclerviewListItemCategoryItem);
         recyclerViewListItemCategoryItem.setHasFixedSize(true);
+
+        // Variabel untuk Skeleton View
+        shimmerframeListItemSkeletonView = findViewById(R.id.shimmerlayoutListItemSkeletonView);
 
         /* Fungsi untuk mendapatkan nilai Intent dari Home, untuk mengubah text pada Title Textview */
 
@@ -91,75 +75,19 @@ public class ListItemActivity extends AppCompatActivity {
     private void showCategoryItemData() {
         recyclerViewListItemCategoryItem.setLayoutManager(new GridLayoutManager(this,2));
         listItemCategoryCardViewAdapter = new ListItemCategoryCardViewAdapter(listItemCategoryCardViewDataModelArrayList);
+        /* Function ini akan mematikan efek shimmer dan menghilangkan layout SkeletonView
+        dan menampilkan layout RecyclerView List Item  */
+        shimmerframeListItemSkeletonView.stopShimmer();
+        shimmerframeListItemSkeletonView.setVisibility(View.GONE);
+        recyclerViewListItemCategoryItem.setVisibility(View.VISIBLE);
         recyclerViewListItemCategoryItem.setAdapter(listItemCategoryCardViewAdapter);
-        loadingIndicator.setVisibility(View.GONE);
+
     }
 
     /* Method untuk menambahkan data yang akan disimpan dalam ArrayList berdasarkan Data Modelnya */
 
     private void addCategoryItemData(int index) {
 
-        /*listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_sawiputih,"Sawi Putih",
-                        "Rp 15.000", "/ 1 pcs"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_sawihijau, "Sawi Hijau",
-                        "Rp 15.500", "/ 1 pcs"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_kangkung, "Kangkung",
-                        "Rp 4.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_bayammerah, "Bayam Merah",
-                        "Rp 13.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_bayamhijau, "Bayam Hijau",
-                        "Rp 4.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_mentimun, "Mentimun",
-                        "Rp 6.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_wortel, "Wortel",
-                        "Rp 9.500", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_pare, "Pare",
-                        "Rp 6.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_labusiam, "Labu Siam",
-                        "Rp 9.500", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_pucukubi, "Pucuk Ubi",
-                        "Rp 10.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_kol, "Kol",
-                        "Rp 8.000", "/ 1 pcs"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_kembangkol, "Kembang Kol",
-                        "Rp 30.000", "/ 1 pcs"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_brokoli, "Brokoli",
-                        "Rp 24.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_buncis, "Buncis",
-                        "Rp 4.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_kacangpanjang, "Kacang Panjang",
-                        "Rp 5.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_kentang, "Kentang",
-                        "Rp 18.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_tombakbawang, "Tombak Bawang",
-                        "Rp 8.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_bawangmerah, "Bawang Merah",
-                        "Rp 12.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_bawangputih, "Bawang Putih",
-                        "Rp 10.000", "/ 1 pack"));
-        listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
-                        "Rp 20.000", "/ 1 pack"));
-        */
         String packed = "/";
         if (Float.valueOf(satuan[index]) > 1.0)
             packed += satuan[index];
@@ -190,7 +118,8 @@ public class ListItemActivity extends AppCompatActivity {
     backgroundTask sendData;
     // Alur setelah AsyncTask selesai
     protected void runAsync() {
-        loadingIndicator.setVisibility(View.VISIBLE);
+        // Memulai Efek Shimmer
+        shimmerframeListItemSkeletonView.startShimmer();
         sendData = new backgroundTask(new backgroundTask.AsyncResponse() {
             @Override
             public void processFinish(String output) {
@@ -266,5 +195,19 @@ public class ListItemActivity extends AppCompatActivity {
             parentActivity.listGambar[indexnum] = result;
             parentActivity.addCategoryItemData(indexnum);
         }
+    }
+
+    // Memulai efek shimmer jika pengguna kembali menggunakan aplikasi
+    @Override
+    protected void onResume() {
+        super.onResume();
+        shimmerframeListItemSkeletonView.startShimmer();
+    }
+
+    // Mematikan efek shimmer jika pengguna sudah berada di dalam aplikasi
+    @Override
+    protected void onPause() {
+        super.onPause();
+        shimmerframeListItemSkeletonView.stopShimmer();
     }
 }

@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imageCategoryItem"
             android:layout_marginTop="12dp"
-            android:textColor="@color/colorTest"
+            android:textColor="@color/colorPrimary"
             android:textSize="14sp"
             android:textStyle="bold"
             tools:text="Bawang Bombay"/>
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textnameCategoryItem"
             android:layout_marginTop="2dp"
-            android:textColor="@color/colorTest2"
+            android:textColor="@color/colorSecondary"
             android:textSize="16sp"
             android:textStyle="bold"
             tools:text="Rp 10.000"/>
@@ -57,7 +57,6 @@
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@id/textpriceCategoryItem"
             android:layout_alignBottom="@id/textpriceCategoryItem"
-
             android:textSize="12sp"
             tools:text="/1 pack"/>
         

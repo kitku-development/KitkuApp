@@ -7,5 +7,5 @@
         android:radius="7dp"/>
 
     <solid
-        android:color="@color/colorTest"/>
+        android:color="@color/colorSecondary"/>
 </shape>

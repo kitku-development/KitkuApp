@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Kitku</string>
 
+    <string name="main_banner_slider_image">Banner Slider Kitku</string>
+
     <string name="main_content_desc_image_toolbar">Logo Kitku</string>
     <string name="main_message_choose_category">Pilih kategori yang anda inginkan</string>
 
@@ -39,6 +41,12 @@
     <string name="register_action_tologin_text"><u>Masuk disini !</u></string>
 
     <string name="listitem_content_desc_image">Gambar Item</string>
+    <string name="listitem_skeletonview_content_desc_image">Skeleton View Item Image</string>
+
+    <string name="detailitem_item_content_desc_image">Detail Item, Item Image</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

@@ -62,7 +62,7 @@
                 android:layout_marginTop="24dp"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="12dp"
-                card_view:strokeColor="@color/colorTest"
+                card_view:strokeColor="@color/colorPrimary"
                 card_view:strokeWidth="2dp">
 
                 <android.support.design.widget.TextInputLayout
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:paddingTop="5dp"
-                    android:textColorHint="@color/colorTest2">
+                    android:textColorHint="@color/colorSecondary">
 
                     <EditText
                         android:id="@+id/edittextLoginEmail"
@@ -96,7 +96,7 @@
                 android:layout_marginTop="24dp"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="12dp"
-                card_view:strokeColor="@color/colorTest"
+                card_view:strokeColor="@color/colorPrimary"
                 card_view:strokeWidth="2dp">
 
                 <android.support.design.widget.TextInputLayout
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:paddingTop="5dp"
-                    android:textColorHint="@color/colorTest2">
+                    android:textColorHint="@color/colorSecondary">
 
                     <EditText
                         android:id="@+id/edittextLoginPassword"
@@ -128,7 +128,7 @@
                 android:layout_below="@id/materialcardviewLoginPassword"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
-                android:background="@drawable/all_button_rounded_corners"
+                android:background="@drawable/all_button_roundedcorners_colorprimary_solid"
                 android:text="@string/fragmentlogin_button_title_login"
                 android:textColor="@color/colorWhite"
                 android:textSize="12sp"
@@ -154,7 +154,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="12dp"
                 android:text="@string/fragmentlogin_action_toregister_text"
-                android:textColor="@color/colorTest2"
+                android:textColor="@color/colorSecondary"
                 android:textStyle="bold" />
 
         </RelativeLayout>

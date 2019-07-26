@@ -92,12 +92,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .commit();
                 break;
 
+            case R.id.botnav_menu_cart:
+                fragment = new CartFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frameFragmentContainer, fragment)
+                        .commit();
+
             case R.id.botnav_menu_user:
                 fragment = new LoginFragment();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frameFragmentContainer, fragment)
                         .commit();
                 break;
+
+            case R.id.botnav_menu_partner:
+                fragment = new PartnerFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frameFragmentContainer, fragment)
+                        .commit();
+
+
         }
 
         /* Akan mengembalikan nilai berupa method LoadFragment yang akan menampilkan Fragment sesuai Menu yang diclick */

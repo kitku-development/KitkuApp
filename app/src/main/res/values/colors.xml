@@ -4,14 +4,11 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="colorPrimary">#16701F</color>
-    <color name="colorSecondary">#77BF6C</color>
+    <color name="colorPrimary">#528F6E</color>
+    <color name="colorSecondary">#92CBAD</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorToolbar">#F8F8F8</color>
-
-
-    <color name="colorTest">#528F6E</color>
-    <color name="colorTest2">#92CBAD</color>
+    <color name="colorSkeletonView">#BDBDBD</color>
 
 </resources>
