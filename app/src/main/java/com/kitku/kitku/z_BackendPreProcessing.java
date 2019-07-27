@@ -18,15 +18,16 @@ class z_BackendPreProcessing {
 
     //Deklarasi URL untuk diakses di berbagai activity
     static String
-            URL_RegisterPelanggan   = "https://kitku.id/dummy/create/register_pelanggan.php",
-            URL_RegisterMitra       = "https://kitku.id/dummy/create/register_supplier.php",
-            URL_InsertPemesanan     = "https://kitku.id/dummy/create/insert_pemesanan.php",
-            URL_LoginPelanggan      = "https://kitku.id/dummy/read/login_pelanggan.php",
-            URL_ProdukPerKategori   = "https://kitku.id/produk/",
+            URL_RegisterPelanggan   = "https://kitku.id/pelanggan/register",
+            URL_LoginPelanggan      = "https://kitku.id/pelanggan/login",
+            URL_DataPelanggan       = "https://kitku.id/pelanggan/data/",
+            //URL_RegisterMitra       = "https://kitku.id/dummy/create/register_supplier.php",
+            URL_ProdukPerKategori   = "https://kitku.id/produk/kategori/",
             URL_ProdukDetail        = "https://kitku.id/produk/detail/",
             URL_ProdukSupplier      = "https://kitku.id/produk/supplier/",
             URL_DetailPemesanan     = "https://kitku.id/invoice/detail/",
-            URL_ListPemesananUser   = "https://kitku.id/invoce/pelanggan/";
+            URL_ListPemesananUser   = "https://kitku.id/invoice/pelanggan/",
+            URL_InsertPemesanan     = "https://kitku.id/invoice/add";
 
     // convert JSON supaya bisa diakses
     // Example JSON
@@ -65,8 +66,7 @@ class z_BackendPreProcessing {
         // looping akses JSONArray
         // tiap baris array dijadikan JSONObject karena pada 1 baris array terdapat banyak data
         // masukkan data ke dalam array dengan getString("nama informasi")
-        for (int index = 0; index < jsonArray.length(); index++)
-        {
+        for (int index = 0; index < jsonArray.length(); index++) {
             JSONObject baris        = jsonArray.getJSONObject(index);
             id_barang[index]        = baris.getString("id");
             nama_barang[index]      = baris.getString("nama");
@@ -102,20 +102,20 @@ class z_BackendPreProcessing {
         // Inisialisasi array untuk penyimpanan data
         JSONArray jsonArray     = jsonObject.getJSONArray("Products");
         JSONObject baris        = jsonArray.getJSONObject(0);
-        String id_barang        = baris.getString("id");
         String nama_barang      = baris.getString("nama");
         String desc             = baris.getString("desc");
         String satuan           = baris.getString("satuan");
+        String harga            = baris.getString("harga");
         String jumlah_stok      = baris.getString("jumlah");
         String review           = baris.getString("review");
         String url_gambar       = baris.getString("url");
 
         // Kirim informasi array tersebut ke dalam array baru
         return new String[]{
-                id_barang,
                 nama_barang,
                 desc,
                 satuan,
+                harga,
                 jumlah_stok,
                 review,
                 url_gambar

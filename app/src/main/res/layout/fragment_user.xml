@@ -5,13 +5,14 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tvtest"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
         android:text="Ini User Activity (Jika User berhasil login, maka akan masuk kesini)"
         android:textColor="@color/colorBlack"
-        android:textSize="24sp"/>
+        android:textSize="24sp" />
 
 </RelativeLayout>

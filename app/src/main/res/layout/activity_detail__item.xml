@@ -26,7 +26,6 @@
                         android:id="@+id/textitemnameToolbarDetail_Item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Wortel"
                         android:layout_marginStart="16dp"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@id/buttonToolbarDetail_ItemBack"
@@ -37,7 +36,8 @@
                     <Button
                         android:id="@+id/buttonToolbarDetail_ItemBack"
                         style="@style/ButtonToolbarBack"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true"
+                        android:onClick="setBackButton" />
 
                 </RelativeLayout>
 
@@ -54,10 +54,9 @@
                 android:id="@+id/imageDetail_Item"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:contentDescription="@string/detailitem_item_content_desc_image"
                 android:layout_below="@id/lineDetail_Item1"
-                android:scaleType="fitXY"
-                android:src="@drawable/image_sayur_wortel"/>
+                android:contentDescription="@string/todo"
+                android:scaleType="centerCrop" />
 
             <View
                 android:id="@+id/lineDetail_Item2"
@@ -70,7 +69,6 @@
                 android:id="@+id/textitemnameDetail_Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wortel"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
                 android:layout_below="@id/lineDetail_Item2"
@@ -82,7 +80,6 @@
                 android:id="@+id/textitempackDetail_Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 pack (100gr)"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="2dp"
                 android:layout_below="@id/textitemnameDetail_Item"
@@ -93,13 +90,12 @@
                 android:id="@+id/textitempriceDetail_Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp 15.000"
+                android:layout_below="@id/textitempackDetail_Item"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
-                android:layout_below="@id/textitempackDetail_Item"
-                android:textSize="24sp"
                 android:textColor="@color/colorSecondary"
-                android:textStyle="bold"/>
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textpackDetail_Item"
@@ -113,7 +109,6 @@
                 android:layout_toEndOf="@id/textitempriceDetail_Item"
                 android:layout_alignBottom="@id/textitempriceDetail_Item"
                 android:textSize="14sp"
-                android:text="/1 pack"
                 android:textColor="@color/colorBlack"/>
 
             <View
@@ -131,7 +126,7 @@
                 android:id="@+id/txtDetail_Item1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Deskripsi Produk"
+                android:text="@string/deskripsi_produk"
                 android:layout_marginTop="12dp"
                 android:layout_below="@id/lineDetail_Item3"
                 android:layout_centerHorizontal="true"
@@ -143,15 +138,14 @@
                 android:id="@+id/textitemdescriptionDetail_Item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Wortel adalah tumbuhan biennial (siklus hidup 12 - 24 bulan) yang menyimpan karbohidrat dalam jumlah besar untuk tumbuhan tersebut berbungga pada tahun kedua. Batang bunga tumbuh setinggi sekitar 1m, dengan bunga berwarna putih, dan rasa manis yang langu"
-                android:ellipsize="end"
-                android:layout_marginBottom="14dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="6dp"
                 android:layout_below="@id/txtDetail_Item1"
-                android:textSize="14sp"
-                android:textColor="@color/colorBlack" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="14dp"
+                android:ellipsize="end"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
 
         </RelativeLayout>
     </ScrollView>
@@ -162,10 +156,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        android:text="Beli Produk"
+        android:text="@string/beli_produk"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         android:textSize="14sp"
         android:onClick="buttonBuyItem"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:foregroundGravity="center" />
 
 </RelativeLayout>

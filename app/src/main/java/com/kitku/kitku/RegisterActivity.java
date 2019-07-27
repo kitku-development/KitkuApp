@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         loadingIndicator = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
         loadingIndicator.setVisibility(View.GONE);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                findViewById(R.id.layout).getWidth(),findViewById(R.id.layout).getHeight());
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        loadingIndicator.setLayoutParams(params);
         RelativeLayout relativeLayout = findViewById(R.id.relativeLayout);
         relativeLayout.addView(loadingIndicator);
 

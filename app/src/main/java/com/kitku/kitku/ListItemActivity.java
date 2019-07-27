@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,10 +19,8 @@ import java.util.ArrayList;
 
 public class ListItemActivity extends AppCompatActivity {
 
-    private TextView textviewListItemCategoryName;
     private RecyclerView recyclerViewListItemCategoryItem;
     private ArrayList<ListItemCategoryCardViewDataModel> listItemCategoryCardViewDataModelArrayList = new ArrayList<>();
-    private ListItemCategoryCardViewAdapter listItemCategoryCardViewAdapter;
     String txtTitle;
     private ShimmerFrameLayout shimmerframeListItemSkeletonView;
 
@@ -31,7 +30,7 @@ public class ListItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_item);
 
         //addCategoryItemData();
-        textviewListItemCategoryName = findViewById(R.id.textviewListItemCategoryName);
+        TextView textviewListItemCategoryName = findViewById(R.id.textviewListItemCategoryName);
         recyclerViewListItemCategoryItem = findViewById(R.id.recyclerviewListItemCategoryItem);
         recyclerViewListItemCategoryItem.setHasFixedSize(true);
 
@@ -74,7 +73,7 @@ public class ListItemActivity extends AppCompatActivity {
 
     private void showCategoryItemData() {
         recyclerViewListItemCategoryItem.setLayoutManager(new GridLayoutManager(this,2));
-        listItemCategoryCardViewAdapter = new ListItemCategoryCardViewAdapter(listItemCategoryCardViewDataModelArrayList);
+        ListItemCategoryCardViewAdapter listItemCategoryCardViewAdapter = new ListItemCategoryCardViewAdapter(listItemCategoryCardViewDataModelArrayList);
         /* Function ini akan mematikan efek shimmer dan menghilangkan layout SkeletonView
         dan menampilkan layout RecyclerView List Item  */
         shimmerframeListItemSkeletonView.stopShimmer();
@@ -96,7 +95,8 @@ public class ListItemActivity extends AppCompatActivity {
                 listGambar[index],
                 String.valueOf(nama_barang[index]),
                 String.valueOf(harga[index]),
-                packed
+                packed,
+                id_barang[index]
         ));
 
         counterselesai++;
@@ -138,6 +138,7 @@ public class ListItemActivity extends AppCompatActivity {
                     listGambar = new Bitmap[url.length];
                     counterselesai = 0;
                     for (int index = 0; index < url.length; index++) {
+                        //Log.d("url",url[index]);
                         try {
                             new downloadImage(ListItemActivity.this).execute(
                                     url[index], String.valueOf(index));
@@ -156,9 +157,6 @@ public class ListItemActivity extends AppCompatActivity {
                                 url[index];
                         Log.d("Barang : ", print);
                     }*/
-                    //
-                    // Proses untuk menampilkan barang dimulai dari sini (masih dalam kurung try catch)
-                    //
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -170,7 +168,7 @@ public class ListItemActivity extends AppCompatActivity {
     Bitmap[] listGambar;
     int counterselesai;
     static class downloadImage extends AsyncTask<String, Void, Bitmap> {
-        private WeakReference<ListItemActivity> mParentActivity = null;
+        private WeakReference<ListItemActivity> mParentActivity;
         int indexnum;
 
         downloadImage(ListItemActivity parentActivity) {
@@ -209,5 +207,9 @@ public class ListItemActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         shimmerframeListItemSkeletonView.stopShimmer();
+    }
+
+    public void setbackButton(View v) {
+        this.finish();
     }
 }

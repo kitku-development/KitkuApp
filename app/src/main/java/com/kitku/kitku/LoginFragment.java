@@ -1,33 +1,27 @@
 package com.kitku.kitku;
 
-import android.app.Notification;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.widget.CircularProgressDrawable;
-import android.support.v7.graphics.drawable.DrawableWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
+
+import java.util.Objects;
 
 public class LoginFragment extends Fragment {
 
@@ -37,6 +31,9 @@ public class LoginFragment extends Fragment {
     Toast notifikasi;
     View view;
     ProgressBar loadingIndicator;
+    SharedPreferences userData;
+    SharedPreferences.Editor userDataEdit;
+    EditText emailbox, passbox;
 
     @Nullable
     @Override
@@ -47,6 +44,9 @@ public class LoginFragment extends Fragment {
         textviewLoginGoToRegister = view.findViewById(R.id.textviewLoginGoToRegister);
         layoutLoginFragment = view.findViewById(R.id.layoutLoginFragment);
         loadingIndicator = new ProgressBar(view.getContext(), null, android.R.attr.progressBarStyleLarge);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(view.getWidth(),view.getHeight());
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        loadingIndicator.setLayoutParams(params);
         loadingIndicator.setVisibility(View.GONE);
         layoutLoginFragment.addView(loadingIndicator);
 
@@ -74,13 +74,18 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        userData = PreferenceManager.getDefaultSharedPreferences(
+                Objects.requireNonNull(getContext()).getApplicationContext());
+        if (userData.contains("ID"))
+            gotoPage();
+
         return view;
     }
 
     protected void loginActivity(View v){
-        EditText
-                emailbox    = v.findViewById(R.id.edittextLoginEmail),
-                passbox     = v.findViewById(R.id.edittextLoginPassword);
+
+        emailbox    = v.findViewById(R.id.edittextLoginEmail);
+        passbox     = v.findViewById(R.id.edittextLoginPassword);
 
         notifikasi = Toast.makeText(v.getContext()," ",Toast.LENGTH_LONG);
 
@@ -108,6 +113,15 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    protected void gotoPage() {
+        layoutLoginFragment.setVisibility(View.GONE);
+
+        Fragment userDetailFragment = new UserFragment();
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameFragmentContainerLoginGoToUserDetailFragment, userDetailFragment);
+        fragmentTransaction.commit();
+    }
 
     // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
     static class backgroundTask extends z_AsyncServerAccess {
@@ -123,14 +137,11 @@ public class LoginFragment extends Fragment {
                 String response;
                 try {
                     response = new JSONObject(output).getString("message");
-                    if (response.equals("Login Success.")) {
-                        layoutLoginFragment.setVisibility(View.GONE);
-
-                        Fragment userDetailFragment = new UserFragment();
-                        FragmentManager fragmentManager = getChildFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frameFragmentContainerLoginGoToUserDetailFragment, userDetailFragment);
-                        fragmentTransaction.commit();
+                    if (response.contains("PEL-")) {
+                        userDataEdit = userData.edit();
+                        userDataEdit.putString("ID", response);
+                        userDataEdit.apply();
+                        gotoPage();
                     } else {
                         notifikasi.setText("Login gagal!\n" +
                                 "Silakan periksa kembali data anda.");
