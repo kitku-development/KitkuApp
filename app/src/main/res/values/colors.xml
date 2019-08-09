@@ -10,5 +10,6 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorToolbar">#F8F8F8</color>
     <color name="colorSkeletonView">#BDBDBD</color>
+    <color name="colorCartBackground">#F2F2F2</color>
 
 </resources>

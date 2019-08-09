@@ -45,6 +45,11 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginTop">24dp</item>
     </style>
+    
+    <style name="TabLayoutTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 
 
     

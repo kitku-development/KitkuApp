@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frameFragmentContainer, fragment)
                         .commit();
+                break;
 
             case R.id.botnav_menu_user:
                 fragment = new LoginFragment();
