@@ -55,16 +55,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     /* Method untuk meload Fragment saat aplikasi pertama kali dibuka */
 
-    private boolean loadFragment (Fragment fragment) {
+    boolean loadFragment (Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.frameFragmentContainer, fragment)
                     .commit();
             return true;
         }
-
         return false;
-
     }
 
     /* Method untuk mengarahkan pengguna ke Fragment tertentu jika menekan salah satu menu pada Bottom Navigation View */
@@ -108,5 +106,4 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         return loadFragment(fragment);
     }
-
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/UpperBorder"
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:background="@color/colorBlack"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp" />
+
+    <TextView
+        android:id="@+id/UserMenuText"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_toStartOf="@id/UserMenuButton"
+        android:foregroundGravity="center_vertical"
+        android:padding="10sp"
+        android:textSize="30sp" />
+
+    <ImageButton
+        android:id="@+id/UserMenuButton"
+        android:layout_width="40sp"
+        android:layout_height="50sp"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorWhite"
+        android:padding="10sp"
+        android:rotation="180"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_button_back" />
+
+    <View
+        android:id="@+id/LowerBorder"
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:layout_below="@id/UserMenuButton"
+        android:background="@color/colorBlack"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp" />
+
+</RelativeLayout>

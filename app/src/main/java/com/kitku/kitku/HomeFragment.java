@@ -21,10 +21,6 @@ import me.relex.circleindicator.CircleIndicator;
 public class HomeFragment extends Fragment {
 
     private ViewPager viewpagerHomeBannerSlider;
-    private CircleIndicator circleindicatorHomeBannerSlider;
-    private HomeBannerSliderPagerAdapter homeBannerSliderPagerAdapter;
-    private MaterialCardView materialcardviewVegetableButtonMain, materialcardviewMeatButtonMain;
-    private MaterialCardView materialcardviewFishButtonMain, materialcardviewWheatButtonMain;
     private ArrayList<HomeBannerSliderPagerDataModel> list = new ArrayList<>();
 
     private Timer timer;
@@ -38,15 +34,15 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         viewpagerHomeBannerSlider = view.findViewById(R.id.viewpagerHomeBannerSlider);
-        circleindicatorHomeBannerSlider = view.findViewById(R.id.circleindicatorHomeBannerSlider);
-        materialcardviewVegetableButtonMain = view.findViewById(R.id.materialcardviewVegetableButtonMain);
-        materialcardviewMeatButtonMain = view.findViewById(R.id.materialcardviewMeatButtonMain);
-        materialcardviewFishButtonMain = view.findViewById(R.id.materialcardviewFishButtonMain);
-        materialcardviewWheatButtonMain = view.findViewById(R.id.materialcardviewWheatButtonMain);
+        CircleIndicator circleindicatorHomeBannerSlider = view.findViewById(R.id.circleindicatorHomeBannerSlider);
+        MaterialCardView materialcardviewVegetableButtonMain = view.findViewById(R.id.materialcardviewVegetableButtonMain);
+        MaterialCardView materialcardviewMeatButtonMain = view.findViewById(R.id.materialcardviewMeatButtonMain);
+        MaterialCardView materialcardviewFishButtonMain = view.findViewById(R.id.materialcardviewFishButtonMain);
+        MaterialCardView materialcardviewWheatButtonMain = view.findViewById(R.id.materialcardviewWheatButtonMain);
 
         list.addAll(HomeBannerSliderPagerDataset.getImageData());
 
-        homeBannerSliderPagerAdapter = new HomeBannerSliderPagerAdapter(this.getActivity());
+        HomeBannerSliderPagerAdapter homeBannerSliderPagerAdapter = new HomeBannerSliderPagerAdapter(this.getActivity());
         homeBannerSliderPagerAdapter.setHomeBannerSliderPagerDataModelArrayList(list);
         viewpagerHomeBannerSlider.setAdapter(homeBannerSliderPagerAdapter);
         circleindicatorHomeBannerSlider.setViewPager(viewpagerHomeBannerSlider);

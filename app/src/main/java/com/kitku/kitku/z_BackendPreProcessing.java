@@ -18,16 +18,17 @@ class z_BackendPreProcessing {
 
     //Deklarasi URL untuk diakses di berbagai activity
     static String
-            URL_RegisterPelanggan   = "https://kitku.id/pelanggan/register",
-            URL_LoginPelanggan      = "https://kitku.id/pelanggan/login",
-            URL_DataPelanggan       = "https://kitku.id/pelanggan/data/",
-            //URL_RegisterMitra       = "https://kitku.id/dummy/create/register_supplier.php",
-            URL_ProdukPerKategori   = "https://kitku.id/produk/kategori/",
-            URL_ProdukDetail        = "https://kitku.id/produk/detail/",
-            URL_ProdukSupplier      = "https://kitku.id/produk/supplier/",
-            URL_DetailPemesanan     = "https://kitku.id/invoice/detail/",
-            URL_ListPemesananUser   = "https://kitku.id/invoice/pelanggan/",
-            URL_InsertPemesanan     = "https://kitku.id/invoice/add";
+            URL_UserRegister        = "https://kitku.id/pelanggan/register",
+            URL_UserLogin           = "https://kitku.id/pelanggan/login",
+            URL_UserData            = "https://kitku.id/pelanggan/data/",
+            URL_SupplierLogin       = "https://kitku.id/supplier/login",
+            URL_SupplierData        = "https://kitku.id/supplier/data/",
+            URL_ProductCategory     = "https://kitku.id/produk/kategori/",
+            URL_ProductDetail       = "https://kitku.id/produk/detail/",
+            URL_ProductSupplier     = "https://kitku.id/produk/supplier/",
+            URL_InvoiceDetail       = "https://kitku.id/invoice/detail/",
+            URL_InvoiceListUser     = "https://kitku.id/invoice/pelanggan/",
+            URL_InvoiceInsert       = "https://kitku.id/invoice/add";
 
     // convert JSON supaya bisa diakses
     // Example JSON
@@ -35,7 +36,7 @@ class z_BackendPreProcessing {
     //      {"id":"BAR-1","nama":"barang 1","satuan":"1.00","harga":"1000","jumlah":"8","url":"https://"},
     //      {"id":"BAR-2","nama":"barang 2","satuan":"1.00","harga":"1000","jumlah":"6","url":"https://"}
     //  ]}
-    String[][] bacaListProduk(String rawData) throws Exception {
+    String[][] readProductList(String rawData) throws Exception {
 
         // String bisa diconvert menjadi JSONObject atau JSONArray
         // Jika menggunakan JSONObject maka pengaksesannya dengan pemeriksaan string index
@@ -92,14 +93,13 @@ class z_BackendPreProcessing {
     // {"Products":[
     //      {"id":"BAR-1","nama":"barang 1","desc":"blabla","satuan":"0.00","jumlah":"8","review":"0.00","url":"https://"}
     //  ]}
-    String[] bacaDetailProduk(String rawData) throws Exception {
+    String[] readProductDetail(String rawData) throws Exception {
 
         // Buat JSONObject dari String
         JSONObject jsonObject       = new JSONObject(rawData);
         //Log.d("a",jsonObject.toString());
 
         // Buat JSONArray dengan informasi dari JSONObject dengan informasi Products
-        // Inisialisasi array untuk penyimpanan data
         JSONArray jsonArray     = jsonObject.getJSONArray("Products");
         JSONObject baris        = jsonArray.getJSONObject(0);
         String nama_barang      = baris.getString("nama");
@@ -130,8 +130,8 @@ class z_BackendPreProcessing {
     //    "kontak"    : "",
     //    "email"     : ""
     // }
-    String registerPelanggan(String nama, String email, String password,
-                             String alamat, String kontak) throws Exception {
+    String registerUser(String nama, String email, String password,
+                        String alamat, String kontak) throws Exception {
         // buat JSONObject baru dan masukkan data kedalam JSONObject
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("password", password);
@@ -150,7 +150,7 @@ class z_BackendPreProcessing {
     //    "email"     : "",
     //    "password"  : ""
     // }
-    String loginPelanggan(String user, String pass) throws Exception{
+    String loginUser(String user, String pass) throws Exception{
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("email", user);
         jsonObject.put("password", pass);
@@ -168,9 +168,9 @@ class z_BackendPreProcessing {
     //    "waktu_kirim"     : "",
     //    "catatan"         : ""
     // }
-    String kirimPemesanan(String user, String[] id_bar, int[] jumlah,
-                          int[] harga, int ongkos, String pengiriman,
-                          String catatan) throws  Exception{
+    String sendOrderList(String user, String[] id_bar, int[] jumlah,
+                         int[] harga, int ongkos, String pengiriman,
+                         String catatan) throws  Exception{
         // Masukkan data sebagai JSONObject
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id_pelanggan", user);
@@ -216,5 +216,74 @@ class z_BackendPreProcessing {
         jsonObject.put("catatan",       catatan);
 
         return jsonObject.toString();
+    }
+
+    // convert JSON supaya bisa diakses
+    // Example JSON
+    // {"Products":[
+    //      {"nama_pelanggan":"tester","alamat_pelanggan":"Jl. Tester No. 0","kontak_pelanggan":"0000","waktu_terdaftar":"2019-07-02 11:34:13"}
+    //  ]}
+    String[] readUserData(String rawData) throws Exception {
+
+        // Buat JSONObject dari String
+        JSONObject jsonObject       = new JSONObject(rawData);
+        //Log.d("a",jsonObject.toString());
+
+        // Buat JSONArray dengan informasi dari JSONObject dengan informasi Products
+        JSONArray jsonArray     = jsonObject.getJSONArray("Pelanggans");
+        JSONObject baris        = jsonArray.getJSONObject(0);
+        String nama             = baris.getString("nama_pelanggan");
+        String alamat           = baris.getString("alamat_pelanggan");
+        String kontak           = baris.getString("kontak_pelanggan");
+        String waktu            = baris.getString("waktu_terdaftar");
+
+        // Kirim informasi array tersebut ke dalam array baru
+        return new String[]{
+                nama,
+                alamat,
+                kontak,
+                waktu
+        };
+    }
+
+    // Buat JSON menjadi seperti
+    // {
+    //    "email"     : "",
+    //    "password"  : ""
+    // }
+    String loginMitra(String user, String pass) throws Exception{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("email", user);
+        jsonObject.put("password", pass);
+
+        return jsonObject.toString();
+    }
+
+    // convert JSON supaya bisa diakses
+    // Example JSON
+    // {"Products":[
+    //      {"nama_pelanggan":"tester","alamat_pelanggan":"Jl. Tester No. 0","kontak_pelanggan":"0000","waktu_terdaftar":"2019-07-02 11:34:13"}
+    //  ]}
+    String[] readSupplierData(String rawData) throws Exception {
+
+        // Buat JSONObject dari String
+        JSONObject jsonObject       = new JSONObject(rawData);
+        //Log.d("a",jsonObject.toString());
+
+        // Buat JSONArray dengan informasi dari JSONObject dengan informasi Products
+        JSONArray jsonArray     = jsonObject.getJSONArray("Suppliers");
+        JSONObject baris        = jsonArray.getJSONObject(0);
+        String nama             = baris.getString("nama_supplier");
+        String alamat           = baris.getString("alamat_supplier");
+        String kontak           = baris.getString("kontak_supplier");
+        String waktu            = baris.getString("waktu_terdaftar");
+
+        // Kirim informasi array tersebut ke dalam array baru
+        return new String[]{
+                nama,
+                alamat,
+                kontak,
+                waktu
+        };
     }
 }

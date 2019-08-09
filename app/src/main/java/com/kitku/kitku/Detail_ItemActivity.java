@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 public class Detail_ItemActivity extends AppCompatActivity {
 
@@ -46,7 +47,7 @@ public class Detail_ItemActivity extends AppCompatActivity {
             //Log.d("id",id_barang);
         }
         runAsync();
-        sendData.execute(z_BackendPreProcessing.URL_ProdukDetail + id_barang, null);
+        sendData.execute(z_BackendPreProcessing.URL_ProductDetail + id_barang, null);
     }
 
     public void buttonBuyItem(View view) {
@@ -63,7 +64,9 @@ public class Detail_ItemActivity extends AppCompatActivity {
 
         dialog_detail_item_buyitem.setCancelable(false);
         dialog_detail_item_buyitem.setCanceledOnTouchOutside(false);
-        dialog_detail_item_buyitem.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(
+                dialog_detail_item_buyitem.getWindow()).setBackgroundDrawable(
+                        new ColorDrawable(Color.TRANSPARENT));
 
         dialog_detail_item_buyitem.show();
     }
@@ -89,7 +92,7 @@ public class Detail_ItemActivity extends AppCompatActivity {
                 String[] data;
                 try {
                     // Parsing data dari JSON ke dalam array
-                    data = new z_BackendPreProcessing().bacaDetailProduk(output);
+                    data = new z_BackendPreProcessing().readProductDetail(output);
 
                     // Data dalam array dikelompokkan dalam array baru
                     nama_barang = data[0];

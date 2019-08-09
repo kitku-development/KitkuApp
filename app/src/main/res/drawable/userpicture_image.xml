@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/foregroundPicture"
+        android:drawable="@drawable/ic_logo_kitku"/>
+
+    <item
+        android:id="@+id/roundBorder"
+        android:drawable="@drawable/circle"/>
+
+    <item
+        android:id="@+id/squareBorder"
+        android:drawable="@drawable/rectangle"/>
+</layer-list>

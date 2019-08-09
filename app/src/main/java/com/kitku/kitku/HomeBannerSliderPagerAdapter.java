@@ -15,21 +15,21 @@ public class HomeBannerSliderPagerAdapter extends PagerAdapter {
 
     private Context context;
     private ArrayList<HomeBannerSliderPagerDataModel> homeBannerSliderPagerDataModelArrayList;
-    private int custom_position = 0;
+    //private int custom_position = 0;
 
     /* Constructor untuk context */
 
-    public HomeBannerSliderPagerAdapter(Context context) {
+    HomeBannerSliderPagerAdapter(Context context) {
         this.context = context;
     }
 
     /* Getter dan Setter untuk mengambil data pada Data Model */
 
-    public void setHomeBannerSliderPagerDataModelArrayList(ArrayList<HomeBannerSliderPagerDataModel> homeBannerSliderPagerDataModelArrayList) {
+    void setHomeBannerSliderPagerDataModelArrayList(ArrayList<HomeBannerSliderPagerDataModel> homeBannerSliderPagerDataModelArrayList) {
         this.homeBannerSliderPagerDataModelArrayList = homeBannerSliderPagerDataModelArrayList;
     }
 
-    public ArrayList<HomeBannerSliderPagerDataModel> getHomeBannerSliderPagerDataModelArrayList() {
+    private ArrayList<HomeBannerSliderPagerDataModel> getHomeBannerSliderPagerDataModelArrayList() {
         return homeBannerSliderPagerDataModelArrayList;
     }
 
