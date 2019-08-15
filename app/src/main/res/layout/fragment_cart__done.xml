@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Cart_DoneFragment">
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:descendantFocusability="blocksDescendants">
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerviewCart_DoneOrderList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,5 +24,5 @@
 
         </RelativeLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>

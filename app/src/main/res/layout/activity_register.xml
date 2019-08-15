@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarRegister"
         style="@style/Toolbar">
 
@@ -20,7 +20,7 @@
             android:id="@+id/buttonToolbarRegisterBack"
             style="@style/ButtonToolbarBack" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <View
         android:id="@+id/lineRegister1"
@@ -63,7 +63,7 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterName"
                 style="@style/EditTextRegisterLayout"
                 android:layout_below="@id/txtRegister2"
@@ -72,7 +72,7 @@
                 card_view:strokeColor="@color/colorPrimary"
                 card_view:strokeWidth="2dp">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -90,11 +90,11 @@
                         android:hint="@string/register_name_text"
                         android:inputType="textPersonName"
                         android:textSize="15sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterEmail"
                 style="@style/EditTextRegisterLayout"
                 android:layout_below="@id/materialcardviewRegisterName"
@@ -103,7 +103,7 @@
                 card_view:strokeColor="@color/colorPrimary"
                 card_view:strokeWidth="2dp">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -121,11 +121,11 @@
                         android:hint="@string/register_email_text"
                         android:inputType="textEmailAddress"
                         android:textSize="15sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterPassword"
                 style="@style/EditTextRegisterLayout"
                 android:layout_below="@id/materialcardviewRegisterEmail"
@@ -134,7 +134,7 @@
                 card_view:strokeColor="@color/colorPrimary"
                 card_view:strokeWidth="2dp">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -152,11 +152,11 @@
                         android:hint="@string/register_password_text"
                         android:inputType="textPassword"
                         android:textSize="15sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterAddress"
                 style="@style/EditTextRegisterLayout"
                 android:layout_below="@id/materialcardviewRegisterPassword"
@@ -165,7 +165,7 @@
                 card_view:strokeColor="@color/colorPrimary"
                 card_view:strokeWidth="2dp">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -183,11 +183,11 @@
                         android:hint="@string/register_address_text"
                         android:inputType="text"
                         android:textSize="15sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialcardviewRegisterPhoneNumber"
                 style="@style/EditTextRegisterLayout"
                 android:layout_below="@id/materialcardviewRegisterAddress"
@@ -196,7 +196,7 @@
                 card_view:strokeColor="@color/colorPrimary"
                 card_view:strokeWidth="2dp">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -214,9 +214,9 @@
                         android:hint="@string/register_phonenumber_text"
                         android:inputType="phone"
                         android:textSize="15sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <Button
                 android:id="@+id/buttonregister_Register"

@@ -53,7 +53,7 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialcardviewLoginEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 card_view:strokeColor="@color/colorPrimary"
                 card_view:strokeWidth="2dp">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -83,11 +83,11 @@
                         android:hint="@string/fragmentlogin_email_text"
                         android:inputType="textEmailAddress"
                         android:textSize="15sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialcardviewLoginPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                 card_view:strokeColor="@color/colorPrimary"
                 card_view:strokeWidth="2dp">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -117,9 +117,9 @@
                         android:hint="@string/fragmentlogin_password_text"
                         android:inputType="textPassword"
                         android:textSize="15sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <Button
                 android:id="@+id/buttonfragmentlogin_Login"

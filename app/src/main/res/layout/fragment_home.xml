@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarMain"
         style="@style/Toolbar">
 
@@ -13,7 +13,7 @@
             android:id="@+id/imageLogoToolbar"
             style="@style/ImageToolbar"
             android:contentDescription="@string/main_content_desc_image_toolbar"/>
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:layout_height="2dp"
                 android:background="#D6D6D6"/>
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpagerHomeBannerSlider"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -71,7 +71,7 @@
                 android:layout_marginTop="12dp"
                 android:gravity="center_horizontal">
 
-                <android.support.design.card.MaterialCardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/materialcardviewVegetableButtonMain"
                     android:layout_width="150dp"
                     android:layout_height="110dp"
@@ -106,9 +106,9 @@
                         android:textStyle="bold"
                         android:layout_gravity="bottom|center_horizontal" />
 
-                </android.support.design.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.design.card.MaterialCardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/materialcardviewMeatButtonMain"
                     android:layout_width="150dp"
                     android:layout_height="110dp"
@@ -144,7 +144,7 @@
                         android:gravity="center_horizontal"
                         android:layout_gravity="bottom|center_horizontal" />
 
-                </android.support.design.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
             <LinearLayout
@@ -156,7 +156,7 @@
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="12dp">
 
-                <android.support.design.card.MaterialCardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/materialcardviewFishButtonMain"
                     android:layout_width="150dp"
                     android:layout_height="110dp"
@@ -191,9 +191,9 @@
                         android:textStyle="bold"
                         android:layout_gravity="bottom|center_horizontal" />
 
-                </android.support.design.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
-                <android.support.design.card.MaterialCardView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/materialcardviewWheatButtonMain"
                     android:layout_width="150dp"
                     android:layout_height="110dp"
@@ -229,7 +229,7 @@
                         android:gravity="center_horizontal"
                         android:layout_gravity="bottom|center_horizontal" />
 
-                </android.support.design.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 

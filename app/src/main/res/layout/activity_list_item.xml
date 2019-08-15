@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ListItemActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarListItem"
         style="@style/Toolbar">
 
@@ -20,7 +20,7 @@
             style="@style/ButtonToolbarBack"
             android:onClick="setbackButton" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <View
         android:id="@+id/lineListItem1"
@@ -29,7 +29,7 @@
         android:layout_below="@id/toolbarListItem"
         android:background="#D6D6D6" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
 
             </com.facebook.shimmer.ShimmerFrameLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerviewListItemCategoryItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,5 +165,5 @@
                 android:visibility="gone"/>
 
         </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>
