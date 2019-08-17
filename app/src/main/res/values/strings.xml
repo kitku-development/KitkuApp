@@ -47,12 +47,34 @@
 
     <string name="orderlist_orderamount_title">Total Pesanan (X Item)</string>
 
+    <string name="checkout_set_address_toolbar_title">Alamat</string>
+    <string name="checkout_set_address_title">Kemana pesanan anda akan dikirim ?</string>
+    <string name="checkout_set_address_name_hint">Nama Penerima</string>
+    <string name="checkout_set_address_phone_hint">No. Telpon Penerima</string>
+    <string name="checkout_set_address_address_hint">Alamat Penerima</string>
+    <string name="checkout_set_address_set_map_title">Tentukan alamat anda disini !</string>
+    <string name="checkout_set_address_button_title_go_to_gmap">Go To Google Map</string>
+    <string name="checkout_set_address_button_title_save_address">Simpan Alamat</string>
+
+    <string name="dialog_buyitem_title">Barang sudah terpesan !</string>
+    <string name="dialog_buyitem_description">Silahkan lihat di pesanan anda untuk membuat checkout pembayaran</string>
+    <string name="dialog_buyitem_back_button_title">Kembali</string>
+    <string name="dialog_buyitem_to_cart_button_title">Ke Pesanan</string>
+
+    <string name="cart_toolbar_title">Pesanan</string>
+
+    <string name="user_welcome_title">Selamat datang,</string>
+    <string name="user_toolbar_title">Akun Anda</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="deskripsi_produk">Deskripsi Produk</string>
     <string name="beli_produk">Beli Produk</string>
     <string name="todo">TODO</string>
-
-
+    <string name="ok">OK</string>
+    <string name="cancel">Batal</string>
+    <string name="content_desc_image_item">Image Item</string>
+    <string name="content_desc_remove_imagebutton">Remove Item</string>
+    <string name="content_desc_add_imagebutton">Add Item</string>
 
 </resources>

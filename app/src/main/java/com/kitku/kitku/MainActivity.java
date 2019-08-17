@@ -2,6 +2,11 @@ package com.kitku.kitku;
 
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.kitku.kitku.Cart.CartFragment;
+import com.kitku.kitku.Home.HomeFragment;
+import com.kitku.kitku.Login.LoginFragment;
+import com.kitku.kitku.User.UserFragment;
+
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;

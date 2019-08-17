@@ -11,9 +11,14 @@
         android:roundIcon="@drawable/ic_logo_kitku"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Checkout.CheckoutActivity"></activity>
+        <activity android:name=".User.UserMenu.FAQActivity" />
+        <activity android:name=".User.UserMenu.TermsAndConditionsActivity" />
+        <activity android:name=".User.UserMenu.BlogActivity" />
+        <activity android:name=".Checkout.Checkout_SetAddressActivity" />
         <activity android:name=".Detail_ItemActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ListItemActivity" />
+        <activity android:name=".List_Item.ListItemActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreenNoToolbar">

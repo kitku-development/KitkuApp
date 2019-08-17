@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".CartFragment">
+    tools:context=".Cart.CartFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarCart"
+        android:id="@+id/toolbarCheckoutSetAddress"
         style="@style/Toolbar">
 
         <RelativeLayout
@@ -15,10 +15,10 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textitemnameToolbarDetail_Item"
+                android:id="@+id/textToolbarName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pesanan"
+                android:text="@string/cart_toolbar_title"
                 android:layout_marginStart="16dp"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
@@ -40,7 +40,7 @@
         android:id="@+id/lineCart1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/toolbarCart"
+        android:layout_below="@id/toolbarCheckoutSetAddress"
         android:background="#D6D6D6" />
 
     <com.google.android.material.tabs.TabLayout

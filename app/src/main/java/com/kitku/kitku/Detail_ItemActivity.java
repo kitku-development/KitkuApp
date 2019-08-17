@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
+import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
+
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.Objects;

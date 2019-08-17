@@ -7,9 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -19,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
+
+import com.kitku.kitku.Login.LoginFragment;
 
 import static androidx.core.view.ViewCompat.generateViewId;
 
@@ -131,7 +131,7 @@ class UserMenuBuilder {
         menuButton.setBackgroundColor(Color.WHITE);
         menuButton.setImageDrawable(
                 resources.getDrawable(
-                        R.drawable.backbutton_icon,
+                        R.drawable.ic_button_back,
                         userMenuLayout.getContext().getTheme()));
         menuButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
         menuButton.setRotation(180);
@@ -210,7 +210,7 @@ class UserMenuBuilder {
                     fragmentTransaction.commit();
                     //pageview = inflater.inflate(R.layout.fragment_login, container, false);
                 }}})
-                .setNegativeButton(R.string.calcel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();}})

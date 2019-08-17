@@ -28,7 +28,7 @@ public class UserMenuAdapter extends RecyclerView.Adapter<UserMenuAdapter.ViewHo
     @NonNull
     @Override
     public UserMenuAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_menu_view, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_menu_item_rv_layout, viewGroup, false);
         return new UserMenuAdapter.ViewHolder(view);
     }
 
@@ -55,6 +55,7 @@ public class UserMenuAdapter extends RecyclerView.Adapter<UserMenuAdapter.ViewHo
         ViewHolder(@NonNull final View itemView) {
             super(itemView);
 
+            /*
             menuText    = itemView.findViewById(R.id.UserMenuText);
             upperBorder = itemView.findViewById(R.id.UpperBorder);
             lowerBorder = itemView.findViewById(R.id.LowerBorder);
@@ -68,10 +69,10 @@ public class UserMenuAdapter extends RecyclerView.Adapter<UserMenuAdapter.ViewHo
                             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                if (!menuText.getText().equals("Logout")) dialogInterface.dismiss();
-                                else {
+                                    if (!menuText.getText().equals("Logout")) dialogInterface.dismiss();
+                                    else {
                                         SharedPreferences userData = PreferenceManager.getDefaultSharedPreferences(
-                                        itemView.getContext().getApplicationContext());
+                                                itemView.getContext().getApplicationContext());
                                         SharedPreferences.Editor userDataEdit = userData.edit();
                                         if (tag.equals("User"))
                                             userDataEdit.remove("ID_User");
@@ -85,15 +86,15 @@ public class UserMenuAdapter extends RecyclerView.Adapter<UserMenuAdapter.ViewHo
                                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                         fragmentTransaction.replace(fragmentView.getId(), LoginFragment);
                                         fragmentTransaction.commit();
-                                }}})
-                            .setNegativeButton(R.string.calcel, new DialogInterface.OnClickListener() {
+                                    }}})
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss(); }})
                             .show();
                 }
             });
-
+*/
         }
     }
 }
