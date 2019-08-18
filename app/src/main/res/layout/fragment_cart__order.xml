@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cartOrderLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Cart.Cart_Order.Cart_OrderFragment">
@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/layoutCart_OrderTotalPrice"
-        android:descendantFocusability="blocksDescendants"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:descendantFocusability="blocksDescendants">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,11 +21,11 @@
                 android:id="@+id/textCart_Order1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/orderlist_orderamount_title"
                 android:textColor="@color/colorBlack"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerviewCart_OrderOrderList"
@@ -41,9 +41,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/recyclerviewCart_OrderOrderList"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="14dp"
-                android:layout_centerHorizontal="true"
                 android:text="Belanja Lagi"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
@@ -57,9 +57,9 @@
         android:id="@+id/layoutCart_OrderTotalPrice"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical"
+        android:layout_above="@id/buttonCart_OrderGoToCheckout"
         android:background="@color/colorSecondary"
-        android:layout_above="@id/buttonCart_OrderGoToCheckout">
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,17 +69,18 @@
             android:text="Total"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/cartTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="12dp"
-            android:text="Rp 148.000"
+            android:text="Rp. 0"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -92,6 +93,6 @@
         android:text="Checkout"
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 </RelativeLayout>

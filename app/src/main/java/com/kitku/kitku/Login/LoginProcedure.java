@@ -24,8 +24,7 @@ import java.util.Objects;
 
 class LoginProcedure {
 
-    View view;
-    private RelativeLayout layoutLoginFragment;
+    private View view;
     private Toast notifikasi;
     private ProgressDialog loadingIndicator;
     //private SharedPreferences userData;
@@ -59,7 +58,7 @@ class LoginProcedure {
             // Ubah data menjadi JSON
             String json = null;
             try {
-                json = new z_BackendPreProcessing().loginUser(
+                json = new z_BackendPreProcessing().loginUserAndMitra(
                         emailbox.getText().toString(),
                         passbox.getText().toString()
                 );
@@ -74,8 +73,9 @@ class LoginProcedure {
         }
     }
 
+    // Prosedur untuk menampilkan fragment lanjutan (baik user maupun mitra)
     void gotoPage(String condition, FragmentManager fManager, View v) {
-        layoutLoginFragment = v.findViewById(R.id.layoutLoginFragment);
+        RelativeLayout layoutLoginFragment = v.findViewById(R.id.layoutLoginFragment);
         layoutLoginFragment.setVisibility(View.GONE);
         Fragment fragments;
         if (condition.equals("User"))

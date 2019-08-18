@@ -87,10 +87,10 @@
                 android:layout_toStartOf="@id/imagebtnaddorderOrderListItem"
                 android:background="@drawable/cartorder_circle_background"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="100"
-                android:textSize="16sp"
+                android:text="1"
                 android:textColor="@color/colorBlack"
-                android:textStyle="bold"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/imagebtnremoveorderOrderListItem"

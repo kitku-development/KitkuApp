@@ -12,13 +12,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.kitku.kitku.BackgroundProcess.ImageCaching;
 import com.kitku.kitku.R;
 import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
 import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ListItemActivity extends AppCompatActivity {
 
@@ -144,7 +147,7 @@ public class ListItemActivity extends AppCompatActivity {
                         //Log.d("url",url[index]);
                         try {
                             new downloadImage(ListItemActivity.this).execute(
-                                    url[index], String.valueOf(index));
+                                    url[index], String.valueOf(index), id_barang[index]);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -183,9 +186,25 @@ public class ListItemActivity extends AppCompatActivity {
             indexnum = Integer.parseInt(url[1]);
             Bitmap mIcon11 = null;
             try {
-                InputStream in = new java.net.URL(url[0]).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) { e.printStackTrace(); }
+                if (new ImageCaching().isExist(
+                        Objects.requireNonNull(mParentActivity.get().getExternalFilesDir("Images"))
+                                .getCanonicalPath() + url[2]))
+                    mIcon11 = new ImageCaching().getImage(
+                            Objects.requireNonNull(mParentActivity
+                                    .get()
+                                    .getExternalFilesDir("Images"))
+                                    .getCanonicalPath() +
+                                    url[2]);
+                else {
+                    InputStream in = new java.net.URL(url[0]).openStream();
+                    mIcon11 = BitmapFactory.decodeStream(in);
+                    String imgLocation = Objects.requireNonNull(mParentActivity
+                            .get()
+                            .getExternalFilesDir("Images"))
+                            .getCanonicalPath() + url[2];
+                    new ImageCaching().putImageWithFullPath(imgLocation, mIcon11);
+                }
+            } catch (IOException e) { e.printStackTrace(); }
 
             return mIcon11;
         }

@@ -1,9 +1,17 @@
 package com.kitku.kitku.BackgroundProcess;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import androidx.preference.PreferenceManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class z_BackendPreProcessing {
 
@@ -150,7 +158,7 @@ public class z_BackendPreProcessing {
     //    "email"     : "",
     //    "password"  : ""
     // }
-    public String loginUser(String user, String pass) throws Exception{
+    public String loginUserAndMitra(String user, String pass) throws Exception{
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("email", user);
         jsonObject.put("password", pass);
@@ -170,13 +178,13 @@ public class z_BackendPreProcessing {
     // }
     String sendOrderList(String user, String[] id_bar, int[] jumlah,
                          int[] harga, int ongkos, String pengiriman,
-                         String catatan) throws  Exception{
+                         String catatan) throws  Exception {
         // Masukkan data sebagai JSONObject
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id_pelanggan", user);
 
         // Untuk id_barang, jumlah, harga dibuat dalam bentuk array
-        StringBuilder arrayBarang = new StringBuilder("[");
+        /*StringBuilder arrayBarang = new StringBuilder("[");
         StringBuilder arrayJumlah = new StringBuilder("[");
         StringBuilder arrayHarga  = new StringBuilder("[");
 
@@ -186,7 +194,7 @@ public class z_BackendPreProcessing {
                 arrayBarang.append(",");
                 arrayJumlah.append(",");
                 arrayHarga.append(",");
-            }*/
+            }
             // 'id_bar'
             //arrayBarang.append("'");
             arrayBarang.append(id_bar[index]);
@@ -205,12 +213,12 @@ public class z_BackendPreProcessing {
         // tutup array
         arrayBarang.append("]");
         arrayJumlah.append("]");
-        arrayHarga.append("]");
+        arrayHarga.append("]");*/
 
         // masukan array dan sisa data ke JSONObject
-        jsonObject.put("id_barang",     arrayBarang);
-        jsonObject.put("jumlah",        arrayJumlah);
-        jsonObject.put("harga",         arrayHarga);
+        //jsonObject.put("id_barang",     arrayBarang);
+        //jsonObject.put("jumlah",        arrayJumlah);
+        //jsonObject.put("harga",         arrayHarga);
         jsonObject.put("ongkos",        ongkos);
         jsonObject.put("waktu_kirim",   pengiriman);
         jsonObject.put("catatan",       catatan);
@@ -251,13 +259,14 @@ public class z_BackendPreProcessing {
     //    "email"     : "",
     //    "password"  : ""
     // }
-    String loginMitra(String user, String pass) throws Exception{
+    /*String loginMitra(String user, String pass) throws Exception{
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("email", user);
         jsonObject.put("password", pass);
 
         return jsonObject.toString();
     }
+    NOTICE : procedure above has been replaced with loginUserAndMitra */
 
     // convert JSON supaya bisa diakses
     // Example JSON
@@ -286,4 +295,113 @@ public class z_BackendPreProcessing {
                 waktu
         };
     }
+
+    public void addItemToCart(String id, String count, String price, Context context, String name,
+                              String piece, String pack) throws Exception {
+        // reinitiate price
+        price = price.replace("Rp. ","");
+
+        // get data from SharedPreference
+        SharedPreferences userData = PreferenceManager.getDefaultSharedPreferences(
+                Objects.requireNonNull(context));
+        String jsonCart = "{}";
+        if (userData.contains("Cart"))
+            jsonCart = userData.getString("Cart",null);
+
+        // Parse the data from SharedPreference (example JSON refer to sendOrderList above)
+        // just get id_barang, jumlah, harga
+        List<String> id_barang, jumlah, harga, nama, satuan, pak;
+        JSONObject jsonObject  = new JSONObject(jsonCart);
+
+        // if data exist -> read data, else -> create new
+        if (jsonObject.has("id_barang")) {
+            id_barang   = ItemListDeserialize(jsonObject.getJSONArray("id_barang"));
+            jumlah      = ItemListDeserialize(jsonObject.getJSONArray("jumlah"));
+            harga       = ItemListDeserialize(jsonObject.getJSONArray("harga"));
+            nama        = ItemListDeserialize(jsonObject.getJSONArray("nama"));
+            satuan      = ItemListDeserialize(jsonObject.getJSONArray("satuan"));
+            pak         = ItemListDeserialize(jsonObject.getJSONArray("pack"));
+        }
+        else {
+            id_barang   = new ArrayList<>();
+            jumlah      = new ArrayList<>();
+            harga       = new ArrayList<>();
+            nama        = new ArrayList<>();
+            satuan      = new ArrayList<>();
+            pak         = new ArrayList<>();
+        }
+
+        boolean found = false;
+        // compare data with the new one, if exist -> replace, if not -> add
+        if (id_barang.size() > 0)
+        {
+            for (int index = 0; index < id_barang.size(); index++) {
+                if (id_barang.get(index).equals(id)) {
+                    if (!count.equals("0"))
+                        jumlah.set(index,count);
+                    else {
+                        id_barang.remove(index);
+                        jumlah.remove(index);
+                        harga.remove(index);
+                        nama.remove(index);
+                        satuan.remove(index);
+                        pak.remove(index);
+                    }
+                    found = true;
+                }
+            }
+        }
+
+        if (!found) {
+            id_barang.add(id);
+            jumlah.add(count);
+            harga.add(price);
+            nama.add(name);
+            satuan.add(piece);
+            pak.add(pack);
+        }
+
+        // Add data into new JSONObject
+        jsonObject = new JSONObject();
+        jsonObject.put("id_barang",new JSONArray(id_barang));
+        jsonObject.put("jumlah", new JSONArray(jumlah));
+        jsonObject.put("harga",new JSONArray(harga));
+        jsonObject.put("nama", new JSONArray(nama));
+        jsonObject.put("satuan", new JSONArray(satuan));
+        jsonObject.put("pack", new JSONArray(pak));
+
+        // Convert JSONObject into string
+        jsonCart = jsonObject.toString();
+
+        // edit shared preferences
+        SharedPreferences.Editor userDataEdit = userData.edit();
+        if (userData.contains("Cart")) userDataEdit.remove("Cart");
+        userDataEdit.putString("Cart", jsonCart);
+        userDataEdit.apply();
+    }
+
+    public List<String> ItemListDeserialize(JSONArray raw) throws Exception{
+        List<String> newone = new ArrayList<>();
+        for (int index = 0; index < raw.length(); index++) {
+            newone.add(index,raw.getString(index));
+        }
+        //Log.d("des", newone.toString());
+        return newone;
+    }
+
+    /*private String ItemListSerialize(String[] raw) {
+        // Start with [
+        StringBuilder array = new StringBuilder("[");
+
+        // Loop to input data
+        for(int index = 0; index < raw.length; index++){
+            if (index > 0)
+                array.append(",");
+            array.append("{").append(raw[index]).append("}");
+        }
+        // Close array with ]
+        array.append("]");
+
+        return array.toString();
+    }*/
 }
