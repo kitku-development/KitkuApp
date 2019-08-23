@@ -21,11 +21,12 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+//import java.io.IOException;
+//import java.text.DateFormat;
+//import java.text.SimpleDateFormat;
+//import java.util.Calendar;
+//import java.util.Date;
+//import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -76,7 +77,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             askPermission();
         }
 
-        dataExpire();
+        try {
+            dataExpire();
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     /* Method untuk meload Fragment saat aplikasi pertama kali dibuka */
@@ -182,26 +185,37 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-    public void dataExpire() {
+    public void dataExpire() throws Exception {
         SharedPreferences userData = PreferenceManager.getDefaultSharedPreferences(this);
         long dates = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ROOT);
-        String date = sdf.format(dates);
+        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ROOT);
+        String date = sdf.format(dates);*/
         SharedPreferences.Editor userDataEdit = userData.edit();
-        //Log.d("date",date);
+        long dateStored;
+        try { dateStored = userData.getLong("Last Update", 0); }
+        catch (Exception e) { e.printStackTrace(); dateStored = 0; }
+        //Log.d("date",String.valueOf(dates));
         if (userData.contains("Last Update")) {
-            if (!date.equals(userData.getString("Last Update", null))) {
+            // 1 day = 86400 second ; * 1000 msecond
+            if (dates - dateStored > 86400000) {
                 userDataEdit.remove("Last Update");
                 userDataEdit.remove("Cart");
-                File file = getExternalFilesDir("Images");
-                File[] files = Objects.requireNonNull(file).listFiles();
+                String dirString = Objects.requireNonNull(getExternalFilesDir("Images/Images")).toString();
+                File dir = new File(dirString);
+                File[] files = dir.listFiles();
+                assert files != null;
                 for (File file1 : files) {
-                    file1.delete();
+                    Log.d("loc", file1.getCanonicalPath());
+                    if (file1.delete()) Log.d("stat", "true");
+                    else Log.d("stat", "false");
                 }
             }
         }
 
-        userDataEdit.putString("Last Update", date);
+        userDataEdit.putLong("Last Update", dates);
         userDataEdit.apply();
+
+        //dates = System.currentTimeMillis();
+        //Log.d("date",String.valueOf(dates));
     }
 }

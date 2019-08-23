@@ -40,7 +40,7 @@ public class Cart_OrderFragment extends Fragment {
     private RecyclerView recyclerviewOrderList;
     private Cart_Order_OrderListCardViewAdapter cartOrderListAdapter;
     private ArrayList<Cart_Order_OrderListCardViewDataModel> orderListArrayList = new ArrayList<>();
-    private TextView cartTotalPrice;
+    private TextView cartTotalPrice, totalItem;
 
     private Button buttonToCheckout;
 
@@ -59,16 +59,41 @@ public class Cart_OrderFragment extends Fragment {
 
         buttonToCheckout = orderView.findViewById(R.id.buttonCart_OrderGoToCheckout);
         cartTotalPrice = orderView.findViewById(R.id.cartTotalPrice);
+        totalItem = orderView.findViewById(R.id.textCart_Order1);
+
+        earlyProc();
 
         return orderView;
     }
 
+    public void earlyProc() {
+        addData();
+        showData();
+        buttonToCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Jika User belum mengisi Alamat, maka akan diarahkan ke Halaman Pengisian Alamat
+                Intent intent = new Intent(v.getContext(), Checkout_SetAddressActivity.class);
+                v.getContext().startActivity(intent);
+
+                /* Jika User sudah mengisi Alamat, maka akan langsung diarahkan ke Halaman Checkout
+                Intent intent = new Intent(v.getContext(), CheckoutActivity.class);
+                v.getContext().startActivity(intent);*/
+            }
+        });
+    }
+
     @Override
+    public void onResume() {
+        super.onResume();
+        earlyProc();
+    }
+
+    /*@Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        addData();
-        showData();
+
 
         buttonToCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,13 +105,13 @@ public class Cart_OrderFragment extends Fragment {
                 /* Jika User sudah mengisi Alamat, maka akan langsung diarahkan ke Halaman Checkout
                 Intent intent = new Intent(v.getContext(), CheckoutActivity.class);
                 v.getContext().startActivity(intent);
-                */
+
 
 
             }
         });
 
-    }
+    }*/
 
     private void showData() {
         recyclerviewOrderList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -96,8 +121,8 @@ public class Cart_OrderFragment extends Fragment {
 
     private List<String> id_barang, jumlah, harga, nama, satuan, pack;
     private void addData() {
-        //new loadData(this).execute();
-
+        new loadData(this).execute();
+        /*
         orderListArrayList = new ArrayList<>();
 
         orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
@@ -124,12 +149,12 @@ public class Cart_OrderFragment extends Fragment {
         orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
                 (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
                         "Rp 22.000", "/ 1 pack"));
-
+    */
     }
 
-    /*static class loadData extends AsyncTask<String, Void, String> {
+    static class loadData extends AsyncTask<String, Void, String> {
         private WeakReference<Cart_OrderFragment> mParentActivity;
-        int totalPrice;
+        int totalPrice, totalItem;
 
         loadData(Cart_OrderFragment parentActivity) {
             mParentActivity = new WeakReference<>(parentActivity);
@@ -181,6 +206,7 @@ public class Cart_OrderFragment extends Fragment {
                             ));
                         } catch (Exception e) { e.printStackTrace(); }
                         totalPrice += Integer.valueOf(mParentActivity.get().harga.get(index));
+                        totalItem = index + 1;
                     }
                 } catch (Exception e) { e.printStackTrace(); }
             }
@@ -190,6 +216,8 @@ public class Cart_OrderFragment extends Fragment {
         protected void onPostExecute(String result) {
             String totalPriceString = "Rp. " + totalPrice;
             mParentActivity.get().cartTotalPrice.setText(totalPriceString);
+            mParentActivity.get().totalItem.setText(
+                    "Total pesanan : " + totalItem + " item(s)");
         }
-    }*/
+    }
 }

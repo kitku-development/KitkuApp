@@ -46,18 +46,18 @@ public class Cart_Order_OrderListCardViewAdapter
 
     @Override
     public void onBindViewHolder(@NonNull final Cart_Order_OrderListCardViewAdapter.OrderListViewHolder orderListViewHolder, final int position) {
-        //String priceString = "Rp. " + orderListDataModel.get(position).getText_price_orderlist_item();
-        String priceString = orderListDataModel.get(position).getText_price_orderlist_item();
-        orderListViewHolder.itemImage.setImageResource(orderListDataModel.get(position).getImage_orderlist_item());
-        //orderListViewHolder.itemImage.setImageBitmap(orderListDataModel.get(position).getImage_orderlist_item());
+        String priceString = "Rp. " + orderListDataModel.get(position).getText_price_orderlist_item();
+        //String priceString = orderListDataModel.get(position).getText_price_orderlist_item();
+        //orderListViewHolder.itemImage.setImageResource(orderListDataModel.get(position).getImage_orderlist_item());
+        orderListViewHolder.itemImage.setImageBitmap(orderListDataModel.get(position).getImage_orderlist_item());
         orderListViewHolder.textItemName.setText(orderListDataModel.get(position).getText_name_orderlist_item());
         orderListViewHolder.textItemPrice.setText(priceString);
         orderListViewHolder.textItemPack.setText(orderListDataModel.get(position).getText_pack_orderlist_item());
-        /*orderListViewHolder.textTotalPrice = orderListDataModel.get(position).getTotalPriceText();
+        orderListViewHolder.textTotalPrice = orderListDataModel.get(position).getTotalPriceText();
         orderListViewHolder.productPrice = orderListDataModel.get(position).getProductPrice();
         orderListViewHolder.id_barang = orderListDataModel.get(position).getId_barang();
         orderListViewHolder.c = orderListDataModel.get(position).getContext();
-        orderListViewHolder.textItemAmount.setText(orderListDataModel.get(position).getQuantity());*/
+        orderListViewHolder.textItemAmount.setText(orderListDataModel.get(position).getQuantity());
 
         orderListViewHolder.textItemAmount.setText(String.valueOf(defaultAmount));
 
@@ -115,7 +115,7 @@ public class Cart_Order_OrderListCardViewAdapter
             textItemAmount = itemView.findViewById(R.id.textorderamountOrderListItem);
 
             // ubah teks toal harga ketika jumlah item berubah
-            /*
+
             textItemAmount.addTextChangedListener(new TextWatcher() {
                 int oldQuantity, newQuantity, oldPrice;
                 @Override
@@ -154,7 +154,7 @@ public class Cart_Order_OrderListCardViewAdapter
                                 textItemPack.getText().toString());
                     } catch (Exception e) { e.printStackTrace(); }
                 }
-            });*/
+            });
         }
     }
 }

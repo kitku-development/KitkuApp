@@ -22,7 +22,7 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
-class LoginProcedure {
+public class LoginProcedure {
 
     private View view;
     private Toast notifikasi;
@@ -33,7 +33,7 @@ class LoginProcedure {
     private String condition;
     private Context context;
 
-    void loginActivity(View v, String condition, Context context, FragmentManager fragmentz){
+    public void loginActivity(View v, String condition, Context context, FragmentManager fragmentz){
         this.condition  = condition;
         this.view       = v;
         this.context    = context;

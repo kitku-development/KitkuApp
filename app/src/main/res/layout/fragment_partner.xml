@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/partnerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PartnerFragment">
+
+    <ProgressBar
+        android:id="@+id/loadingIndicator"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,111 +22,103 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarCheckoutSetAddress"
-            style="@style/Toolbar">
-
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/userLayout1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtUser2"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleimageviewUser_UserPhoto"
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginStart="14dp"
+                    android:src="@drawable/z_test_foto_user"
+                    app:civ_border_color="@color/colorPrimary"
+                    app:civ_border_width="2dp" />
 
                 <TextView
-                    android:id="@+id/textToolbarName"
+                    android:id="@+id/textviewUser_Username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Akun Mitra Anda"
-                    android:layout_marginStart="16dp"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:textSize="20sp"
+                    android:layout_marginStart="18dp"
+                    android:gravity="center_vertical"
                     android:textColor="@color/colorPrimary"
-                    android:textStyle="bold"/>
-
-                <Button
-                    android:id="@+id/buttonToolbarDetail_ItemBack"
-                    style="@style/ButtonToolbarBack"
-                    android:layout_centerVertical="true"/>
-
-            </RelativeLayout>
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@id/toolbarCheckoutSetAddress"
-            android:background="#D6D6D6" />
-
-        <TextView
-            android:id="@+id/txtUser1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toolbarCheckoutSetAddress"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:text="Selamat datang,"
-            android:textColor="@color/colorSecondary"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/txtUser2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtUser1"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:text="Hanya sebuah preview dari halaman user Mitra, diperlukan konten mengenai apa2 saja fitur yang diinginkan didalam halaman ini"
-            android:textColor="@color/colorBlack"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
-
-        <LinearLayout
-            android:id="@+id/userLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtUser2"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circleimageviewUser_UserPhoto"
-                android:layout_width="84dp"
-                android:layout_height="84dp"
-                android:layout_marginStart="14dp"
-                android:src="@drawable/z_test_foto_user"
-                app:civ_border_color="@color/colorPrimary"
-                app:civ_border_width="2dp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/textviewUser_Username"
+                android:id="@+id/txtUser2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginStart="18dp"
-                android:text="Evan Edsa Azola"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
+                android:layout_below="@id/txtUser1"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="Hanya sebuah preview dari halaman user Mitra, diperlukan konten mengenai apa2 saja fitur yang diinginkan didalam halaman ini"
+                android:textColor="@color/colorBlack"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerviewUserMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/userLayout1"
-            android:layout_marginTop="32dp"/>
+            <TextView
+                android:id="@+id/txtUser1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbarCheckoutSetAddress"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="Selamat datang,"
+                android:textColor="@color/colorSecondary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/toolbarCheckoutSetAddress"
+                android:background="#D6D6D6" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarCheckoutSetAddress"
+                style="@style/Toolbar">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/buttonToolbarDetail_ItemBack"
+                        style="@style/ButtonToolbarBack"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/textToolbarName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:text="Akun Mitra Anda"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerviewUserMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userLayout1"
+                android:layout_marginTop="32dp" />
 
         </RelativeLayout>
 
     </ScrollView>
-
-    <ProgressBar
-        android:id="@+id/loadingIndicator"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
 
 </RelativeLayout>

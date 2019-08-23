@@ -77,22 +77,24 @@
                 android:id="@+id/textitemnameDetail_Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/lineDetail_Item2"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
-                android:layout_below="@id/lineDetail_Item2"
-                android:textSize="28sp"
+                android:text="Nama item"
                 android:textColor="@color/colorPrimary"
-                android:textStyle="bold"/>
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textitempackDetail_Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/textitemnameDetail_Item"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="2dp"
-                android:layout_below="@id/textitemnameDetail_Item"
-                android:textSize="14sp"
-                android:textColor="@color/colorBlack" />
+                android:text="400gr - 500gr"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textitempriceDetail_Item"
@@ -103,21 +105,23 @@
                 android:layout_marginTop="4dp"
                 android:textColor="@color/colorSecondary"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Rp. 5000" />
 
             <TextView
                 android:id="@+id/textpackDetail_Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textitempackDetail_Item"
-                android:gravity="bottom"
+                android:layout_alignBottom="@id/textitempriceDetail_Item"
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="6dp"
                 android:layout_toEndOf="@id/textitempriceDetail_Item"
-                android:layout_alignBottom="@id/textitempriceDetail_Item"
-                android:textSize="14sp"
-                android:textColor="@color/colorBlack"/>
+                android:gravity="bottom"
+                android:text="/ pack "
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
 
             <View
                 android:id="@+id/lineDetail_Item3"

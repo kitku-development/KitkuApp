@@ -66,20 +66,19 @@
             android:layout_width="84dp"
             android:layout_height="84dp"
             android:layout_marginStart="14dp"
-            android:src="@drawable/z_test_foto_user"
+            android:src="@drawable/ic_logo_kitku"
             app:civ_border_color="@color/colorPrimary"
-            app:civ_border_width="2dp"/>
+            app:civ_border_width="2dp" />
 
         <TextView
             android:id="@+id/textviewUser_Username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginStart="18dp"
-            android:text="Evan Edsa Azola"
+            android:gravity="center_vertical"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

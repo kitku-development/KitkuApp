@@ -52,8 +52,8 @@ public class LoginFragment extends Fragment {
                 Objects.requireNonNull(getContext()).getApplicationContext());
         if (data.contains("ID_User"))
             new LoginProcedure().gotoPage("User", getChildFragmentManager(), view);
-        else if (data.contains("ID_Mitra"))
-            new LoginProcedure().gotoPage("Mitra", getChildFragmentManager(), view);
+        /*else if (data.contains("ID_Mitra"))
+            new LoginProcedure().gotoPage("Mitra", getChildFragmentManager(), view);*/
         return view;
     }
 }

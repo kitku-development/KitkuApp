@@ -231,7 +231,7 @@ public class z_BackendPreProcessing {
     // {"Products":[
     //      {"nama_pelanggan":"tester","alamat_pelanggan":"Jl. Tester No. 0","kontak_pelanggan":"0000","waktu_terdaftar":"2019-07-02 11:34:13"}
     //  ]}
-    String[] readUserData(String rawData) throws Exception {
+    public String[] readUserData(String rawData) throws Exception {
 
         // Buat JSONObject dari String
         JSONObject jsonObject       = new JSONObject(rawData);
@@ -273,7 +273,7 @@ public class z_BackendPreProcessing {
     // {"Products":[
     //      {"nama_pelanggan":"tester","alamat_pelanggan":"Jl. Tester No. 0","kontak_pelanggan":"0000","waktu_terdaftar":"2019-07-02 11:34:13"}
     //  ]}
-    String[] readSupplierData(String rawData) throws Exception {
+    public String[] readSupplierData(String rawData) throws Exception {
 
         // Buat JSONObject dari String
         JSONObject jsonObject       = new JSONObject(rawData);
@@ -311,6 +311,7 @@ public class z_BackendPreProcessing {
         // Parse the data from SharedPreference (example JSON refer to sendOrderList above)
         // just get id_barang, jumlah, harga
         List<String> id_barang, jumlah, harga, nama, satuan, pak;
+        assert jsonCart != null;
         JSONObject jsonObject  = new JSONObject(jsonCart);
 
         // if data exist -> read data, else -> create new

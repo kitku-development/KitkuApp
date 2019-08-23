@@ -1,26 +1,34 @@
 package com.kitku.kitku.User;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+//import android.widget.ImageView;
+import android.widget.ProgressBar;
+//import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.kitku.kitku.R;
+import com.kitku.kitku.BackgroundProcess.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UserFragment extends Fragment {
 
     private RecyclerView recyclerViewMenu;
     private ArrayList<UserMenuListCardViewDataModel> menuListArrayList = new ArrayList<>();
-    private UserMenuListCardViewAdapter  userMenuListAdapter;
+    private UserMenuListCardViewAdapter userMenuListAdapter;
 
     public UserFragment() {
     }
@@ -33,18 +41,31 @@ public class UserFragment extends Fragment {
         recyclerViewMenu = menuListView.findViewById(R.id.recyclerviewUserMenu);
         recyclerViewMenu.setHasFixedSize(true);
 
+        usernameText        = menuListView.findViewById(R.id.textviewUser_Username);
+        loadingIndicator    = menuListView.findViewById(R.id.loadingIndicator);
+        loadingIndicator.setVisibility(View.INVISIBLE);
+        //userPicture         = menuListView.findViewById(R.id.circleimageviewUser_UserPhoto);
+        //userMenuLayout      = view.findViewById(R.id.userFragmentLayout);
+        SharedPreferences userData = PreferenceManager.getDefaultSharedPreferences(
+                Objects.requireNonNull(getContext()).getApplicationContext());
+        runAsync();
+        sendData.execute(z_BackendPreProcessing.URL_UserData +
+                userData.getString("ID_User", null), null);
+        loadingIndicator.setVisibility(View.VISIBLE);
+        addMenuData();
+        showMenuData();
+
         return menuListView;
 
     }
 
-    @Override
+    /*@Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        addMenuData();
-        showMenuData();
 
-    }
+
+    }*/
 
     private void showMenuData() {
         recyclerViewMenu.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -63,37 +84,12 @@ public class UserFragment extends Fragment {
     }
 
 
-}
-
-
-    /*
+//}
     private TextView usernameText;
     private ProgressBar loadingIndicator;
-    private ImageView userPicture;
-    private RelativeLayout userMenuLayout;
-    */
+    //private ImageView userPicture;
+    //private RelativeLayout userMenuLayout;
 
-    /*
-        View view = inflater.inflate(R.layout.fragment_user, container, false);
-        view.setId(View.generateViewId());
-
-        SharedPreferences userData = PreferenceManager.getDefaultSharedPreferences(
-                Objects.requireNonNull(getContext()).getApplicationContext());
-
-        usernameText        = view.findViewById(R.id.usernameText);
-        loadingIndicator    = view.findViewById(R.id.loadingIndicator);
-        userPicture         = view.findViewById(R.id.userPicture);
-        userMenuLayout      = view.findViewById(R.id.userMenuLayout);
-
-        loadingIndicator.setVisibility(View.VISIBLE);
-        addUserMenu(view, inflater, container);
-
-        runAsync();
-        sendData.execute(z_BackendPreProcessing.URL_UserData +
-                userData.getString("ID_User", null), null);
-    */
-
-    /*
     // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
     static class backgroundTask extends z_AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
@@ -109,13 +105,13 @@ public class UserFragment extends Fragment {
                     String[] userData = new z_BackendPreProcessing().readUserData(output);
                     usernameText.setText(userData[0]);
                     loadingIndicator.setVisibility(View.GONE);
-                    new downloadImage(UserFragment.this).execute();
+                    //new downloadImage(UserFragment.this).execute();
                 } catch (Exception e) { e.printStackTrace(); }
             }
         });
     }
 
-    static class downloadImage extends AsyncTask<String, Void, Bitmap> {
+    /*static class downloadImage extends AsyncTask<String, Void, Bitmap> {
         private WeakReference<UserFragment> mParentActivity;
         //int indexnum;
 
@@ -173,3 +169,4 @@ public class UserFragment extends Fragment {
         }
     }
     */
+}
