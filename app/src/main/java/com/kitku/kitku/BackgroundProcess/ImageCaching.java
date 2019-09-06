@@ -1,7 +1,9 @@
 package com.kitku.kitku.BackgroundProcess;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,11 +52,11 @@ public class ImageCaching {
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }*/
 
-    public boolean putImageWithFullPath(String fullPath, Bitmap theBitmap) {
-        return !(fullPath == null || theBitmap == null) && saveBitmap(fullPath, theBitmap);
+    public boolean putImageWithFullPath(String fullPath, Bitmap theBitmap, Context c) {
+        return !(fullPath == null || theBitmap == null) && saveBitmap(fullPath, theBitmap, c);
     }
 
-    private boolean saveBitmap(String fullPath, Bitmap bitmap) {
+    private boolean saveBitmap(String fullPath, Bitmap bitmap, Context c) {
         if (fullPath == null || bitmap == null)
             return false;
 
@@ -62,9 +64,9 @@ public class ImageCaching {
         boolean bitmapCompressed;
         boolean streamClosed = false;
 
-        //File folder = c.getExternalFilesDir("Images");// + "newfoldername";
-        //if (!folder.exists()) folder.mkdir();
-        //fullPath = folder.getAbsolutePath().concat(fullPath);
+        File folder = c.getExternalFilesDir("Images");// + "newfoldername";
+        if (!folder.exists()) folder.mkdir();
+        fullPath = folder.getAbsolutePath().concat("/").concat(fullPath);
 
         File imageFile = new File(fullPath);
 
@@ -78,6 +80,8 @@ public class ImageCaching {
         try {
             fileCreated = imageFile.createNewFile();
         } catch (IOException e) { e.printStackTrace(); }
+
+        Log.d("location",imageFile.getAbsolutePath());
 
         FileOutputStream out = null;
         try {

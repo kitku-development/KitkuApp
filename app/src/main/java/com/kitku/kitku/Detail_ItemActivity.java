@@ -19,6 +19,7 @@ import com.kitku.kitku.BackgroundProcess.ImageCaching;
 import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
 import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -41,7 +42,7 @@ public class Detail_ItemActivity extends AppCompatActivity {
         kolomGambar         = findViewById(R.id.imageDetail_Item);
         teksNama            = findViewById(R.id.textitemnameDetail_Item);
         teksHarga           = findViewById(R.id.textitempriceDetail_Item);
-        teksPack            = findViewById(R.id.textpackDetail_Item);
+        teksPack            = findViewById(R.id.textitempackDetail_Item);
         teksDetail          = findViewById(R.id.textitemdescriptionDetail_Item);
         teksToolbar         = findViewById(R.id.textitemnameToolbarDetail_Item);
         findViewById(R.id.txtDetail_Item1).setVisibility(View.INVISIBLE);
@@ -145,23 +146,20 @@ public class Detail_ItemActivity extends AppCompatActivity {
         protected Bitmap doInBackground(String...url) {
             Bitmap mIcon11 = null;
             try {
+                File folder = mParentActivity.get().getExternalFilesDir("Images");
+                assert folder != null;
+                String dirLocation = folder.getAbsolutePath().concat("/");
                 if (new ImageCaching().isExist(
-                        Objects.requireNonNull(mParentActivity.get().getExternalFilesDir("Images"))
-                                .getCanonicalPath() + url[1]))
-                    mIcon11 = new ImageCaching().getImage(
-                            Objects.requireNonNull(mParentActivity
-                                    .get()
-                                    .getExternalFilesDir("Images"))
-                                    .getCanonicalPath() +
-                                    url[1]);
+                        dirLocation.concat(url[1])))
+                    mIcon11 = new ImageCaching().getImage(dirLocation.concat(url[1]));
                 else {
                     InputStream in = new java.net.URL(url[0]).openStream();
                     mIcon11 = BitmapFactory.decodeStream(in);
-                    String imgLocation = Objects.requireNonNull(mParentActivity
+                    /*String imgLocation = Objects.requireNonNull(mParentActivity
                             .get()
                             .getExternalFilesDir("Images"))
-                            .getCanonicalPath() + url[1];
-                    new ImageCaching().putImageWithFullPath(imgLocation, mIcon11);
+                            .getCanonicalPath() + url[1];*/
+                    new ImageCaching().putImageWithFullPath(url[1], mIcon11, mParentActivity.get().getBaseContext());
                 }
             } catch (IOException e) { e.printStackTrace(); }
             return mIcon11;
@@ -183,11 +181,11 @@ public class Detail_ItemActivity extends AppCompatActivity {
         teksNama.setText(nama_barang);
         String temp = "Rp. " + harga;
         teksHarga.setText(temp);
-        if (Integer.parseInt(satuan) > 1)
+        /*if (Integer.parseInt(satuan) > 1)
             temp = "/ " + satuan + " pack";
         else
-            temp = "/ pack";
-        teksPack.setText(temp);
+            temp = "/ pack";*/
+        teksPack.setText(satuan);
         teksDetail.setText(desc);
         kolomGambar.setImageBitmap(gambar);
         teksToolbar.setText(nama_barang);

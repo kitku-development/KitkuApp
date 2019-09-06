@@ -200,12 +200,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             if (dates - dateStored > 86400000) {
                 userDataEdit.remove("Last Update");
                 userDataEdit.remove("Cart");
-                String dirString = Objects.requireNonNull(getExternalFilesDir("Images/Images")).toString();
+                String dirString = Objects.requireNonNull(getExternalFilesDir("Images")).getAbsolutePath();
                 File dir = new File(dirString);
                 File[] files = dir.listFiles();
                 assert files != null;
                 for (File file1 : files) {
-                    Log.d("loc", file1.getCanonicalPath());
+                    Log.d("loc", file1.getAbsolutePath());
                     if (file1.delete()) Log.d("stat", "true");
                     else Log.d("stat", "false");
                 }

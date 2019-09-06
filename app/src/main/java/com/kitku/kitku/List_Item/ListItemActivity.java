@@ -17,6 +17,7 @@ import com.kitku.kitku.R;
 import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
 import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -93,15 +94,15 @@ public class ListItemActivity extends AppCompatActivity {
 
     private void addCategoryItemData(int index) {
 
-        String packed = "/";
+        /*String packed = "/";
         if (Float.valueOf(satuan[index]) > 1.0)
             packed += satuan[index];
-        packed += " pack";
+        packed += " pack";*/
         listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel(
                 listGambar[index],
                 String.valueOf(nama_barang[index]),
                 String.valueOf(harga[index]),
-                packed,
+                "/ pack",
                 id_barang[index]
         ));
 
@@ -186,23 +187,20 @@ public class ListItemActivity extends AppCompatActivity {
             indexnum = Integer.parseInt(url[1]);
             Bitmap mIcon11 = null;
             try {
+                File folder = mParentActivity.get().getExternalFilesDir("Images");
+                assert folder != null;
+                String dirLocation = folder.getAbsolutePath().concat("/");
                 if (new ImageCaching().isExist(
-                        Objects.requireNonNull(mParentActivity.get().getExternalFilesDir("Images"))
-                                .getCanonicalPath() + url[2]))
-                    mIcon11 = new ImageCaching().getImage(
-                            Objects.requireNonNull(mParentActivity
-                                    .get()
-                                    .getExternalFilesDir("Images"))
-                                    .getCanonicalPath() +
-                                    url[2]);
+                        Objects.requireNonNull(dirLocation.concat(url[2]))))
+                    mIcon11 = new ImageCaching().getImage(dirLocation.concat(url[2]));
                 else {
                     InputStream in = new java.net.URL(url[0]).openStream();
                     mIcon11 = BitmapFactory.decodeStream(in);
-                    String imgLocation = Objects.requireNonNull(mParentActivity
+                    /*String imgLocation = Objects.requireNonNull(mParentActivity
                             .get()
                             .getExternalFilesDir("Images"))
-                            .getCanonicalPath() + url[2];
-                    new ImageCaching().putImageWithFullPath(imgLocation, mIcon11);
+                            .getCanonicalPath() + url[2];*/
+                    new ImageCaching().putImageWithFullPath(url[2], mIcon11, mParentActivity.get().getBaseContext());
                 }
             } catch (IOException e) { e.printStackTrace(); }
 
