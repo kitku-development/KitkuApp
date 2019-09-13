@@ -13,10 +13,10 @@ public class Cart_Order_OrderListCardViewDataModel {
     private String text_pack_orderlist_item;
     private int orderAmount = 1, productPrice;
     private TextView totalPriceText;
-    private String id_barang, q;
+    private String id_barang, quantity;
     private Context context;
 
-    public Cart_Order_OrderListCardViewDataModel(Bitmap image_orderlist_item, String text_name_orderlist_item, String text_price_orderlist_item, String text_pack_orderlist_item, TextView view, String id, Context c, String q) {
+    public Cart_Order_OrderListCardViewDataModel(Bitmap image_orderlist_item, String text_name_orderlist_item, String text_price_orderlist_item, String text_pack_orderlist_item, TextView view, String id, Context c, String quantity) {
     //public Cart_Order_OrderListCardViewDataModel(int image_orderlist_item, String text_name_orderlist_item, String text_price_orderlist_item, String text_pack_orderlist_item) {
         this.image_orderlist_item = image_orderlist_item;
         this.text_name_orderlist_item = text_name_orderlist_item;
@@ -26,7 +26,7 @@ public class Cart_Order_OrderListCardViewDataModel {
         this.productPrice = Integer.valueOf(text_price_orderlist_item);
         this.id_barang = id;
         this.context = c;
-        this.q = q;
+        this.quantity = quantity;
     }
 
     /*public int getImage_orderlist_item() {
@@ -61,7 +61,7 @@ public class Cart_Order_OrderListCardViewDataModel {
 
     public Context getContext() { return context; }
 
-    public String getQuantity() { return q; }
+    public String getQuantity() { return quantity; }
 
     public void setImage_orderlist_item(Bitmap image_orderlist_item) {
         this.image_orderlist_item = image_orderlist_item;

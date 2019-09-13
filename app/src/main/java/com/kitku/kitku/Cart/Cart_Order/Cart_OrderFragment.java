@@ -5,6 +5,7 @@ import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ import com.kitku.kitku.R;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -189,20 +192,20 @@ public class Cart_OrderFragment extends Fragment {
                     mParentActivity.get().orderListArrayList = new ArrayList<>();
                     for (int index = 0; index < mParentActivity.get().id_barang.size(); index++) {
                         try {
-                            gambar.add(index, new ImageCaching().getImage(
-                                    Objects.requireNonNull(Objects.requireNonNull(mParentActivity.get().getContext())
-                                            .getExternalFilesDir("Images"))
-                                            .getCanonicalPath() +
-                                            mParentActivity.get().id_barang.get(index)));
+                            File folder = mParentActivity.get().getContext().getExternalFilesDir("Images");
+                            assert folder != null;
+                            String dirLocation = folder.getAbsolutePath().concat("/");
+                            gambar.add(index, new ImageCaching().getImage(dirLocation.concat(
+                                            mParentActivity.get().id_barang.get(index))));
                             mParentActivity.get().orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel(
                                     gambar.get(index),
                                     mParentActivity.get().nama.get(index),
                                     mParentActivity.get().harga.get(index),
-                                    mParentActivity.get().pack.get(index),
+                                    mParentActivity.get().pack.get(index).concat(" / pack"),
                                     mParentActivity.get().cartTotalPrice,
                                     mParentActivity.get().id_barang.get(index),
                                     mParentActivity.get().getContext(),
-                                    mParentActivity.get().satuan.get(index)
+                                    mParentActivity.get().jumlah.get(index)
                             ));
                         } catch (Exception e) { e.printStackTrace(); }
                         totalPrice += Integer.valueOf(mParentActivity.get().harga.get(index));
