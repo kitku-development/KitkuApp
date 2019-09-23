@@ -42,6 +42,9 @@ public class HomeFragment extends Fragment {
         MaterialCardView materialcardviewMeatButtonMain = view.findViewById(R.id.materialcardviewMeatButtonMain);
         MaterialCardView materialcardviewFishButtonMain = view.findViewById(R.id.materialcardviewFishButtonMain);
         MaterialCardView materialcardviewWheatButtonMain = view.findViewById(R.id.materialcardviewWheatButtonMain);
+        MaterialCardView materialcardviewFastFoodButtonMain = view.findViewById(R.id.materialcardviewFastFoodButtonMain);
+        MaterialCardView materialcardviewOthersButtonMain = view.findViewById(R.id.materialcardviewOthersButtonMain);
+
 
         list.addAll(HomeBannerSliderPagerDataset.getImageData());
 
@@ -83,6 +86,22 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ListItemActivity.class);
                 intent.putExtra("titletextWheat", "Beras dan Biji-bijian");
+                startActivity(intent);
+            }
+        });
+        materialcardviewFastFoodButtonMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ListItemActivity.class);
+                intent.putExtra("titletextFastFood", "Makanan Siap Saji");
+                startActivity(intent);
+            }
+        });
+        materialcardviewOthersButtonMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ListItemActivity.class);
+                intent.putExtra("titletextOthers", "Lainnya");
                 startActivity(intent);
             }
         });

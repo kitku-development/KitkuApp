@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frameFragmentContainer, fragment)
                         .commit();
-
+                break;
 
         }
 

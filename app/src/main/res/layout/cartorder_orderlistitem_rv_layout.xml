@@ -22,7 +22,8 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="8dp"
+                android:layout_centerVertical="true">
                 <ImageView
                     android:id="@+id/imageOrderListItem"
                     android:layout_width="match_parent"
@@ -41,7 +42,8 @@
                 android:layout_toEndOf="@id/cvOrderListItemImageLayout"
                 android:text="Bawang Bombay"
                 android:textColor="@color/colorBlack"
-                android:textSize="14sp" />
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/textpriceOrderListItem"
@@ -49,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textnameOrderListItem"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:layout_toEndOf="@id/cvOrderListItemImageLayout"
                 android:text="Rp 15.000"
                 android:textColor="@color/colorPrimary"
@@ -65,8 +67,20 @@
                 android:layout_toEndOf="@id/cvOrderListItemImageLayout"
                 android:text="/pack"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                android:textStyle="bold"/>
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textmaxorderOrderListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textpackOrderListItem"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@id/cvOrderListItemImageLayout"
+                android:text="Maksimal Pembelian : 3"
+                android:textColor="@color/colorBlack"
+                android:textSize="12sp" />
 
             <ImageButton
                 android:id="@+id/imagebtnaddorderOrderListItem"

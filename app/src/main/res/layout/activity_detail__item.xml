@@ -79,10 +79,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lineDetail_Item2"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:text="Nama item"
                 android:textColor="@color/colorPrimary"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -102,9 +102,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textitempackDetail_Item"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:textColor="@color/colorSecondary"
-                android:textSize="24sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 tools:text="Rp. 5000" />
 
@@ -116,7 +116,7 @@
                 android:layout_alignBottom="@id/textitempriceDetail_Item"
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="6dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@id/textitempriceDetail_Item"
                 android:gravity="bottom"
                 android:text="/ pack "
@@ -162,16 +162,34 @@
         </RelativeLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/buttonDetail_Item_BuyItem"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        android:text="@string/beli_produk"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:onClick="buttonBuyItem"/>
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonDetail_Item_GoToHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.35"
+            android:background="@drawable/detail_item_gotohome_image"
+            android:onClick="buttonToHome"/>
+
+        <Button
+            android:id="@+id/buttonDetail_Item_BuyItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:background="@color/colorPrimary"
+            android:text="@string/beli_produk"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:onClick="buttonBuyItem"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

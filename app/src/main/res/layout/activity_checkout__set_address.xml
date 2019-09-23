@@ -59,6 +59,36 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
+                android:text="Label Alamat"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:id="@+id/layoutCheckout_SetAddress1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textCheckout_SetAddress1"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/all_thinner_rounded_corners"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinnerAddressLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textCheckout_SetAddress2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutCheckout_SetAddress1"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="18dp"
                 android:text="@string/checkout_set_address_title"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"/>
@@ -67,10 +97,10 @@
                 android:id="@+id/materialcardviewSetAddressName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textCheckout_SetAddress1"
+                android:layout_below="@id/textCheckout_SetAddress2"
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="12dp"
                 card_view:strokeColor="@color/colorPrimary"
@@ -129,11 +159,131 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:id="@+id/textCheckout_SetAddress3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/materialcardviewSetAddressPhoneNumber"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="18dp"
+                android:text="Provinsi"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:id="@+id/layoutCheckout_SetAddress2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textCheckout_SetAddress3"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/all_thinner_rounded_corners"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinnerAddressProvince"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textCheckout_SetAddress4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutCheckout_SetAddress2"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="18dp"
+                android:text="Kota"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:id="@+id/layoutCheckout_SetAddress3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textCheckout_SetAddress4"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/all_thinner_rounded_corners"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinnerAddressCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textCheckout_SetAddress5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutCheckout_SetAddress3"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="18dp"
+                android:text="Kecamatan"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:id="@+id/layoutCheckout_SetAddress4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textCheckout_SetAddress5"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/all_thinner_rounded_corners"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinnerAddressDistrict"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textCheckout_SetAddress6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutCheckout_SetAddress4"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="18dp"
+                android:text="Kelurahan"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:id="@+id/layoutCheckout_SetAddress5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textCheckout_SetAddress6"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/all_thinner_rounded_corners"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinnerAddressSubDistrict"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp" />
+
+            </LinearLayout>
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialcardviewSetAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/materialcardviewSetAddressPhoneNumber"
+                android:layout_below="@id/layoutCheckout_SetAddress5"
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="24dp"
@@ -162,11 +312,44 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/textCheckout_SetAddress2"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialcardviewSetMoreInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/materialcardviewSetAddress"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="24dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="12dp"
+                card_view:strokeColor="@color/colorPrimary"
+                card_view:strokeWidth="2dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textColorHint="@color/colorSecondary">
+
+                    <EditText
+                        android:id="@+id/edittextSetMoreInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="10dp"
+                        android:hint="Informasi Tambahan"
+                        android:inputType="text"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/textCheckout_SetAddress7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/materialcardviewSetMoreInfo"
                 android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="18dp"
@@ -178,13 +361,13 @@
                 android:id="@+id/buttonCheckout_SetAddressSetOnGMap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textCheckout_SetAddress2"
+                android:layout_below="@id/textCheckout_SetAddress7"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="12dp"
                 android:background="@drawable/all_button_roundedcorners_colorprimary_solid"
-                android:drawableStart="@drawable/setaddress_add_location_button_icon"
+                android:drawableStart="@drawable/setaddress_addlocation_button_icon"
                 android:text="@string/checkout_set_address_button_title_go_to_gmap"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"/>

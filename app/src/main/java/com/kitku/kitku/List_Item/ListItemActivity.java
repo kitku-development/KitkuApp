@@ -72,6 +72,18 @@ public class ListItemActivity extends AppCompatActivity {
             newCategoryClick();
             sendData.execute(z_BackendPreProcessing.URL_ProductCategory + "BIJI", null);
         }
+        if (bundle != null && bundle.containsKey("titletextFastFood")) {
+            txtTitle = bundle.getString("titletextFastFood");
+            textviewListItemCategoryName.setText(txtTitle);
+            newCategoryClick();
+            sendData.execute(z_BackendPreProcessing.URL_ProductCategory + "BIJI", null);
+        }
+        if (bundle != null && bundle.containsKey("titletextOthers")) {
+            txtTitle = bundle.getString("titletextOthers");
+            textviewListItemCategoryName.setText(txtTitle);
+            newCategoryClick();
+            sendData.execute(z_BackendPreProcessing.URL_ProductCategory + "BIJI", null);
+        }
 
         //showCategoryItemData();
     }

@@ -36,19 +36,6 @@
                 android:nestedScrollingEnabled="false"
                 android:scrollbars="vertical" />
 
-            <TextView
-                android:id="@+id/textviewCart_OrderGoToListItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/recyclerviewCart_OrderOrderList"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="14dp"
-                android:text="Belanja Lagi"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -57,7 +44,8 @@
         android:id="@+id/layoutCart_OrderTotalPrice"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_above="@id/buttonCart_OrderGoToCheckout"
+        android:layout_above="@id/layoutCart_OrderButtons"
+        android:layout_marginBottom="3dp"
         android:background="@color/colorSecondary"
         android:gravity="center_vertical">
 
@@ -84,15 +72,39 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/buttonCart_OrderGoToCheckout"
+    <LinearLayout
+        android:id="@+id/layoutCart_OrderButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:text="Checkout"
-        android:textColor="@color/colorWhite"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonCart_OrderGoToHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="2dp"
+            android:background="@color/colorSecondary"
+            android:text="Belanja Lagi"
+            android:textColor="@color/colorWhite"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/buttonCart_OrderGoToCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="2dp"
+            android:background="@color/colorPrimary"
+            android:text="Checkout"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_weight="0.75"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

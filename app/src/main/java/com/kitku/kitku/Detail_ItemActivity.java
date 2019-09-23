@@ -1,6 +1,7 @@
 package com.kitku.kitku;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,7 +28,7 @@ import java.util.Objects;
 
 public class Detail_ItemActivity extends AppCompatActivity {
 
-    Button buttonDetail_ItemBuyItem;
+    Button buttonDetail_ItemBuyItem, buttonGoToHome;
     ImageView kolomGambar;
     TextView teksNama, teksPack, teksHarga, teksDetail, teksToolbar;
     String id_barang;
@@ -38,6 +39,7 @@ public class Detail_ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail__item);
 
         buttonDetail_ItemBuyItem = findViewById(R.id.buttonDetail_Item_BuyItem);
+        buttonGoToHome = findViewById(R.id.buttonDetail_Item_GoToHome);
 
         kolomGambar         = findViewById(R.id.imageDetail_Item);
         teksNama            = findViewById(R.id.textitemnameDetail_Item);
@@ -93,6 +95,13 @@ public class Detail_ItemActivity extends AppCompatActivity {
 
     public void setBackButton(View v) {
         this.finish();
+    }
+
+    public void buttonToHome(View view) {
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
     }
 
     // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity

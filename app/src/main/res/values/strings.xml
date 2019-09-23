@@ -10,11 +10,15 @@
     <string name="main_content_desc_meat_icon">Ikon Kategori Daging, Unggas dan Telur</string>
     <string name="main_content_desc_fish_icon">Ikon Kategori Ikan</string>
     <string name="main_content_desc_wheat_icon">Ikon Kategori Beras dan Biji-bijian</string>
+    <string name="main_content_desc_fastfood_icon">Ikon Kategori Makanan Siap Saji</string>
+    <string name="main_content_desc_others_icon">Ikon Kategori Lainnya</string>
 
     <string name="main_title_vegetable_category">Sayur</string>
     <string name="main_title_meat_category">Daging, Unggas\ndan Telur</string>
     <string name="main_title_fish_category">Ikan</string>
     <string name="main_title_wheat_category">Beras dan Biji-bijian</string>
+    <string name="main_title_fastfood_category">Makanan Siap Saji</string>
+    <string name="main_title_others_category">Lainnya</string>
 
     <string name="botnav_title_home">Home</string>
     <string name="botnav_title_cart">Pesanan</string>
@@ -76,5 +80,6 @@
     <string name="content_desc_image_item">Image Item</string>
     <string name="content_desc_remove_imagebutton">Remove Item</string>
     <string name="content_desc_add_imagebutton">Add Item</string>
+
 
 </resources>
