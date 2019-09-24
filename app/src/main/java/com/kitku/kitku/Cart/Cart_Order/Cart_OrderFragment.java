@@ -5,11 +5,10 @@ import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,12 +22,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.kitku.kitku.Checkout.Checkout_SetAddressActivity;
+import com.kitku.kitku.MainActivity;
 import com.kitku.kitku.R;
 
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,17 +45,18 @@ public class Cart_OrderFragment extends Fragment {
     private TextView cartTotalPrice, totalItem;
 
     private Button buttonToCheckout;
+    //private View orderViewPub;
 
     public Cart_OrderFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View orderView = inflater.inflate(R.layout.fragment_cart__order, container, false);
-
+        //orderViewPub = orderView;
         recyclerviewOrderList = orderView.findViewById(R.id.recyclerviewCart_OrderOrderList);
         recyclerviewOrderList.setHasFixedSize(true);
 
@@ -65,11 +65,17 @@ public class Cart_OrderFragment extends Fragment {
         totalItem = orderView.findViewById(R.id.textCart_Order1);
 
         earlyProc();
+        orderView.findViewById(R.id.buttonCart_OrderGoToHome).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.default_home_button();
+            }
+        });
 
         return orderView;
     }
 
-    public void earlyProc() {
+    private void earlyProc() {
         addData();
         showData();
         buttonToCheckout.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +128,7 @@ public class Cart_OrderFragment extends Fragment {
         recyclerviewOrderList.setAdapter(cartOrderListAdapter);
     }
 
-    private List<String> id_barang, jumlah, harga, nama, satuan, pack;
+    private List<String> id_barang, jumlah, harga, nama, pack;//satuan, pack;
     private void addData() {
         new loadData(this).execute();
         /*
@@ -184,15 +190,15 @@ public class Cart_OrderFragment extends Fragment {
                             .ItemListDeserialize(jsonObject.getJSONArray("harga"));
                     mParentActivity.get().nama       = new z_BackendPreProcessing()
                             .ItemListDeserialize(jsonObject.getJSONArray("nama"));
-                    mParentActivity.get().satuan     = new z_BackendPreProcessing()
-                        .ItemListDeserialize(jsonObject.getJSONArray("satuan"));
+                    //mParentActivity.get().satuan     = new z_BackendPreProcessing()
+                    //    .ItemListDeserialize(jsonObject.getJSONArray("satuan"));
                     mParentActivity.get().pack       = new z_BackendPreProcessing()
                             .ItemListDeserialize(jsonObject.getJSONArray("pack"));
                     List<Bitmap> gambar = new ArrayList<>();
                     mParentActivity.get().orderListArrayList = new ArrayList<>();
                     for (int index = 0; index < mParentActivity.get().id_barang.size(); index++) {
                         try {
-                            File folder = mParentActivity.get().getContext().getExternalFilesDir("Images");
+                            File folder = Objects.requireNonNull(mParentActivity.get().getContext()).getExternalFilesDir("Images");
                             assert folder != null;
                             String dirLocation = folder.getAbsolutePath().concat("/");
                             gambar.add(index, new ImageCaching().getImage(dirLocation.concat(
@@ -218,9 +224,9 @@ public class Cart_OrderFragment extends Fragment {
 
         protected void onPostExecute(String result) {
             String totalPriceString = "Rp. " + totalPrice;
+            String totalPesanan = "Total pesanan : ".concat(String.valueOf(totalItem)).concat(" item(s)");
             mParentActivity.get().cartTotalPrice.setText(totalPriceString);
-            mParentActivity.get().totalItem.setText(
-                    "Total pesanan : " + totalItem + " item(s)");
+            mParentActivity.get().totalItem.setText(totalPesanan);
         }
     }
 }

@@ -5,7 +5,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kitku.kitku.Cart.CartFragment;
 import com.kitku.kitku.Home.HomeFragment;
 import com.kitku.kitku.Login.LoginFragment;
-import com.kitku.kitku.User.UserFragment;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -16,6 +15,7 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import androidx.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,7 +31,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    BottomNavigationView bottomnavigationviewMainOption;
+    static BottomNavigationView bottomnavigationviewMainOption;
     boolean goToUserFragment, goToLoginFragment;
 
     @Override
@@ -65,11 +65,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (goToUserFragment) {
             bottomnavigationviewMainOption.setSelectedItemId(R.id.botnav_menu_user);
-            loadFragment(new UserFragment());
+            //loadFragment(new UserFragment());
         }
         if (goToLoginFragment) {
             bottomnavigationviewMainOption.setSelectedItemId(R.id.botnav_menu_user);
-            loadFragment(new LoginFragment());
+            //loadFragment(new LoginFragment());
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR)
@@ -79,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         try {
             dataExpire();
+        } catch (Exception e) { e.printStackTrace(); }
+        try {
+            Bundle bundleMessage = getIntent().getExtras();
+            assert bundleMessage != null;
+            if (bundleMessage.containsKey("goToCart"))
+                ToCart();
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -161,12 +167,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
-        } else {
+        } /*else {
             // Permission has already been granted
-        }
+        }*/
     }
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -183,9 +189,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             // other 'case' lines to check for other
             // permissions this app might request.
         }
-    }
+    }*/
 
-    public void dataExpire() throws Exception {
+    public void dataExpire() {//throws Exception {
         SharedPreferences userData = PreferenceManager.getDefaultSharedPreferences(this);
         long dates = System.currentTimeMillis();
         /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ROOT);
@@ -218,4 +224,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //dates = System.currentTimeMillis();
         //Log.d("date",String.valueOf(dates));
     }
+
+
+    private void ToCart() {
+        bottomnavigationviewMainOption.setSelectedItemId(R.id.botnav_menu_cart);
+    }
+
+    public static void default_home_button() {
+        bottomnavigationviewMainOption.setSelectedItemId(R.id.botnav_menu_home);
+    }
+    /*private static FragmentManager getTheFragmentManager() {
+        return fManager;
+    }*/
 }

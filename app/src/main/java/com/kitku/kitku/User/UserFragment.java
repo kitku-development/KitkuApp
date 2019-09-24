@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import com.kitku.kitku.R;
 import com.kitku.kitku.BackgroundProcess.*;
+import com.kitku.kitku.Login.LoginFragment;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -29,6 +32,10 @@ public class UserFragment extends Fragment {
     private RecyclerView recyclerViewMenu;
     private ArrayList<UserMenuListCardViewDataModel> menuListArrayList = new ArrayList<>();
     private UserMenuListCardViewAdapter userMenuListAdapter;
+    private View menuListView;
+    private static SharedPreferences userData;
+    private static FragmentManager fragmentManager;
+    private static int FragmentLayout;
 
     public UserFragment() {
     }
@@ -37,7 +44,7 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View menuListView = inflater.inflate(R.layout.fragment_user, container, false);
+        menuListView = inflater.inflate(R.layout.fragment_user, container, false);
         recyclerViewMenu = menuListView.findViewById(R.id.recyclerviewUserMenu);
         recyclerViewMenu.setHasFixedSize(true);
 
@@ -45,9 +52,11 @@ public class UserFragment extends Fragment {
         loadingIndicator    = menuListView.findViewById(R.id.loadingIndicator);
         loadingIndicator.setVisibility(View.INVISIBLE);
         //userPicture         = menuListView.findViewById(R.id.circleimageviewUser_UserPhoto);
-        //userMenuLayout      = view.findViewById(R.id.userFragmentLayout);
-        SharedPreferences userData = PreferenceManager.getDefaultSharedPreferences(
+        //userMenuLayout      = view.findViewById(R.id.FragmentLayout);
+        userData = PreferenceManager.getDefaultSharedPreferences(
                 Objects.requireNonNull(getContext()).getApplicationContext());
+        fragmentManager = this.getFragmentManager();
+        FragmentLayout = R.id.frameFragmentContainerLoginGoToUserDetailFragment;
         runAsync();
         sendData.execute(z_BackendPreProcessing.URL_UserData +
                 userData.getString("ID_User", null), null);
@@ -77,10 +86,10 @@ public class UserFragment extends Fragment {
     private void addMenuData() {
         menuListArrayList = new ArrayList<>();
 
-        menuListArrayList.add(new UserMenuListCardViewDataModel("Blog"));
-        menuListArrayList.add(new UserMenuListCardViewDataModel("Syarat dan Ketentuan"));
-        menuListArrayList.add(new UserMenuListCardViewDataModel("FAQ"));
-        menuListArrayList.add(new UserMenuListCardViewDataModel("Logout"));
+        menuListArrayList.add(new UserMenuListCardViewDataModel("Blog", menuListView));
+        menuListArrayList.add(new UserMenuListCardViewDataModel("Syarat dan Ketentuan", menuListView));
+        menuListArrayList.add(new UserMenuListCardViewDataModel("FAQ", menuListView));
+        menuListArrayList.add(new UserMenuListCardViewDataModel("Logout", menuListView));
     }
 
 
@@ -109,6 +118,18 @@ public class UserFragment extends Fragment {
                 } catch (Exception e) { e.printStackTrace(); }
             }
         });
+    }
+
+    static void loggingOut(View menuListView) {
+        SharedPreferences.Editor userDataEdit = userData.edit();
+        userDataEdit.remove("ID_User");
+        userDataEdit.apply();
+        menuListView.setVisibility(View.GONE);
+        //menuListView.setId(View.generateViewId());
+        Fragment LoginFragment = new LoginFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(FragmentLayout, LoginFragment);
+        fragmentTransaction.commit();
     }
 
     /*static class downloadImage extends AsyncTask<String, Void, Bitmap> {

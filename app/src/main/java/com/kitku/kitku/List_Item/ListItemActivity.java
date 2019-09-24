@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.kitku.kitku.BackgroundProcess.ImageCaching;
@@ -178,6 +179,11 @@ public class ListItemActivity extends AppCompatActivity {
                     }*/
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(
+                            ListItemActivity.this,
+                            "Gagal terhubung ke server. Periksa kembali koneksi anda.",
+                            Toast.LENGTH_LONG).
+                            show();
                 }
             }
         });
@@ -214,7 +220,9 @@ public class ListItemActivity extends AppCompatActivity {
                             .getCanonicalPath() + url[2];*/
                     new ImageCaching().putImageWithFullPath(url[2], mIcon11, mParentActivity.get().getBaseContext());
                 }
-            } catch (IOException e) { e.printStackTrace(); }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             return mIcon11;
         }

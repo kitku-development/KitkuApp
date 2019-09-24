@@ -10,11 +10,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
 import androidx.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kitku.kitku.BackgroundProcess.ImageCaching;
 import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
@@ -58,6 +60,7 @@ public class Detail_ItemActivity extends AppCompatActivity {
         }
         runAsync();
         sendData.execute(z_BackendPreProcessing.URL_ProductDetail + id_barang, null);
+        findViewById(R.id.button).setVisibility(View.GONE);
     }
 
     public void buttonBuyItem(View view) {
@@ -76,11 +79,21 @@ public class Detail_ItemActivity extends AppCompatActivity {
         final Dialog dialog_detail_item_buyitem = new Dialog(this);
         dialog_detail_item_buyitem.setContentView(R.layout.dialog_detail_item_buyitem);
 
-        Button buttonDialoDetail_Item_Back = dialog_detail_item_buyitem.findViewById(R.id.buttonDialogDetail_Item_Back);
-        buttonDialoDetail_Item_Back.setOnClickListener(new View.OnClickListener() {
+        Button buttonDialogDetail_Item_Back = dialog_detail_item_buyitem.findViewById(R.id.buttonDialogDetail_Item_Back);
+        buttonDialogDetail_Item_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog_detail_item_buyitem.dismiss();
+            }
+        });
+        Button buttonDialogDetail_Item_ToOrder = dialog_detail_item_buyitem.findViewById(R.id.buttonDialogDetail_Item_ToOrder);
+        buttonDialogDetail_Item_ToOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Detail_ItemActivity.this, MainActivity.class);
+                intent.putExtra("goToCart",true);
+                startActivity(intent);
+                Detail_ItemActivity.this.finish();
             }
         });
 
@@ -101,6 +114,7 @@ public class Detail_ItemActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        this.finish();
 
     }
 
@@ -137,6 +151,11 @@ public class Detail_ItemActivity extends AppCompatActivity {
                     } catch (Exception e) { e.printStackTrace(); }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(
+                            Detail_ItemActivity.this,
+                            "Gagal terhubung ke server. Periksa kembali koneksi anda.",
+                            Toast.LENGTH_LONG).
+                            show();
                 }
             }
         });
@@ -170,7 +189,9 @@ public class Detail_ItemActivity extends AppCompatActivity {
                             .getCanonicalPath() + url[1];*/
                     new ImageCaching().putImageWithFullPath(url[1], mIcon11, mParentActivity.get().getBaseContext());
                 }
-            } catch (IOException e) { e.printStackTrace(); }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return mIcon11;
         }
 
@@ -200,7 +221,7 @@ public class Detail_ItemActivity extends AppCompatActivity {
         teksToolbar.setText(nama_barang);
     }
 
-    public void secretbutton(View v) {
+    public void secretButton(View v) {
         SharedPreferences.Editor edit = PreferenceManager
                 .getDefaultSharedPreferences(this).edit();
         edit.remove("Cart");

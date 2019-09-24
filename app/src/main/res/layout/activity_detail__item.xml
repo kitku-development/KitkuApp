@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:onClick="secretbutton"
+                        android:onClick="secretButton"
                         android:text="Delete" />
 
                 </RelativeLayout>
@@ -176,6 +176,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2.35"
             android:background="@drawable/detail_item_gotohome_image"
+            style="@android:style/ButtonBar"
             android:onClick="buttonToHome"/>
 
         <Button
@@ -188,6 +189,7 @@
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
             android:textSize="14sp"
+            style="@android:style/ButtonBar"
             android:onClick="buttonBuyItem"/>
 
     </LinearLayout>
