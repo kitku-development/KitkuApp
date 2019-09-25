@@ -29,6 +29,8 @@ public class z_BackendPreProcessing {
             URL_UserRegister        = "https://kitku.id/pelanggan/register",
             URL_UserLogin           = "https://kitku.id/pelanggan/login",
             URL_UserData            = "https://kitku.id/pelanggan/data/",
+            URL_UserUploadImg       = "https://kitku.id/pelanggan/picture/update/",
+            URL_UserPicLoc          = "https://kitku.id/pelangganpic/",
             URL_SupplierLogin       = "https://kitku.id/supplier/login",
             URL_SupplierData        = "https://kitku.id/supplier/data/",
             URL_ProductCategory     = "https://kitku.id/produk/kategori/",

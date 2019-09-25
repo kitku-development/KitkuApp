@@ -12,10 +12,6 @@ import java.nio.charset.StandardCharsets;
 import javax.net.ssl.HttpsURLConnection;
 
 public abstract class z_AsyncServerAccess extends AsyncTask<String, Void, String> {
-    /*@Override
-    protected void onPreExecute(){
-        ProgressBar
-    }*/
     @Override
     protected String doInBackground(String...strings) {
         //Log.d("data",strings[0]);
@@ -66,7 +62,7 @@ public abstract class z_AsyncServerAccess extends AsyncTask<String, Void, String
         } catch (Exception e) {return e.getMessage();}
 
         // Parse the response
-        if (HttpResult != HttpURLConnection.HTTP_INTERNAL_ERROR) {
+        if (HttpResult != HttpsURLConnection.HTTP_INTERNAL_ERROR) {
             BufferedReader bufferedReader;
             try {
                 bufferedReader = new BufferedReader(
@@ -97,7 +93,7 @@ public abstract class z_AsyncServerAccess extends AsyncTask<String, Void, String
         void processFinish(String output);
     }
 
-     public AsyncResponse delegate;
+     protected AsyncResponse delegate;
 
     @Override
     protected void onPostExecute(String result) {

@@ -187,7 +187,7 @@ public class Detail_ItemActivity extends AppCompatActivity {
                             .get()
                             .getExternalFilesDir("Images"))
                             .getCanonicalPath() + url[1];*/
-                    new ImageCaching().putImageWithFullPath(url[1], mIcon11, mParentActivity.get().getBaseContext());
+                    new ImageCaching().putImageWithFullPath(url[1], mIcon11, mParentActivity.get().getBaseContext(), "item");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

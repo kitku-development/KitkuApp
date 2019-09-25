@@ -72,20 +72,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             //loadFragment(new LoginFragment());
         }
 
+        // ask permission to utilize caching image
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED) {
             askPermission();
         }
 
+        // delete data if one day old
         try {
             dataExpire();
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) { /*e.printStackTrace();*/ }
+
+        // used to redirect from Detail_Item to Cart
         try {
             Bundle bundleMessage = getIntent().getExtras();
             assert bundleMessage != null;
             if (bundleMessage.containsKey("goToCart"))
                 ToCart();
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) { /*e.printStackTrace();*/ }
     }
 
     /* Method untuk meload Fragment saat aplikasi pertama kali dibuka */
@@ -191,21 +195,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }*/
 
+    // used to delete "SharedPreference of Cart data" and "product image cache"
+    // will be delete automatically if Cart data is a day old already (taken from Last Update)
+    // this procedure only occur when the app opened
     public void dataExpire() {//throws Exception {
         SharedPreferences userData = PreferenceManager.getDefaultSharedPreferences(this);
         long dates = System.currentTimeMillis();
         /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ROOT);
         String date = sdf.format(dates);*/
+        // get User data
         SharedPreferences.Editor userDataEdit = userData.edit();
         long dateStored;
+        // if LastUpdate is exist, get data. else, create LastUpdate
         try { dateStored = userData.getLong("Last Update", 0); }
         catch (Exception e) { e.printStackTrace(); dateStored = 0; }
         //Log.d("date",String.valueOf(dates));
+        // this is a bit mistake, it should directly execute if (dates - dateStored > 86400000)
+        // because we already check LastUpdate above
         if (userData.contains("Last Update")) {
+            // check if LastUpdate is one days old
             // 1 day = 86400 second ; * 1000 msecond
             if (dates - dateStored > 86400000) {
+                // remove Cart and LastUpdate
                 userDataEdit.remove("Last Update");
                 userDataEdit.remove("Cart");
+                // delete all product image cache
                 String dirString = Objects.requireNonNull(getExternalFilesDir("Images")).getAbsolutePath();
                 File dir = new File(dirString);
                 File[] files = dir.listFiles();
@@ -218,6 +232,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
         }
 
+        // create new LastUpdate data
         userDataEdit.putLong("Last Update", dates);
         userDataEdit.apply();
 
@@ -225,11 +240,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //Log.d("date",String.valueOf(dates));
     }
 
-
+    // used to redirect from Detail_Item to Cart
     private void ToCart() {
         bottomnavigationviewMainOption.setSelectedItemId(R.id.botnav_menu_cart);
     }
 
+    // used to redirect from Cart to Home
     public static void default_home_button() {
         bottomnavigationviewMainOption.setSelectedItemId(R.id.botnav_menu_home);
     }

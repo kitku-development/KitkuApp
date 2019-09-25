@@ -70,6 +70,15 @@
             app:civ_border_color="@color/colorPrimary"
             app:civ_border_width="2dp" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_marginStart="14dp"
+            android:layout_alignStart="@id/circleimageviewUser_UserPhoto"
+            android:layout_alignEnd="@id/circleimageviewUser_UserPhoto" />
+
         <TextView
             android:id="@+id/textviewUser_Username"
             android:layout_width="wrap_content"
@@ -79,6 +88,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

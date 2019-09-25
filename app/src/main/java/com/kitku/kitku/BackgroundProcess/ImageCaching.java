@@ -52,60 +52,77 @@ public class ImageCaching {
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }*/
 
-    public boolean putImageWithFullPath(String fullPath, Bitmap theBitmap, Context c) {
-        return !(fullPath == null || theBitmap == null) && saveBitmap(fullPath, theBitmap, c);
+    // parameter
+    // 1. fullPath -> ImageName to save
+    // 2. theBitmap -> the saved bitmap
+    // 3. context -> to access getExternalDirectory()
+    // 4. tag -> to choose whether to save product or userPic ("User" or else)
+    public void putImageWithFullPath(String fullPath, Bitmap theBitmap, Context c, String tag) {
+        if (!(fullPath == null || theBitmap == null)) {
+            saveBitmap(fullPath, theBitmap, c, tag);
+        }
     }
 
-    private boolean saveBitmap(String fullPath, Bitmap bitmap, Context c) {
+    private void saveBitmap(String fullPath, Bitmap bitmap, Context c, String tag) {
         if (fullPath == null || bitmap == null)
-            return false;
+            return;
 
-        boolean fileCreated = false;
-        boolean bitmapCompressed;
-        boolean streamClosed = false;
+        //boolean fileCreated = false;
+        //boolean bitmapCompressed;
+        //boolean streamClosed = false;
 
-        File folder = c.getExternalFilesDir("Images");// + "newfoldername";
+        // Get the directory string
+        File folder;
+        if (tag.equals("User"))
+            folder = c.getExternalFilesDir("UserPic");
+        else
+            folder = c.getExternalFilesDir("Images");
+        // if folder not exist, create one
         if (!folder.exists()) folder.mkdir();
         fullPath = folder.getAbsolutePath().concat("/").concat(fullPath);
 
+        // if image exist, delete it first
         File imageFile = new File(fullPath);
-
-        /*if (!imageFile.getParentFile().exists())
-            imageFile.getParentFile().mkdirs();*/
-
         if (imageFile.exists())
             if (!imageFile.delete())
-                return false;
+                return;
 
         try {
-            fileCreated = imageFile.createNewFile();
-        } catch (IOException e) { e.printStackTrace(); }
+            //fileCreated = imageFile.createNewFile();
+            // create the cache file
+            imageFile.createNewFile();
+        } catch (IOException e) { /*e.printStackTrace();*/ }
 
-        Log.d("location",imageFile.getAbsolutePath());
+        //Log.d("location",imageFile.getAbsolutePath());
 
+        // get bitmap to FileOutputStream, then convert image as PNG (even though
+        // the file would have no extension later)
         FileOutputStream out = null;
         try {
+            // from FileOutputStream, write the bitmap to file
             out = new FileOutputStream(imageFile);
-            bitmapCompressed = bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            //bitmapCompressed = bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            // compress and convert file as PNG type
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
         } catch (Exception e) {
-            e.printStackTrace();
-            bitmapCompressed = false;
+            //e.printStackTrace();
+            //bitmapCompressed = false;
         } finally {
             if (out != null) {
+                // dump all the resource used for FileOutputStream
                 try {
                     out.flush();
                     out.close();
-                    streamClosed = true;
+                    //streamClosed = true;
                 } catch (IOException e) {
                     e.printStackTrace();
-                    streamClosed = false;
+                    //streamClosed = false;
                 }
             }
         }
-
-        return (fileCreated && bitmapCompressed && streamClosed);
     }
 
+    // to get Image if exist as cache
     public Bitmap getImage(String path) {
         //path = c.getExternalFilesDir("Images").getAbsolutePath() + path;
         Bitmap bitmapFromPath = null;
@@ -116,12 +133,13 @@ public class ImageCaching {
             // TODO: handle exception
             e.printStackTrace();
         }
-
         return bitmapFromPath;
     }
 
+    // to check if cache is exist
     public boolean isExist(String path) {
         File imageFile = new File(path);
+        //Log.d("path", path);
         return imageFile.exists();
     }
 

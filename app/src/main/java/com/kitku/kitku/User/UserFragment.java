@@ -1,6 +1,14 @@
 package com.kitku.kitku.User;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,20 +20,27 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-//import android.widget.ImageView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-//import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kitku.kitku.R;
 import com.kitku.kitku.BackgroundProcess.*;
 import com.kitku.kitku.Login.LoginFragment;
 
+import java.io.File;
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static android.app.Activity.RESULT_OK;
 
 public class UserFragment extends Fragment {
 
@@ -33,9 +48,13 @@ public class UserFragment extends Fragment {
     private ArrayList<UserMenuListCardViewDataModel> menuListArrayList = new ArrayList<>();
     private UserMenuListCardViewAdapter userMenuListAdapter;
     private View menuListView;
+    private ImageView profilePic;
     private static SharedPreferences userData;
     private static FragmentManager fragmentManager;
     private static int FragmentLayout;
+    private static int RESULT_LOAD_IMAGE = 1;
+    private ProgressBar progressBar;
+    //private ImageView profilePic;
 
     public UserFragment() {
     }
@@ -50,19 +69,41 @@ public class UserFragment extends Fragment {
 
         usernameText        = menuListView.findViewById(R.id.textviewUser_Username);
         loadingIndicator    = menuListView.findViewById(R.id.loadingIndicator);
+        progressBar         = menuListView.findViewById(R.id.progressBar);
+        profilePic          = menuListView.findViewById(R.id.circleimageviewUser_UserPhoto);
         loadingIndicator.setVisibility(View.INVISIBLE);
         //userPicture         = menuListView.findViewById(R.id.circleimageviewUser_UserPhoto);
         //userMenuLayout      = view.findViewById(R.id.FragmentLayout);
+
+        // get userdata from app preferencemanager
         userData = PreferenceManager.getDefaultSharedPreferences(
                 Objects.requireNonNull(getContext()).getApplicationContext());
         fragmentManager = this.getFragmentManager();
         FragmentLayout = R.id.frameFragmentContainerLoginGoToUserDetailFragment;
+
+        // load data and image from server (if image cache exist, load it from memory instead)
         runAsync();
         sendData.execute(z_BackendPreProcessing.URL_UserData +
                 userData.getString("ID_User", null), null);
         loadingIndicator.setVisibility(View.VISIBLE);
+        profilePic.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        new downloadImage(UserFragment.this).execute(
+                z_BackendPreProcessing.URL_UserPicLoc,
+                userData.getString("ID_User", null));
+
+        // show menu for user
         addMenuData();
         showMenuData();
+
+        // set onclick of User Image to upload image and replace the existing one
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
 
         return menuListView;
 
@@ -100,7 +141,7 @@ public class UserFragment extends Fragment {
     //private RelativeLayout userMenuLayout;
 
     // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
-    static class backgroundTask extends z_AsyncServerAccess {
+    public static class backgroundTask extends z_AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
     }
 
@@ -120,6 +161,7 @@ public class UserFragment extends Fragment {
         });
     }
 
+    // used to logout user and redirect to login fragment
     static void loggingOut(View menuListView) {
         SharedPreferences.Editor userDataEdit = userData.edit();
         userDataEdit.remove("ID_User");
@@ -132,9 +174,104 @@ public class UserFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    /*static class downloadImage extends AsyncTask<String, Void, Bitmap> {
+    // declare for uploading image
+    public static class backgroundTask2 extends ImageUpload {
+        backgroundTask2(AsyncResponse delegate) { this.delegate = delegate; }
+    }
+
+    // this procedure execute after user chose the image from gallery
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn={MediaStore.Images.Media.DATA};
+
+            assert selectedImage != null;
+            Cursor cursor = Objects.requireNonNull(
+                    getContext()).getContentResolver().query(
+                            selectedImage, filePathColumn, null, null, null);
+            assert cursor != null;
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            // check for image chosen. if exceed 500kb, deny the procedure
+            File file = new File(picturePath);
+            long fileSize = file.length() / 1024;
+            if (fileSize < 500) {
+                // declare async for uploading image
+                backgroundTask2 sendPicture = new backgroundTask2(new backgroundTask2.AsyncResponse() {
+                    @Override
+                    public void processFinish(String output) {
+                        //loadingIndicator.setVisibility(View.GONE);
+                        //progressDialog.dismiss();
+                        if (!output.contains("Failed")) {
+                            try {
+                                Log.d("message", output);
+                                //new downloadImage(UserFragment.this).execute();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            // delete existing picture cache
+                            String dirString = Objects.requireNonNull(
+                                    UserFragment.this.getActivity()
+                                    .getExternalFilesDir("UserPic"))
+                                    .getAbsolutePath()
+                                    .concat("/")
+                                    .concat(Objects.requireNonNull(
+                                            userData.getString("ID_User", null)));
+                            File dir = new File(dirString);
+                            dir.delete();
+
+                            // download new image from server
+                            new downloadImage(UserFragment.this).execute(
+                                    z_BackendPreProcessing.URL_UserPicLoc,
+                                    userData.getString("ID_User", null));
+                        } else
+                            // show warning
+                            Toast.makeText(
+                                    UserFragment.this.getContext(),
+                                    "Upload gambar gagal. Periksa kembali koneksi anda.",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                    }
+                });
+            //};
+                //Log.d("url",z_BackendPreProcessing.URL_UserUploadImg + userData.getString("ID_User", null));
+                //Log.d("img", jsonString.toString());
+                //loadingIndicator.setVisibility(View.VISIBLE);
+                //progressDialog.show();
+                //top.setLayoutParams();
+                profilePic.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+                // upload image
+                sendPicture.execute(z_BackendPreProcessing.URL_UserUploadImg +
+                        userData.getString("ID_User", null), picturePath);
+            }
+            else {
+                // error message if image exceed 500kb
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Error")
+                        .setMessage("Max file gambar adalah 500kb")
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            }
+        }
+    }
+
+    // declare async task to download image
+    static class downloadImage extends AsyncTask<String, Void, Bitmap> {
         private WeakReference<UserFragment> mParentActivity;
-        //int indexnum;
 
         downloadImage(UserFragment parentActivity) {
             mParentActivity = new WeakReference<>(parentActivity);
@@ -145,11 +282,25 @@ public class UserFragment extends Fragment {
             //indexnum = Integer.parseInt(url[1]);
             Bitmap mIcon11 = null;
             try {
-                InputStream in = new java.net.URL("https://kitku.id/productpic/SAYUR.jpeg")
-                        .openStream();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inMutable = true;
-                mIcon11 = BitmapFactory.decodeStream(in,null,options);
+                File folder = Objects.requireNonNull(
+                        mParentActivity.get().getActivity()).getExternalFilesDir("UserPic");
+                if (!folder.exists()) folder.mkdir();
+                String dirLocation = folder.getAbsolutePath().concat("/");
+                // check if image is cached
+                if (new ImageCaching().isExist(dirLocation.concat(url[1])))
+                    mIcon11 = new ImageCaching().getImage(dirLocation.concat(url[1]));
+                else {
+                    // if not, download it
+                    InputStream in = new java.net.URL(url[0].concat(url[1]))
+                            .openStream();
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inMutable = true;
+                    mIcon11 = BitmapFactory.decodeStream(in, null, options);
+                    // save image as cache
+                    new ImageCaching().putImageWithFullPath(url[1], mIcon11,
+                            Objects.requireNonNull(
+                                    mParentActivity.get().getActivity()).getBaseContext(),"User");
+                }
             } catch (Exception e) { e.printStackTrace(); }
 
             return mIcon11;
@@ -158,10 +309,16 @@ public class UserFragment extends Fragment {
         @Override
         protected void onPostExecute(Bitmap result) {
             final UserFragment parentActivity = mParentActivity.get();
-            parentActivity.userPicture.setImageBitmap(result);
+            if (result != null) {
+                // set and show image
+                parentActivity.profilePic.setImageBitmap(result);
+            }
+            parentActivity.progressBar.setVisibility(View.GONE);
+            parentActivity.profilePic.setVisibility(View.VISIBLE);
         }
     }
 
+    /*
     // Menu user disetting disini
     private void addUserMenu(View v, LayoutInflater inflater, ViewGroup container) {
         String[] menuList   = new String[] {"Blog", "Syarat dan Ketentuan", "FAQ", "Logout"};
