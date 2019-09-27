@@ -11,46 +11,6 @@ import java.io.IOException;
 public class ImageCaching {
     // code reference : https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo/blob/master/TinyDB.java
 
-    //private String DEFAULT_APP_IMAGEDATA_DIRECTORY;
-    //private String lastImagePath = "";
-
-    /*public String putImage(String theFolder, String theImageName, Bitmap theBitmap) {
-        if (theFolder == null || theImageName == null || theBitmap == null)
-            return null;
-
-        this.DEFAULT_APP_IMAGEDATA_DIRECTORY = theFolder;
-        String mFullPath = setupFullPath(theImageName);
-
-        if (!mFullPath.equals("")) {
-            lastImagePath = mFullPath;
-            saveBitmap(mFullPath, theBitmap);
-        }
-        return mFullPath;
-    }
-
-    private String setupFullPath(String imageName) {
-        File mFolder = new File(Environment.getExternalStorageDirectory(), DEFAULT_APP_IMAGEDATA_DIRECTORY);
-
-        if (isExternalStorageReadable() && isExternalStorageWritable() && !mFolder.exists()) {
-            if (!mFolder.mkdirs()) {
-                Log.e("ERROR", "Failed to setup folder");
-                return "";
-            }
-        }
-        return mFolder.getPath() + '/' + imageName;
-    }
-
-    private static boolean isExternalStorageWritable() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
-
-    private static boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-
-        return Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
-    }*/
-
     // parameter
     // 1. fullPath -> ImageName to save
     // 2. theBitmap -> the saved bitmap
@@ -142,9 +102,4 @@ public class ImageCaching {
         //Log.d("path", path);
         return imageFile.exists();
     }
-
-
-    /*public String getSavedImagePath() {
-        return lastImagePath;
-    }*/
 }
