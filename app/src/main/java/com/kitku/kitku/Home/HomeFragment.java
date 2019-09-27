@@ -106,16 +106,7 @@ public class HomeFragment extends Fragment {
                 /*Intent intent = new Intent(getActivity(), ListItemActivity.class);
                 intent.putExtra("titletextOthers", "Lainnya");
                 startActivity(intent);*/
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Error")
-                        .setMessage("Max file gambar adalah 500kb")
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                showComingSoonMessage();
             }
         });
 
