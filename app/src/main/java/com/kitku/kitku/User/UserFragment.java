@@ -219,7 +219,7 @@ public class UserFragment extends Fragment {
 
                             // delete existing picture cache
                             String dirString = Objects.requireNonNull(
-                                    UserFragment.this.getActivity()
+                                    Objects.requireNonNull(UserFragment.this.getActivity())
                                     .getExternalFilesDir("UserPic"))
                                     .getAbsolutePath()
                                     .concat("/")
@@ -284,6 +284,7 @@ public class UserFragment extends Fragment {
             try {
                 File folder = Objects.requireNonNull(
                         mParentActivity.get().getActivity()).getExternalFilesDir("UserPic");
+                assert folder != null;
                 if (!folder.exists()) folder.mkdir();
                 String dirLocation = folder.getAbsolutePath().concat("/");
                 // check if image is cached

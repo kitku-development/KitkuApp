@@ -1,9 +1,9 @@
 package com.kitku.kitku.User;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kitku.kitku.MainActivity;
 import com.kitku.kitku.User.UserMenu.BlogActivity;
 import com.kitku.kitku.User.UserMenu.FAQActivity;
 import com.kitku.kitku.R;
@@ -64,6 +59,7 @@ public class UserMenuListCardViewAdapter extends RecyclerView.Adapter<UserMenuLi
                     v.getContext().startActivity(intent);
                 } else if (menuListViewHolder.getAdapterPosition() == 3) {
                     // Event yang akan terjadi jika User menekan tombol Logout berada di sini
+                    loggingOut(v.getContext(), menuListViewHolder.listView);
                 }
             }
         });
@@ -85,25 +81,29 @@ public class UserMenuListCardViewAdapter extends RecyclerView.Adapter<UserMenuLi
                     v.getContext().startActivity(intent);
                 } else if (menuListViewHolder.getAdapterPosition() == 3) {
                     // Event yang akan terjadi jika User menekan tombol Logout berada di sini
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle("Logout")
-                            .setMessage("Apakah anda ingin logout?")
-                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    UserFragment.loggingOut(menuListViewHolder.listView);
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            })
-                            .show();
+                    loggingOut(v.getContext(), menuListViewHolder.listView);
                 }
             }
         });
+    }
+
+    private void loggingOut(Context c, final View listView) {
+        new AlertDialog.Builder(c)
+                .setTitle("Logout")
+                .setMessage("Apakah anda ingin logout?")
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        UserFragment.loggingOut(listView);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .show();
     }
                                     /*if (!menuText.equals("Logout")) dialogInterface.dismiss();
                                     else {

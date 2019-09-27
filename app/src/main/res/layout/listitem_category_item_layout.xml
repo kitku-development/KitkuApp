@@ -22,7 +22,7 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:contentDescription="@string/listitem_content_desc_image"
-            tools:src="@drawable/image_sayur_bawangbombay"
+            tools:src="@drawable/image_sayur_bawangbombay_compressed"
             android:scaleType="fitXY"/>
 
         <TextView

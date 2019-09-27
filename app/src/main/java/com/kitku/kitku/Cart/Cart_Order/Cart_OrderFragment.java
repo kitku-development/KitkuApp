@@ -39,7 +39,7 @@ import java.util.Objects;
  */
 public class Cart_OrderFragment extends Fragment {
 
-    private RecyclerView recyclerviewOrderList;
+    private RecyclerView recyclerViewOrderList;
     private Cart_Order_OrderListCardViewAdapter cartOrderListAdapter;
     private ArrayList<Cart_Order_OrderListCardViewDataModel> orderListArrayList = new ArrayList<>();
     private TextView cartTotalPrice, totalItem;
@@ -57,14 +57,14 @@ public class Cart_OrderFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         final View orderView = inflater.inflate(R.layout.fragment_cart__order, container, false);
         //orderViewPub = orderView;
-        recyclerviewOrderList = orderView.findViewById(R.id.recyclerviewCart_OrderOrderList);
-        recyclerviewOrderList.setHasFixedSize(true);
+        recyclerViewOrderList = orderView.findViewById(R.id.recyclerviewCart_OrderOrderList);
+        recyclerViewOrderList.setHasFixedSize(true);
 
         buttonToCheckout = orderView.findViewById(R.id.buttonCart_OrderGoToCheckout);
         cartTotalPrice = orderView.findViewById(R.id.cartTotalPrice);
         totalItem = orderView.findViewById(R.id.textCart_Order1);
 
-        earlyProc();
+        earlyProcedure();
         orderView.findViewById(R.id.buttonCart_OrderGoToHome).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +75,7 @@ public class Cart_OrderFragment extends Fragment {
         return orderView;
     }
 
-    private void earlyProc() {
+    private void earlyProcedure() {
         addData();
         showData();
         buttonToCheckout.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +95,7 @@ public class Cart_OrderFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        earlyProc();
+        earlyProcedure();
     }
 
     /*@Override
@@ -123,9 +123,9 @@ public class Cart_OrderFragment extends Fragment {
     }*/
 
     private void showData() {
-        recyclerviewOrderList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        recyclerViewOrderList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         cartOrderListAdapter = new Cart_Order_OrderListCardViewAdapter(orderListArrayList);
-        recyclerviewOrderList.setAdapter(cartOrderListAdapter);
+        recyclerViewOrderList.setAdapter(cartOrderListAdapter);
     }
 
     private List<String> id_barang, jumlah, harga, nama, pack;//satuan, pack;

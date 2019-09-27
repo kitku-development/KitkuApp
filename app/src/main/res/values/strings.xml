@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Kitku</string>
+    <string name="GOOGLE_API_KEY">AIzaSyC1iDEzMJVFxIhUz6locIHyt2IPV06mxtA</string>
 
     <string name="main_banner_slider_image">Banner Slider Kitku</string>
 
@@ -80,6 +81,8 @@
     <string name="content_desc_image_item">Image Item</string>
     <string name="content_desc_remove_imagebutton">Remove Item</string>
     <string name="content_desc_add_imagebutton">Add Item</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_cart__map_">Map</string>
 
 
 </resources>

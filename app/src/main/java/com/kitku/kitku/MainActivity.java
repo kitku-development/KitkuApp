@@ -73,10 +73,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
         // ask permission to utilize caching image
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR)
-                != PackageManager.PERMISSION_GRANTED) {
+        //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        //        != PackageManager.PERMISSION_GRANTED) {
             askPermission();
-        }
+        //}
 
         // delete data if one day old
         try {

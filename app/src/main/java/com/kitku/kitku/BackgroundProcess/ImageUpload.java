@@ -115,7 +115,7 @@ public abstract class ImageUpload extends AsyncTask<String, Void, String> {
         void processFinish(String output);
     }
 
-    public AsyncResponse delegate;
+    protected AsyncResponse delegate;
 
     @Override
     protected void onPostExecute(String result) {

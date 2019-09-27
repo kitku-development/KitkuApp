@@ -16,11 +16,11 @@ public class UserMenuListCardViewDataModel {
         return text_name_list_menu_item;
     }
 
-    public void setText_name_list_menu_item(String text_name_list_menu_item) {
+    /*public void setText_name_list_menu_item(String text_name_list_menu_item) {
         this.text_name_list_menu_item = text_name_list_menu_item;
-    }
+    }*/
 
-    public View getListView() {
+    View getListView() {
         return listView;
     }
 }

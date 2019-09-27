@@ -63,34 +63,34 @@ public class Cart_OnProgressFragment extends Fragment {
         progressListArrayList = new ArrayList<>();
 
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengemasan"));
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengiriman"));
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengemasan"));
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengiriman"));
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengemasan"));
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengiriman"));
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengemasan"));
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengiriman"));
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengemasan"));
         progressListArrayList.add(new Cart_OnProgress_OrderProgressCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sedang dalam proses pengiriman"));
 
     }

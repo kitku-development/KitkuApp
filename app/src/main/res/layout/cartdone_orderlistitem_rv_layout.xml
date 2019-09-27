@@ -27,7 +27,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/content_desc_image_item"
                     android:scaleType="fitXY"
-                    android:src="@drawable/image_sayur_bawangbombay" />
+                    android:src="@drawable/image_sayur_bawangbombay_compressed" />
             </androidx.cardview.widget.CardView>
 
             <TextView

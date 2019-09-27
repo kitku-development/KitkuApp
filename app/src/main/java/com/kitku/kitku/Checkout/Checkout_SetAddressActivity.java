@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.kitku.kitku.Cart.Cart_Map.Cart_Map_Activity;
 import com.kitku.kitku.Checkout.SpinnerAdapter.Checkout_SetAdress_SpinnerAdapter;
 import com.kitku.kitku.R;
 
@@ -100,6 +101,13 @@ public class Checkout_SetAddressActivity extends AppCompatActivity {
         spinnerSetDistrict.setAdapter(spinnerAdapterDistrict);
         spinnerSetSubDistrict.setAdapter(spinnerAdapterSubDistrict);
 
+        findViewById(R.id.buttonCheckout_SetAddressSetOnGMap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Checkout_SetAddressActivity.this, Cart_Map_Activity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void saveAddress(View view) {

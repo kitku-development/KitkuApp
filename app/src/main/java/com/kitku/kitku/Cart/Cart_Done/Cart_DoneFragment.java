@@ -63,34 +63,34 @@ public class Cart_DoneFragment extends Fragment {
         doneListArrayList = new ArrayList<>();
 
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
         doneListArrayList.add(new Cart_Done_OrderDoneCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
+                (R.drawable.image_sayur_bawangbombay_compressed, "Bawang Bombay",
                         "Sudah diterima"));
 
     }

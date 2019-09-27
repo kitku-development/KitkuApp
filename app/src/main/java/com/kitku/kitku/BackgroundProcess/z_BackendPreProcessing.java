@@ -38,7 +38,8 @@ public class z_BackendPreProcessing {
             URL_ProductSupplier     = "https://kitku.id/produk/supplier/",
             URL_InvoiceDetail       = "https://kitku.id/invoice/detail/",
             URL_InvoiceListUser     = "https://kitku.id/invoice/pelanggan/",
-            URL_InvoiceInsert       = "https://kitku.id/invoice/add";
+            URL_InvoiceInsert       = "https://kitku.id/invoice/add",
+            URL_GetDistance         = "https://maps.googleapis.com/maps/api/directions/";
 
     // convert JSON supaya bisa diakses
     // Example JSON
@@ -407,4 +408,35 @@ public class z_BackendPreProcessing {
 
         return array.toString();
     }*/
+
+    // example {
+    //   ..
+    //   "routes": [
+    //      {
+    //         ..
+    //         "legs": [
+    //            {
+    //               "distance": {
+    //                  "text": "1.0 km",
+    //                  "value": 1039
+    //               },
+    //               "duration": {
+    //                  "text": "4 mins",
+    //                  "value": 228
+    //               },
+    //               ..
+    //            }
+    //         ],
+    //         ..
+    //      }
+    //   ],
+    //   "status": "OK"
+    //}
+    public void readDistance(String raw) throws Exception {
+        JSONObject routes = new JSONObject(raw);
+        Log.d("routes", routes.toString());
+        JSONArray legs = new JSONArray(routes);
+        Log.d("legs", legs.getString(0));
+        //JSONObject distance = new JSONObject(legs.getJSONObject(0).getString())
+    }
 }
