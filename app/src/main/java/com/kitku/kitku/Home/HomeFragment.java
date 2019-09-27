@@ -1,5 +1,7 @@
 package com.kitku.kitku.Home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -92,17 +94,28 @@ public class HomeFragment extends Fragment {
         materialcardviewFastFoodButtonMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ListItemActivity.class);
+                /*Intent intent = new Intent(getActivity(), ListItemActivity.class);
                 intent.putExtra("titletextFastFood", "Makanan Siap Saji");
-                startActivity(intent);
+                startActivity(intent);*/
+                showComingSoonMessage();
             }
         });
         materialcardviewOthersButtonMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ListItemActivity.class);
+                /*Intent intent = new Intent(getActivity(), ListItemActivity.class);
                 intent.putExtra("titletextOthers", "Lainnya");
-                startActivity(intent);
+                startActivity(intent);*/
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Error")
+                        .setMessage("Max file gambar adalah 500kb")
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -134,5 +147,16 @@ public class HomeFragment extends Fragment {
         }, 500, 2500);
     }
 
-
+    private void showComingSoonMessage() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Pesan")
+                .setMessage("Coming Soon!")
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 }
