@@ -392,7 +392,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        android:onClick="saveAddress"
+        android:onClick="setButtonSaveAddress"
         android:text="@string/checkout_set_address_button_title_save_address"
         android:textColor="@color/colorWhite"
         android:textSize="16sp"

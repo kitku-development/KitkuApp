@@ -11,15 +11,17 @@ public class ListItemCategoryCardViewDataModel {
     private String text_price_category_item;
     private String text_pack_category_item;
     private String id_barang;
+    private int jumlah;
 
     /* Constructor untuk Data Model yang akan dipakai pada ListItem */
 
-    ListItemCategoryCardViewDataModel(Bitmap image_category_item, String text_name_category_item, String text_price_category_item, String text_pack_category_item, String id) {
+    ListItemCategoryCardViewDataModel(Bitmap image_category_item, String text_name_category_item, String text_price_category_item, String text_pack_category_item, String id, int jumlah) {
         this.image_category_item = image_category_item;
         this.text_name_category_item = text_name_category_item;
         this.text_price_category_item = text_price_category_item;
         this.text_pack_category_item = text_pack_category_item;
         this.id_barang = id;
+        this.jumlah = jumlah;
     }
 
     Bitmap getImage_category_item() {
@@ -39,6 +41,8 @@ public class ListItemCategoryCardViewDataModel {
     }
 
     String getId_barang() { return id_barang; }
+
+    int getJumlah() { return jumlah; }
 
     public void setImage_category_item(Bitmap image_category_item) {
         this.image_category_item = image_category_item;

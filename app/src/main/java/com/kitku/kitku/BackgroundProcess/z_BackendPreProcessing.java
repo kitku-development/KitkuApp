@@ -30,6 +30,7 @@ public class z_BackendPreProcessing {
             URL_UserLogin           = "https://kitku.id/pelanggan/login",
             URL_UserData            = "https://kitku.id/pelanggan/data/",
             URL_UserUploadImg       = "https://kitku.id/pelanggan/picture/update/",
+            URL_UserUpdate          = "https://kitku.id/pelanggan/update/",
             URL_UserPicLoc          = "https://kitku.id/pelangganpic/",
             URL_SupplierLogin       = "https://kitku.id/supplier/login",
             URL_SupplierData        = "https://kitku.id/supplier/data/",
@@ -438,5 +439,14 @@ public class z_BackendPreProcessing {
         JSONArray legs = new JSONArray(routes);
         Log.d("legs", legs.getString(0));
         //JSONObject distance = new JSONObject(legs.getJSONObject(0).getString())
+    }
+
+    public String updateUserInfo(String nama, String alamat, String kontak) throws Exception{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("nama", nama);
+        jsonObject.put("alamat", alamat);
+        jsonObject.put("kontak", kontak);
+
+        return jsonObject.toString();
     }
 }

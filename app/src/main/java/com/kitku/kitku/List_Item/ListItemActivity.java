@@ -1,5 +1,6 @@
 package com.kitku.kitku.List_Item;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -31,6 +32,7 @@ public class ListItemActivity extends AppCompatActivity {
     private ArrayList<ListItemCategoryCardViewDataModel> listItemCategoryCardViewDataModelArrayList = new ArrayList<>();
     String txtTitle;
     private ShimmerFrameLayout shimmerframeListItemSkeletonView;
+    //private static Context ListItemActivityContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class ListItemActivity extends AppCompatActivity {
         TextView textviewListItemCategoryName = findViewById(R.id.textviewListItemCategoryName);
         recyclerViewListItemCategoryItem = findViewById(R.id.recyclerviewListItemCategoryItem);
         recyclerViewListItemCategoryItem.setHasFixedSize(true);
+        //ListItemActivityContext = getBaseContext();
 
         // Variabel untuk Skeleton View
         shimmerframeListItemSkeletonView = findViewById(R.id.shimmerlayoutListItemSkeletonView);
@@ -116,7 +119,8 @@ public class ListItemActivity extends AppCompatActivity {
                 String.valueOf(nama_barang[index]),
                 String.valueOf(harga[index]),
                 "/ pack",
-                id_barang[index]
+                id_barang[index],
+                Integer.valueOf(jumlah[index])
         ));
 
         counterselesai++;
@@ -252,4 +256,8 @@ public class ListItemActivity extends AppCompatActivity {
     public void setbackButton(View v) {
         this.finish();
     }
+
+    /*static Context getContext() {
+        return ListItemActivityContext;
+    }*/
 }

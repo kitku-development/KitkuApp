@@ -1,5 +1,7 @@
 package com.kitku.kitku.List_Item;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +45,13 @@ public class ListItemCategoryCardViewAdapter extends RecyclerView.Adapter<ListIt
         listItemCategoryCardViewViewHolder.textpriceCategoryItem.setText(listItemCategoryCardViewDataModels.get(position).getText_price_category_item());
         listItemCategoryCardViewViewHolder.textpackCategoryItem.setText(listItemCategoryCardViewDataModels.get(position).getText_pack_category_item());
         listItemCategoryCardViewViewHolder.id_barang = listItemCategoryCardViewDataModels.get(position).getId_barang();
+        listItemCategoryCardViewViewHolder.jumlah = listItemCategoryCardViewDataModels.get(position).getJumlah();
+        float transparency = (float) 0.5;
+        if (listItemCategoryCardViewViewHolder.jumlah < 1) {
+            listItemCategoryCardViewViewHolder.imageCategoryItem.setAlpha(transparency);
+            listItemCategoryCardViewViewHolder.itemView.setOnClickListener(listItemCategoryCardViewViewHolder.StockEmpty_OnClick());
+        }
+        else listItemCategoryCardViewViewHolder.itemView.setOnClickListener(listItemCategoryCardViewViewHolder.StockExist_OnClick());
     }
 
     @Override
@@ -57,24 +66,59 @@ public class ListItemCategoryCardViewAdapter extends RecyclerView.Adapter<ListIt
         ImageView imageCategoryItem;
         TextView textnameCategoryItem, textpriceCategoryItem, textpackCategoryItem;
         String id_barang;
+        int jumlah;
+        View itemView;
 
         ListItemCategoryCardViewViewHolder(@NonNull final View itemView) {
             super(itemView);
-
+            this.itemView = itemView;
             imageCategoryItem = itemView.findViewById(R.id.imageCategoryItem);
             textnameCategoryItem = itemView.findViewById(R.id.textnameCategoryItem);
             textpriceCategoryItem = itemView.findViewById(R.id.textpriceCategoryItem);
             textpackCategoryItem = itemView.findViewById(R.id.textpackCategoryItem);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            /*itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(itemView.getContext(), Detail_ItemActivity.class);
+                        intent.putExtra("id", id_barang);
+                        itemView.getContext().startActivity(intent);
+                    }
+                });*/
+        }
+
+        View.OnClickListener StockExist_OnClick() {
+            //itemView.setOnClickListener(
+                return new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(itemView.getContext(), Detail_ItemActivity.class);
+                        intent.putExtra("id", id_barang);
+                        itemView.getContext().startActivity(intent);
+
+                    }
+                };
+            //});
+        }
+
+        View.OnClickListener StockEmpty_OnClick() {
+            //itemView.setOnClickListener(
+            return new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(itemView.getContext(), Detail_ItemActivity.class);
-                    intent.putExtra("id", id_barang);
-                    itemView.getContext().startActivity(intent);
+                    new AlertDialog.Builder(imageCategoryItem.getContext())
+                            .setTitle("Informasi")
+                            .setMessage("Stok barang kosong! \nSilakan periksa kembali nanti.")
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
                 }
-            });
 
+            };
         }
     }
 }
