@@ -5,21 +5,25 @@ import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.kitku.kitku.BackgroundProcess.ImageCaching;
 import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
 import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
 import com.kitku.kitku.Cart.Cart_Map.Cart_Map_Activity;
 import com.kitku.kitku.Checkout.SpinnerAdapter.Checkout_SetAdress_SpinnerAdapter;
 import com.kitku.kitku.R;
 
+import java.io.File;
 import java.util.Objects;
 
 public class Checkout_SetAddressActivity extends AppCompatActivity {
@@ -102,6 +106,63 @@ public class Checkout_SetAddressActivity extends AppCompatActivity {
         spinnerSetDistrict.setAdapter(spinnerAdapterDistrict);
         spinnerSetSubDistrict.setAdapter(spinnerAdapterSubDistrict);
 
+        setPredefinedSettings();
+
+        spinnerSetAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(getApplicationContext(),
+                        "Set Alamat Pengiriman : Alamat" + setAddressText[position],Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        findViewById(R.id.buttonCheckout_SetAddressSetOnGMap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Checkout_SetAddressActivity.this, Cart_Map_Activity.class);
+                startActivity(intent);
+                //Checkout_SetAddressActivity.this.finish();
+            }
+        });
+    }
+
+    public void onResume() {
+        super.onResume();
+        Log.d("info","resumed");
+        setPredefinedSettings();
+    }
+
+    public void onRestart() {
+        super.onRestart();
+        Log.d("info","restarted");
+        setPredefinedSettings();
+    }
+
+    /*public void saveAddress(View view) {
+        Intent intent = new Intent(this, CheckoutActivity.class);
+        startActivity(intent);
+    }*/
+
+    /*public void warningBackgroundColor() {
+        spinnerSetProvince.setBackgroundColor(Color.RED);
+        spinnerSetCity.setBackgroundColor(Color.RED);
+        spinnerSetDistrict.setBackgroundColor(Color.RED);
+        spinnerSetSubDistrict.setBackgroundColor(Color.RED);
+    }
+
+    public void normalizeBackgroundColor(View v) {
+        spinnerSetProvince.setBackgroundColor(Color.WHITE);
+        spinnerSetCity.setBackgroundColor(Color.WHITE);
+        spinnerSetDistrict.setBackgroundColor(Color.WHITE);
+        spinnerSetSubDistrict.setBackgroundColor(Color.WHITE);
+    }*/
+
+    private void setPredefinedSettings() {
         // set pre-defined setting
         userData = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         try {
@@ -167,46 +228,16 @@ public class Checkout_SetAddressActivity extends AppCompatActivity {
             }
         } catch (Exception e) { /* */ }
 
-        spinnerSetAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getApplicationContext(),
-                        "Set Alamat Pengiriman : Alamat" + setAddressText[position],Toast.LENGTH_SHORT).show();
+        try {
+            String locationImagePath = this.getExternalFilesDir("Location").toString().concat("/lokasi");
+            if (new ImageCaching().isExist(locationImagePath)) {
+                Bitmap imageBitmap = new ImageCaching().getImage(locationImagePath);
+                ImageView locationView = findViewById(R.id.locationView);
+                locationView.setImageBitmap(imageBitmap);
+                locationView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        findViewById(R.id.buttonCheckout_SetAddressSetOnGMap).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Checkout_SetAddressActivity.this, Cart_Map_Activity.class);
-                startActivity(intent);
-            }
-        });
+        } catch (Exception e) { /* */ }
     }
-
-    /*public void saveAddress(View view) {
-        Intent intent = new Intent(this, CheckoutActivity.class);
-        startActivity(intent);
-    }*/
-
-    /*public void warningBackgroundColor() {
-        spinnerSetProvince.setBackgroundColor(Color.RED);
-        spinnerSetCity.setBackgroundColor(Color.RED);
-        spinnerSetDistrict.setBackgroundColor(Color.RED);
-        spinnerSetSubDistrict.setBackgroundColor(Color.RED);
-    }
-
-    public void normalizeBackgroundColor(View v) {
-        spinnerSetProvince.setBackgroundColor(Color.WHITE);
-        spinnerSetCity.setBackgroundColor(Color.WHITE);
-        spinnerSetDistrict.setBackgroundColor(Color.WHITE);
-        spinnerSetSubDistrict.setBackgroundColor(Color.WHITE);
-    }*/
 
     // button simpan alamat
     public void setButtonSaveAddress(View v) {

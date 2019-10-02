@@ -2,12 +2,14 @@ package com.kitku.kitku.Cart.Cart_Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -26,17 +29,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.kitku.kitku.BackgroundProcess.ImageCaching;
 import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
 import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
+import com.kitku.kitku.Checkout.CheckoutActivity;
+import com.kitku.kitku.Checkout.Checkout_SetAddressActivity;
 import com.kitku.kitku.R;
 
 import java.util.Objects;
 
-public class Cart_Map_Activity extends AppCompatActivity implements OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationSource.OnLocationChangedListener, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
+    MapView mapView;
     // set storage location
     LatLng storageLocation = new LatLng(-0.9238126,100.3645052);
 
@@ -49,7 +56,7 @@ public class Cart_Map_Activity extends AppCompatActivity implements OnMapReadyCa
         askPermission();
 
         // declare map
-        MapView mapView = findViewById(R.id.mapView);
+        mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.onResume(); // needed to get the map to display immediately
 
@@ -65,6 +72,36 @@ public class Cart_Map_Activity extends AppCompatActivity implements OnMapReadyCa
                 Cart_Map_Activity.this.finish();
             }
         });
+        findViewById(R.id.buttonGetCurrentLocation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cart_Map_Activity.this.onConnected(null);
+            }
+        });
+        findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cart_Map_Activity.this.buttonSaveLocation(v);
+            }
+        });
+    }
+
+    public void buttonSaveLocation(View v) {
+        mMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
+            @Override
+            public void onSnapshotReady(Bitmap bitmap) {
+                new ImageCaching().putImageWithFullPath("lokasi", bitmap,
+                        getApplicationContext(),"Location");
+            }
+        });
+        //startActivity(new Intent(this, Checkout_SetAddressActivity.class));
+        this.finish();
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+        //startActivity(new Intent(this, Checkout_SetAddressActivity.class));
+        this.finish();
     }
 
     /**
@@ -79,7 +116,8 @@ public class Cart_Map_Activity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        //mMap.setOnMapClickListener(this);
+        mMap.setOnMapLongClickListener(this);
         // Add a marker in Sydney and move the camera
         /*LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -106,31 +144,9 @@ public class Cart_Map_Activity extends AppCompatActivity implements OnMapReadyCa
         mLastLocation.addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
-                LatLng currentCoordinate = new LatLng(
-                        Objects.requireNonNull(mLastLocation.getResult()).getLatitude(),
-                        mLastLocation.getResult().getLongitude());
-                // mark location on map and point to it
-                mMap.addMarker(new MarkerOptions().position(currentCoordinate).title("Lokasi anda saat ini."));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(currentCoordinate));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinate, 16.0f));
-                String urlDistance = getDirectionsUrl(currentCoordinate, storageLocation);
-                Log.d("url", urlDistance);
-                sendData = new backgroundTask(new backgroundTask.AsyncResponse() {
-                    @Override
-                    public void processFinish(String output) {
-                        Log.d("output",output);
-                        try { new z_BackendPreProcessing().readDistance(output); }
-                        catch (Exception e) { /*e.printStackTrace();*/ }
-                    }
-                });
-                sendData.execute(urlDistance);
+                setMarkerLocation(mLastLocation);
             }
         });
-
-        /*if (mLastLocation != null) {
-            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-        }*/
     }
 
     @Override
@@ -174,6 +190,24 @@ public class Cart_Map_Activity extends AppCompatActivity implements OnMapReadyCa
         }*/
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.d("att", "location changed");
+        setMarkerLocation(location);
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        Log.d("att", "on map click");
+        setMarkerLocation(latLng);
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        Log.d("att", "on map long click");
+        setMarkerLocation(latLng);
+    }
+
     // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
     static class backgroundTask extends z_AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
@@ -196,5 +230,56 @@ public class Cart_Map_Activity extends AppCompatActivity implements OnMapReadyCa
         String output = "json";
         // Building the url to the web service
         return z_BackendPreProcessing.URL_GetDistance + output + "?" + parameters;
+    }
+
+    public void setMarkerLocation(Task<Location> mLastLocation) {
+        double latitude = 0, longitude = 0;
+        try {
+            latitude = Objects.requireNonNull(mLastLocation.getResult()).getLatitude();
+            longitude = mLastLocation.getResult().getLongitude();
+        } catch (Exception e) { e.printStackTrace(); }
+        if (latitude != 0)
+            setMarker(latitude, longitude);
+    }
+
+    public void setMarkerLocation(Location location) {
+        double latitude = 0, longitude = 0;
+        try {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        } catch (Exception e) { e.printStackTrace(); }
+        if (latitude != 0)
+            setMarker(latitude, longitude);
+    }
+
+    public void setMarkerLocation(LatLng latLng) {
+        double latitude = 0, longitude = 0;
+        try {
+            latitude = latLng.latitude;
+            longitude = latLng.longitude;
+        } catch (Exception e) { e.printStackTrace(); }
+        if (latitude != 0)
+            setMarker(latitude, longitude);
+    }
+
+    private void setMarker(double latitude, double longitude) {
+        LatLng currentCoordinate = new LatLng(latitude, longitude);
+        mMap.clear();
+        // mark location on map and point to it
+        mMap.addMarker(new MarkerOptions().position(currentCoordinate).title("Lokasi yang anda pilih."));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(currentCoordinate));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinate, 16.0f));
+        String urlDistance = getDirectionsUrl(currentCoordinate, storageLocation);
+        Log.d("url", urlDistance);
+        sendData = new backgroundTask(new backgroundTask.AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                Log.d("output", output);
+                try {
+                    new z_BackendPreProcessing().readDistance(output);
+                } catch (Exception e) { /*e.printStackTrace();*/ }
+            }
+        });
+        sendData.execute(urlDistance);
     }
 }

@@ -3,6 +3,7 @@ package com.kitku.kitku.BackgroundProcess;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,7 +16,7 @@ public class ImageCaching {
     // 1. fullPath -> ImageName to save
     // 2. theBitmap -> the saved bitmap
     // 3. context -> to access getExternalDirectory()
-    // 4. tag -> to choose whether to save product or userPic ("User" or else)
+    // 4. tag -> to choose whether to save product or userPic ("User", "Product", or "Location")
     public void putImageWithFullPath(String fullPath, Bitmap theBitmap, Context c, String tag) {
         if (!(fullPath == null || theBitmap == null)) {
             saveBitmap(fullPath, theBitmap, c, tag);
@@ -34,8 +35,10 @@ public class ImageCaching {
         File folder;
         if (tag.equals("User"))
             folder = c.getExternalFilesDir("UserPic");
-        else
+        else if (tag.equals("Product"))
             folder = c.getExternalFilesDir("Images");
+        else
+            folder = c.getExternalFilesDir("Location");
         // if folder not exist, create one
         assert folder != null;
         if (!folder.exists()) folder.mkdir();
@@ -53,7 +56,7 @@ public class ImageCaching {
             imageFile.createNewFile();
         } catch (IOException e) { /*e.printStackTrace();*/ }
 
-        //Log.d("location",imageFile.getAbsolutePath());
+        Log.d("location",imageFile.getAbsolutePath());
 
         // get bitmap to FileOutputStream, then convert image as PNG (even though
         // the file would have no extension later)

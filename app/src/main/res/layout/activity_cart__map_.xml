@@ -27,7 +27,18 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/buttonGetCurrentLocation"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_above="@id/layoutBottom"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/location" />
+
     <RelativeLayout
+        android:id="@+id/layoutBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/mapView"
@@ -54,4 +65,5 @@
             android:text="Alamat :" />
 
     </RelativeLayout>
+
 </RelativeLayout>

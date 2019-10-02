@@ -222,7 +222,7 @@ public class ListItemActivity extends AppCompatActivity {
                             .get()
                             .getExternalFilesDir("Images"))
                             .getCanonicalPath() + url[2];*/
-                    new ImageCaching().putImageWithFullPath(url[2], mIcon11, mParentActivity.get().getBaseContext(),"item");
+                    new ImageCaching().putImageWithFullPath(url[2], mIcon11, mParentActivity.get().getBaseContext(),"Product");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
