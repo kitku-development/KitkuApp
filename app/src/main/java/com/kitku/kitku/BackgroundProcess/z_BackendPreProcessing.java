@@ -40,7 +40,8 @@ public class z_BackendPreProcessing {
             URL_InvoiceDetail       = "https://kitku.id/invoice/detail/",
             URL_InvoiceListUser     = "https://kitku.id/invoice/pelanggan/",
             URL_InvoiceInsert       = "https://kitku.id/invoice/add",
-            URL_GetDistance         = "https://maps.googleapis.com/maps/api/directions/";
+            URL_GetDistance         = "https://maps.googleapis.com/maps/api/directions/",
+            URL_GetBannerList       = "https://kitku.id/bannerlist";
 
     // convert JSON supaya bisa diakses
     // Example JSON
@@ -448,5 +449,23 @@ public class z_BackendPreProcessing {
         jsonObject.put("kontak", kontak);
 
         return jsonObject.toString();
+    }
+
+    // {"Banners":[
+    //   {"total":2},
+    //   {"link":"https:\/\/kitku.id\/bannerpic\/banner1.png"},
+    //   {"link":"https:\/\/kitku.id\/bannerpic\/banner2.png"}
+    // ]}
+    public String[] readBannerInfo(String rawData) throws Exception {
+        JSONObject jsonObject       = new JSONObject(rawData);
+        JSONArray jsonArray         = jsonObject.getJSONArray("Banners");
+        JSONObject totalData        = jsonArray.getJSONObject(0);
+        int total                   = totalData.getInt("total");
+        String[] linkList           = new String[total];
+        for (int i = 0; i < total; i++) {
+            JSONObject banner = jsonArray.getJSONObject(i+1);
+            linkList[i] = banner.getString("link");
+        }
+        return linkList;
     }
 }

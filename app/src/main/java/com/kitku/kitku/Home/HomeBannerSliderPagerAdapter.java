@@ -45,7 +45,7 @@ public class HomeBannerSliderPagerAdapter extends PagerAdapter {
 
         HomeBannerSliderPagerDataModel homeBannerSliderPagerDataModel = getHomeBannerSliderPagerDataModelArrayList().get(position);
 
-        imageBannerSliderItem.setImageResource(homeBannerSliderPagerDataModel.getImage_item());
+        imageBannerSliderItem.setImageBitmap(homeBannerSliderPagerDataModel.getImage_item());
         container.addView(view);
 
         return view;

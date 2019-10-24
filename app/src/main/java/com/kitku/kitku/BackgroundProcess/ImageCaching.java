@@ -37,6 +37,8 @@ public class ImageCaching {
             folder = c.getExternalFilesDir("UserPic");
         else if (tag.equals("Product"))
             folder = c.getExternalFilesDir("Images");
+        else if (tag.equals("Banner"))
+            folder = c.getExternalFilesDir("Banner");
         else
             folder = c.getExternalFilesDir("Location");
         // if folder not exist, create one

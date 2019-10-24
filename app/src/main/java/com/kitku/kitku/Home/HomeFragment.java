@@ -3,6 +3,9 @@ package com.kitku.kitku.Home;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.NonNull;
@@ -10,14 +13,22 @@ import androidx.annotation.Nullable;
 import com.google.android.material.card.MaterialCardView;
 import com.kitku.kitku.List_Item.ListItemActivity;
 import com.kitku.kitku.R;
+import com.kitku.kitku.BackgroundProcess.*;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,8 +39,8 @@ public class HomeFragment extends Fragment {
     private ViewPager viewpagerHomeBannerSlider;
     private ArrayList<HomeBannerSliderPagerDataModel> list = new ArrayList<>();
 
-    private Timer timer;
     private int current_position = 0;
+    private CircleIndicator circleIndicatorHomeBannerSlider;
 
     /* Method untuk create view yang ada di layout fragment_home */
 
@@ -39,7 +50,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         viewpagerHomeBannerSlider = view.findViewById(R.id.viewpagerHomeBannerSlider);
-        CircleIndicator circleindicatorHomeBannerSlider = view.findViewById(R.id.circleindicatorHomeBannerSlider);
+        circleIndicatorHomeBannerSlider = view.findViewById(R.id.circleindicatorHomeBannerSlider);
         MaterialCardView materialcardviewVegetableButtonMain = view.findViewById(R.id.materialcardviewVegetableButtonMain);
         MaterialCardView materialcardviewMeatButtonMain = view.findViewById(R.id.materialcardviewMeatButtonMain);
         MaterialCardView materialcardviewFishButtonMain = view.findViewById(R.id.materialcardviewFishButtonMain);
@@ -48,14 +59,10 @@ public class HomeFragment extends Fragment {
         MaterialCardView materialcardviewOthersButtonMain = view.findViewById(R.id.materialcardviewOthersButtonMain);
 
 
-        list.addAll(HomeBannerSliderPagerDataset.getImageData());
+        //list.addAll(HomeBannerSliderPagerDataset.getImageData());
 
-        HomeBannerSliderPagerAdapter homeBannerSliderPagerAdapter = new HomeBannerSliderPagerAdapter(this.getActivity());
-        homeBannerSliderPagerAdapter.setHomeBannerSliderPagerDataModelArrayList(list);
-        viewpagerHomeBannerSlider.setAdapter(homeBannerSliderPagerAdapter);
-        circleindicatorHomeBannerSlider.setViewPager(viewpagerHomeBannerSlider);
-
-        createSlideShow();
+        runAsync();
+        sendData.execute(z_BackendPreProcessing.URL_GetBannerList, null);
 
         /* Method untuk mengarahkan user ke halaman List Item jika menekan salah satu tombol kategori*/
 
@@ -129,7 +136,7 @@ public class HomeFragment extends Fragment {
             }
         };
 
-        timer = new Timer();
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -149,5 +156,85 @@ public class HomeFragment extends Fragment {
                     }
                 })
                 .show();
+    }
+
+    // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
+    public static class backgroundTask extends z_AsyncServerAccess {
+        backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
+    }
+    private backgroundTask sendData;
+    // Alur setelah AsyncTask selesai
+    private void runAsync() {
+        sendData = new backgroundTask(new backgroundTask.AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                Log.d("output", output);
+                counterData = 0;
+                imageSet = new HomeBannerSliderPagerDataset();
+                try {
+                    String[] linkList = new z_BackendPreProcessing().readBannerInfo(output);
+                    maxData = linkList.length;
+                    for (String s : linkList) {
+                        new downloadImage(HomeFragment.this).execute(
+                                s, s.replace("https://kitku.id/bannerpic/", "")
+                        );
+                    }
+                    //new downloadImage(UserFragment.this).execute();
+                } catch (Exception e) { e.printStackTrace(); }
+            }
+        });
+    }
+
+    // AsyncTask untuk download gambar dan simpan pada array
+    static class downloadImage extends AsyncTask<String, Void, Bitmap> {
+        private WeakReference<HomeFragment> mParentActivity;
+
+        downloadImage(HomeFragment parentActivity) {
+            mParentActivity = new WeakReference<>(parentActivity);
+        }
+
+        @Override
+        protected Bitmap doInBackground(String...url) {
+            Bitmap mIcon11 = null;
+            try {
+                File folder = Objects.requireNonNull(
+                        mParentActivity.get().getActivity()).getExternalFilesDir("Banner");
+                assert folder != null;
+                String dirLocation = folder.getAbsolutePath().concat("/");
+                if (new ImageCaching().isExist(
+                        Objects.requireNonNull(dirLocation.concat(url[1]))))
+                    mIcon11 = new ImageCaching().getImage(dirLocation.concat(url[1]));
+                else {
+                    InputStream in = new java.net.URL(url[0]).openStream();
+                    mIcon11 = BitmapFactory.decodeStream(in);
+                    new ImageCaching().putImageWithFullPath(url[1], mIcon11,
+                            mParentActivity.get().getContext(),"Banner");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            mParentActivity.get().addBanner(result);
+        }
+    }
+
+    private HomeBannerSliderPagerDataset imageSet;
+    private int counterData, maxData;
+    private void addBanner(Bitmap image){
+        imageSet.addImageData(image);
+        counterData++;
+        if (counterData == maxData){
+            list.addAll(imageSet.getImageData());
+            HomeBannerSliderPagerAdapter homeBannerSliderPagerAdapter = new HomeBannerSliderPagerAdapter(this.getActivity());
+            homeBannerSliderPagerAdapter.setHomeBannerSliderPagerDataModelArrayList(list);
+            viewpagerHomeBannerSlider.setAdapter(homeBannerSliderPagerAdapter);
+            circleIndicatorHomeBannerSlider.setViewPager(viewpagerHomeBannerSlider);
+
+            createSlideShow();
+        }
     }
 }
