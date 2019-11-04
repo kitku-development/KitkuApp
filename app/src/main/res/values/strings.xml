@@ -61,6 +61,9 @@
     <string name="checkout_set_address_button_title_go_to_gmap">Go To Google Map</string>
     <string name="checkout_set_address_button_title_save_address">Simpan Alamat</string>
 
+    <string name="checkout_action_tovoucher_text"><u>Punya kode ? Masukkan disini !</u></string>
+    <string name="checkout_action_to_changeaddress_text"><u>Ubah Alamat</u></string>
+
     <string name="dialog_buyitem_title">Barang sudah terpesan !</string>
     <string name="dialog_buyitem_description">Silahkan lihat di pesanan anda untuk membuat checkout pembayaran</string>
     <string name="dialog_buyitem_back_button_title">Kembali</string>

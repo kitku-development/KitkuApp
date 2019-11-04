@@ -28,7 +28,7 @@
                 android:textStyle="bold"/>
 
             <Button
-                android:id="@+id/buttonToolbarDetail_ItemBack"
+                android:id="@+id/buttonToolbarCheckoutBack"
                 style="@style/ButtonToolbarBack"
                 android:layout_centerVertical="true"/>
 

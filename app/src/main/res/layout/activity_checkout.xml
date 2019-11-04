@@ -7,12 +7,615 @@
     android:layout_height="match_parent"
     tools:context=".Checkout.CheckoutActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarCheckout"
+        style="@style/Toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textTitleCheckout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Checkout"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/buttonToolbarCheckoutBack"
+                style="@style/ButtonToolbarBack"
+                android:layout_centerVertical="true"
+                android:onClick="setBackButton" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/toolbarCheckout"
+        android:background="#D6D6D6" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layoutCheckout_GotoPayment"
+        android:layout_below="@id/toolbarCheckout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtCheckout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart ="12dp"
+                android:layout_marginTop="12dp"
+                android:text="Alamat Pengiriman"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textviewCheckoutChangeAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/txtCheckout1"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="12dp"
+                android:text="@string/checkout_action_to_changeaddress_text"
+                android:textColor="@color/colorSecondary"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialcardviewSelectAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtCheckout1"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="14dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="6dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textviewCheckout_AddressName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginEnd="180dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="12dp"
+                        android:maxLines="2"
+                        android:text="Evan Edsa Azola"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/textviewCheckout_AddressLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textviewCheckout_AddressName"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginEnd="120dp"
+                        android:layout_marginStart="14dp"
+                        android:maxLines="2"
+                        android:text="Komplek Filano Jaya I, Kubu Dalam Parak Karakah, Padang Timur"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/textviewCheckout_AddressPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textviewCheckout_AddressLocation"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginStart="14dp"
+                        android:text="+6282175719430"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:id="@+id/imgCheckoutAddressSelection"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/checkout_address_selection_icon"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="24dp"/>
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/txtCheckout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/materialcardviewSelectAddress"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:text="Detail Pesanan"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialcardviewReviewOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtCheckout2"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="6dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvOrderListItemImageLayout"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:cardCornerRadius="8dp">
+
+                        <ImageView
+                            android:id="@+id/imageviewCheckout_OrderImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/content_desc_image_item"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/image_sayur_bawangbombay_compressed" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/textviewCheckout_OrderName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/cvOrderListItemImageLayout"
+                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/cvOrderListItemImageLayout"
+                        android:text="Bawang Bombay"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textviewCheckout_OrderPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textviewCheckout_OrderName"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_toEndOf="@id/cvOrderListItemImageLayout"
+                        android:text="Rp 15.000"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textviewCheckout_OrderPack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textviewCheckout_OrderPrice"
+                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/cvOrderListItemImageLayout"
+                        android:text="/pack"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <ImageButton
+                        android:id="@+id/imagebtnCheckout_AddOrderAmount"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ic_add"
+                        android:contentDescription="@string/content_desc_add_imagebutton" />
+
+                    <TextView
+                        android:id="@+id/textviewCheckout_OrderAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="4dp"
+                        android:layout_toStartOf="@id/imagebtnCheckout_AddOrderAmount"
+                        android:background="@drawable/checkout_circle_background"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="1"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/imagebtnCheckout_RemoveOrderAmount"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="4dp"
+                        android:layout_toStartOf="@id/textviewCheckout_OrderAmount"
+                        android:background="@drawable/ic_remove"
+                        android:contentDescription="@string/content_desc_remove_imagebutton" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/txtCheckout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/materialcardviewReviewOrder"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:text="Waktu Pengiriman"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvCheckoutSendTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtCheckout3"
+                android:layout_marginTop="12dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/txtCheckoutDateTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Tanggal Pengiriman"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/textviewCheckoutSendTime_Date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="12dp"
+                        android:text="Senin, 4 November 2019"
+                        android:textSize="14sp"/>
+
+                    <View
+                        android:id="@+id/viewCheckoutSendTime1"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/textviewCheckoutSendTime_Date"
+                        android:layout_marginTop="10dp"
+                        android:background="#D6D6D6" />
+
+                    <TextView
+                        android:id="@+id/txtCheckoutAreaTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/viewCheckoutSendTime1"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Wilayah Pengiriman"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/textviewCheckoutSendTime_Area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@id/viewCheckoutSendTime1"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Padang"
+                        android:textSize="14sp"/>
+
+                    <View
+                        android:id="@+id/viewCheckoutSendTime2"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/textviewCheckoutSendTime_Area"
+                        android:layout_marginTop="10dp"
+                        android:background="#D6D6D6" />
+
+                    <TextView
+                        android:id="@+id/txtCheckoutTimeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/viewCheckoutSendTime2"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Pilih Waktu Pengiriman"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/materialcardviewSendTime_SelectTime1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtCheckoutTimeTitle"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="6dp"
+                        app:strokeColor="@color/colorPrimary"
+                        app:strokeWidth="2dp">
+
+                        <CheckBox
+                            android:id="@+id/checkboxSendTime_Day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:text="Siang (ETA. 12:00 - 15:00 WIB)"
+                            android:textStyle="bold"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/materialcardviewSendTime_SelectTime2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/materialcardviewSendTime_SelectTime1"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="6dp"
+                        app:strokeColor="@color/colorPrimary"
+                        app:strokeWidth="2dp">
+
+                        <CheckBox
+                            android:id="@+id/checkboxSendTime_Noon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:text="Sore (ETA. 17:00 - 20:00 WIB)"
+                            android:textStyle="bold"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <View
+                        android:id="@+id/viewCheckoutSendTime3"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/materialcardviewSendTime_SelectTime2"
+                        android:layout_marginTop="10dp"
+                        android:background="#D6D6D6" />
+
+                    <TextView
+                        android:id="@+id/txtCheckoutNoteTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/viewCheckoutSendTime3"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Catatan (Opsional)"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/materialcardviewSendTime_Note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtCheckoutNoteTitle"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="12dp"
+                        app:strokeColor="@color/colorPrimary"
+                        app:strokeWidth="2dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textColorHint="@color/colorSecondary">
+
+                            <EditText
+                                android:id="@+id/edittextCheckoutSendTime_Note"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="14dp"
+                                android:layout_marginEnd="14dp"
+                                android:layout_marginBottom="10dp"
+                                android:hint="Tambahkan catatan khusus"
+                                android:inputType="textMultiLine"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/txtCheckout4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvCheckoutSendTime"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:text="Ringkasan Pembayaran"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvCheckoutPaymentReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtCheckout4"
+                android:layout_marginTop="12dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/txtCheckoutPaymentReview_TotalTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Subtotal (X Item)"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/textviewCheckoutPaymentReview_Total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="12dp"
+                        android:text="Rp 15.000"
+                        android:textSize="14sp"/>
+
+                    <View
+                        android:id="@+id/viewCheckoutPaymentReview1"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/textviewCheckoutPaymentReview_Total"
+                        android:layout_marginTop="10dp"
+                        android:background="#D6D6D6" />
+
+                    <TextView
+                        android:id="@+id/txtCheckoutPaymentReview_VoucherTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/viewCheckoutPaymentReview1"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Voucher"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/textviewCheckoutPaymentReview_Voucher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@id/viewCheckoutPaymentReview1"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginTop="10dp"
+                        android:text="( - Rp 0 )"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/textviewCheckoutGoToVoucher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@id/textviewCheckoutPaymentReview_Voucher"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/checkout_action_tovoucher_text"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"/>
+
+                    <View
+                        android:id="@+id/viewCheckoutPaymentReview2"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/textviewCheckoutGoToVoucher"
+                        android:layout_marginTop="10dp"
+                        android:background="#D6D6D6" />
+
+                    <TextView
+                        android:id="@+id/txtCheckoutPaymentReview_DeliveryTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/viewCheckoutPaymentReview2"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Ongkos Kirim"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/textviewCheckoutPaymentReview_Delivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@id/viewCheckoutPaymentReview2"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Rp 15.000"
+                        android:textSize="14sp"/>
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/layoutCheckout_GotoPayment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ini Halaman Checkout"
-        android:layout_centerInParent="true"
-        android:textColor="@color/colorBlack"
-        android:textSize="32sp"/>
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorSecondary">
+
+        <TextView
+            android:id="@+id/txtCheckout_GotoPaymentTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:text="Total Pembayaran"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtCheckout_GotoPaymentTitle"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:text="Rp. 30.000"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/buttonCheckoutGoToPayment"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/all_button_roundedcorners_colorprimary_solid"
+            android:onClick="buttonToPayment"
+            android:text="Bayar"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

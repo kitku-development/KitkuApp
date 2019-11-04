@@ -25,7 +25,7 @@
                 app:cardCornerRadius="8dp"
                 android:layout_centerVertical="true">
                 <ImageView
-                    android:id="@+id/imageOrderListItem"
+                    android:id="@+id/imageviewCheckout_OrderImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/content_desc_image_item"
@@ -34,7 +34,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/textnameOrderListItem"
+                android:id="@+id/textviewCheckout_OrderName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/cvOrderListItemImageLayout"
@@ -46,10 +46,10 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/textpriceOrderListItem"
+                android:id="@+id/textviewCheckout_OrderPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textnameOrderListItem"
+                android:layout_below="@id/textviewCheckout_OrderName"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="2dp"
                 android:layout_toEndOf="@id/cvOrderListItemImageLayout"
@@ -59,10 +59,10 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/textpackOrderListItem"
+                android:id="@+id/textviewCheckout_OrderPack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textpriceOrderListItem"
+                android:layout_below="@id/textviewCheckout_OrderPrice"
                 android:layout_marginStart="12dp"
                 android:layout_toEndOf="@id/cvOrderListItemImageLayout"
                 android:text="/pack"
@@ -73,7 +73,7 @@
                 android:id="@+id/textmaxorderOrderListItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textpackOrderListItem"
+                android:layout_below="@id/textviewCheckout_OrderPack"
                 android:layout_marginBottom="4dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="2dp"
@@ -83,7 +83,7 @@
                 android:textSize="12sp" />
 
             <ImageButton
-                android:id="@+id/imagebtnaddorderOrderListItem"
+                android:id="@+id/imagebtnCheckout_AddOrderAmount"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
@@ -93,12 +93,12 @@
                 android:contentDescription="@string/content_desc_add_imagebutton"/>
 
             <TextView
-                android:id="@+id/textorderamountOrderListItem"
+                android:id="@+id/textviewCheckout_OrderAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="4dp"
-                android:layout_toStartOf="@id/imagebtnaddorderOrderListItem"
+                android:layout_toStartOf="@id/imagebtnCheckout_AddOrderAmount"
                 android:background="@drawable/cartorder_circle_background"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="1"
@@ -107,10 +107,10 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/imagebtnremoveorderOrderListItem"
+                android:id="@+id/imagebtnCheckout_RemoveOrderAmount"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_toStartOf="@id/textorderamountOrderListItem"
+                android:layout_toStartOf="@id/textviewCheckout_OrderAmount"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="4dp"
                 android:contentDescription="@string/content_desc_remove_imagebutton"

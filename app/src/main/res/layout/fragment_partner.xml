@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:id="@+id/buttonToolbarDetail_ItemBack"
+                        android:id="@+id/buttonToolbarCheckoutBack"
                         style="@style/ButtonToolbarBack"
                         android:layout_centerVertical="true" />
 

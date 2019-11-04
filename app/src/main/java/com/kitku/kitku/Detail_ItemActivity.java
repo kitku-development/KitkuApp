@@ -48,7 +48,7 @@ public class Detail_ItemActivity extends AppCompatActivity {
         teksHarga           = findViewById(R.id.textitempriceDetail_Item);
         teksPack            = findViewById(R.id.textitempackDetail_Item);
         teksDetail          = findViewById(R.id.textitemdescriptionDetail_Item);
-        teksToolbar         = findViewById(R.id.textitemnameToolbarDetail_Item);
+        teksToolbar         = findViewById(R.id.textTitleCheckout);
         findViewById(R.id.txtDetail_Item1).setVisibility(View.INVISIBLE);
         findViewById(R.id.lineDetail_Item3).setVisibility(View.INVISIBLE);
         buttonDetail_ItemBuyItem.setVisibility(View.INVISIBLE);

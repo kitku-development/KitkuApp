@@ -15,7 +15,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarDetail_Item"
+                android:id="@+id/toolbarCheckout"
                 style="@style/Toolbar">
 
                 <RelativeLayout
@@ -23,18 +23,18 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/textitemnameToolbarDetail_Item"
+                        android:id="@+id/textTitleCheckout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/buttonToolbarDetail_ItemBack"
+                        android:layout_toEndOf="@id/buttonToolbarCheckoutBack"
                         android:textSize="20sp"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"/>
 
                     <Button
-                        android:id="@+id/buttonToolbarDetail_ItemBack"
+                        android:id="@+id/buttonToolbarCheckoutBack"
                         style="@style/ButtonToolbarBack"
                         android:layout_centerVertical="true"
                         android:onClick="setBackButton" />
@@ -55,7 +55,7 @@
                 android:id="@+id/lineDetail_Item1"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/toolbarDetail_Item"
+                android:layout_below="@id/toolbarCheckout"
                 android:background="#D6D6D6" />
 
             <ImageView

@@ -106,13 +106,13 @@ public class Cart_Order_OrderListCardViewAdapter
         public OrderListViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageButtonAddAmountItem = itemView.findViewById(R.id.imagebtnaddorderOrderListItem);
-            imageButtonRemoveAmountItem = itemView.findViewById(R.id.imagebtnremoveorderOrderListItem);
-            itemImage = itemView.findViewById(R.id.imageOrderListItem);
-            textItemName = itemView.findViewById(R.id.textnameOrderListItem);
-            textItemPrice = itemView.findViewById(R.id.textpriceOrderListItem);
-            textItemPack = itemView.findViewById(R.id.textpackOrderListItem);
-            textItemAmount = itemView.findViewById(R.id.textorderamountOrderListItem);
+            imageButtonAddAmountItem = itemView.findViewById(R.id.imagebtnCheckout_AddOrderAmount);
+            imageButtonRemoveAmountItem = itemView.findViewById(R.id.imagebtnCheckout_RemoveOrderAmount);
+            itemImage = itemView.findViewById(R.id.imageviewCheckout_OrderImage);
+            textItemName = itemView.findViewById(R.id.textviewCheckout_OrderName);
+            textItemPrice = itemView.findViewById(R.id.textviewCheckout_OrderPrice);
+            textItemPack = itemView.findViewById(R.id.textviewCheckout_OrderPack);
+            textItemAmount = itemView.findViewById(R.id.textviewCheckout_OrderAmount);
 
             // ubah teks toal harga ketika jumlah item berubah
 
