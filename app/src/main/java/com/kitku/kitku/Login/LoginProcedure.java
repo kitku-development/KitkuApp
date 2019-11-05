@@ -12,8 +12,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
-import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
-import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
+import com.kitku.kitku.BackgroundProcess.AsyncServerAccess;
+import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
 import com.kitku.kitku.PartnerFragment;
 import com.kitku.kitku.R;
 import com.kitku.kitku.User.UserFragment;
@@ -58,7 +58,7 @@ public class LoginProcedure {
             // Ubah data menjadi JSON
             String json = null;
             try {
-                json = new z_BackendPreProcessing().loginUserAndMitra(
+                json = BackendPreProcessing.loginUserAndMitra(
                         emailbox.getText().toString(),
                         passbox.getText().toString()
                 );
@@ -67,8 +67,8 @@ public class LoginProcedure {
             // Kirim data
             login();
             if (condition.equals("User"))
-                sendData.execute(z_BackendPreProcessing.URL_UserLogin,json);
-            else sendData.execute(z_BackendPreProcessing.URL_SupplierLogin,json);
+                sendData.execute(BackendPreProcessing.URL_UserLogin,json);
+            else sendData.execute(BackendPreProcessing.URL_SupplierLogin,json);
             loadingIndicator.show();
         }
     }
@@ -86,8 +86,8 @@ public class LoginProcedure {
         fragmentTransaction.commit();
     }
 
-    // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
-    static class backgroundTask extends z_AsyncServerAccess {
+    // Inisiasi AsyncTask dari AsyncServerAccess supaya dapat mengakses Activity
+    static class backgroundTask extends AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
     }
 

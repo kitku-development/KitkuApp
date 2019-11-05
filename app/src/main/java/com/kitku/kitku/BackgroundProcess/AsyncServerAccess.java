@@ -10,7 +10,10 @@ import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public abstract class z_AsyncServerAccess extends AsyncTask<String, Void, String> {
+public abstract class AsyncServerAccess extends AsyncTask<String, Void, String> {
+
+    // Usage :  url[0] is the hyperlink to download data
+    //          url[1] is to determine whether we use GET or POST (define url[1] null if using GET)
     @Override
     protected String doInBackground(String...strings) {
         //Log.d("data",strings[0]);
@@ -92,7 +95,7 @@ public abstract class z_AsyncServerAccess extends AsyncTask<String, Void, String
         void processFinish(String output);
     }
 
-     protected AsyncResponse delegate;
+    protected AsyncResponse delegate;
 
     @Override
     protected void onPostExecute(String result) {

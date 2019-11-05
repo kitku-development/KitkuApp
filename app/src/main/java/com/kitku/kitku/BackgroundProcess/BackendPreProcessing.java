@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class z_BackendPreProcessing {
+public class BackendPreProcessing {
 
     // Notice:
     // Bertujuan untuk mempermudah proses data untuk backend
@@ -41,7 +41,9 @@ public class z_BackendPreProcessing {
             URL_InvoiceListUser     = "https://kitku.id/invoice/pelanggan/",
             URL_InvoiceInsert       = "https://kitku.id/invoice/add",
             URL_GetDistance         = "https://maps.googleapis.com/maps/api/directions/",
-            URL_GetBannerList       = "https://kitku.id/bannerlist";
+            URL_GetBannerList       = "https://kitku.id/bannerlist",
+            URL_LinkToBanner        = "https://kitku.id/bannerpic/",
+            URL_LinkToProductPic    = "https://kitku.id/productpic/";
 
     // convert JSON supaya bisa diakses
     // Example JSON
@@ -49,7 +51,7 @@ public class z_BackendPreProcessing {
     //      {"id":"BAR-1","nama":"barang 1","satuan":"1.00","harga":"1000","jumlah":"8","url":"https://"},
     //      {"id":"BAR-2","nama":"barang 2","satuan":"1.00","harga":"1000","jumlah":"6","url":"https://"}
     //  ]}
-    public String[][] readProductList(String rawData) throws Exception {
+    public static String[][] readProductList(String rawData) throws Exception {
 
         // String bisa diconvert menjadi JSONObject atau JSONArray
         // Jika menggunakan JSONObject maka pengaksesannya dengan pemeriksaan string index
@@ -106,7 +108,7 @@ public class z_BackendPreProcessing {
     // {"Products":[
     //      {"id":"BAR-1","nama":"barang 1","desc":"blabla","satuan":"0.00","jumlah":"8","review":"0.00","url":"https://"}
     //  ]}
-    public String[] readProductDetail(String rawData) throws Exception {
+    public static String[] readProductDetail(String rawData) throws Exception {
 
         // Buat JSONObject dari String
         JSONObject jsonObject       = new JSONObject(rawData);
@@ -143,7 +145,7 @@ public class z_BackendPreProcessing {
     //    "kontak"    : "",
     //    "email"     : ""
     // }
-    public String registerUser(String nama, String email, String password,
+    public static String registerUser(String nama, String email, String password,
                         String alamat, String kontak) throws Exception {
         // buat JSONObject baru dan masukkan data kedalam JSONObject
         JSONObject jsonObject = new JSONObject();
@@ -163,7 +165,7 @@ public class z_BackendPreProcessing {
     //    "email"     : "",
     //    "password"  : ""
     // }
-    public String loginUserAndMitra(String user, String pass) throws Exception{
+    public static String loginUserAndMitra(String user, String pass) throws Exception{
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("email", user);
         jsonObject.put("password", pass);
@@ -181,7 +183,7 @@ public class z_BackendPreProcessing {
     //    "waktu_kirim"     : "",
     //    "catatan"         : ""
     // }
-    String sendOrderList(String user, String[] id_bar, int[] jumlah,
+    static String sendOrderList(String user, String[] id_bar, int[] jumlah,
                          int[] harga, int ongkos, String pengiriman,
                          String catatan) throws  Exception {
         // Masukkan data sebagai JSONObject
@@ -236,7 +238,7 @@ public class z_BackendPreProcessing {
     // {"Products":[
     //      {"nama_pelanggan":"tester","alamat_pelanggan":"Jl. Tester No. 0","kontak_pelanggan":"0000","waktu_terdaftar":"2019-07-02 11:34:13"}
     //  ]}
-    public String[] readUserData(String rawData) throws Exception {
+    public static String[] readUserData(String rawData) throws Exception {
 
         // Buat JSONObject dari String
         JSONObject jsonObject       = new JSONObject(rawData);
@@ -278,7 +280,7 @@ public class z_BackendPreProcessing {
     // {"Products":[
     //      {"nama_pelanggan":"tester","alamat_pelanggan":"Jl. Tester No. 0","kontak_pelanggan":"0000","waktu_terdaftar":"2019-07-02 11:34:13"}
     //  ]}
-    public String[] readSupplierData(String rawData) throws Exception {
+    public static String[] readSupplierData(String rawData) throws Exception {
 
         // Buat JSONObject dari String
         JSONObject jsonObject       = new JSONObject(rawData);
@@ -301,7 +303,7 @@ public class z_BackendPreProcessing {
         };
     }
 
-    public void addItemToCart(String id, String count, String price, Context context, String name,
+    public static void addItemToCart(String id, String count, String price, Context context, String name,
                               String piece, String pack) throws Exception {
         // reinitiate price
         price = price.replace("Rp. ","");
@@ -386,7 +388,7 @@ public class z_BackendPreProcessing {
         userDataEdit.apply();
     }
 
-    public List<String> ItemListDeserialize(JSONArray raw) throws Exception{
+    public static List<String> ItemListDeserialize(JSONArray raw) throws Exception{
         List<String> newone = new ArrayList<>();
         for (int index = 0; index < raw.length(); index++) {
             newone.add(index,raw.getString(index));
@@ -434,7 +436,7 @@ public class z_BackendPreProcessing {
     //   ],
     //   "status": "OK"
     //}
-    public void readDistance(String raw) throws Exception {
+    public static void readDistance(String raw) throws Exception {
         JSONObject routes = new JSONObject(raw);
         Log.d("routes", routes.toString());
         JSONArray legs = new JSONArray(routes);
@@ -442,7 +444,7 @@ public class z_BackendPreProcessing {
         //JSONObject distance = new JSONObject(legs.getJSONObject(0).getString())
     }
 
-    public String updateUserInfo(String nama, String alamat, String kontak) throws Exception{
+    public static String updateUserInfo(String nama, String alamat, String kontak) throws Exception{
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("nama", nama);
         jsonObject.put("alamat", alamat);
@@ -456,7 +458,7 @@ public class z_BackendPreProcessing {
     //   {"link":"https:\/\/kitku.id\/bannerpic\/banner1.png"},
     //   {"link":"https:\/\/kitku.id\/bannerpic\/banner2.png"}
     // ]}
-    public String[] readBannerInfo(String rawData) throws Exception {
+    public static String[] readBannerInfo(String rawData) throws Exception {
         JSONObject jsonObject       = new JSONObject(rawData);
         JSONArray jsonArray         = jsonObject.getJSONArray("Banners");
         JSONObject totalData        = jsonArray.getJSONObject(0);

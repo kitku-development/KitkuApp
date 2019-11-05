@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.NonNull;
@@ -18,15 +16,11 @@ import com.kitku.kitku.BackgroundProcess.*;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Timer;
@@ -62,7 +56,7 @@ public class HomeFragment extends Fragment {
         //list.addAll(HomeBannerSliderPagerDataset.getImageData());
 
         runAsync();
-        sendData.execute(z_BackendPreProcessing.URL_GetBannerList, null);
+        sendData.execute(BackendPreProcessing.URL_GetBannerList, null);
 
         /* Method untuk mengarahkan user ke halaman List Item jika menekan salah satu tombol kategori*/
 
@@ -120,6 +114,11 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     /* Method untuk membuat Banner Slider Viewpager berjalan secara otomatis dalam jangka waktu tertentu */
 
     private void createSlideShow() {
@@ -130,9 +129,7 @@ public class HomeFragment extends Fragment {
                 if (current_position == list.size()) {
                     current_position = 0;
                 }
-
                 viewpagerHomeBannerSlider.setCurrentItem(current_position++, true);
-
             }
         };
 
@@ -158,8 +155,22 @@ public class HomeFragment extends Fragment {
                 .show();
     }
 
-    // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
-    public static class backgroundTask extends z_AsyncServerAccess {
+    static class backgroundImageDownloader extends ImageDownloader {
+        backgroundImageDownloader(AsyncResponse delegate) { this.delegate = delegate; }
+    }
+    private backgroundImageDownloader downloadImage;
+
+    private void loadImage() {
+        downloadImage = new backgroundImageDownloader(new backgroundImageDownloader.AsyncResponse() {
+            @Override
+            public void processFinish(Bitmap output, Integer index) {
+                addBanner(output);
+            }
+        });
+    }
+
+    // Inisiasi AsyncTask dari AsyncServerAccess supaya dapat mengakses Activity
+    public static class backgroundTask extends AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
     }
     private backgroundTask sendData;
@@ -168,58 +179,24 @@ public class HomeFragment extends Fragment {
         sendData = new backgroundTask(new backgroundTask.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                Log.d("output", output);
                 counterData = 0;
                 imageSet = new HomeBannerSliderPagerDataset();
                 try {
-                    String[] linkList = new z_BackendPreProcessing().readBannerInfo(output);
+                    String[] linkList = BackendPreProcessing.readBannerInfo(output);
                     maxData = linkList.length;
+                    String bannerDirLocation = getStringOfBannerDirLocation();
                     for (String s : linkList) {
-                        new downloadImage(HomeFragment.this).execute(
-                                s, s.replace("https://kitku.id/bannerpic/", "")
+                        loadImage();
+                        downloadImage.execute(
+                                bannerDirLocation,
+                                s.replace(BackendPreProcessing.URL_LinkToBanner, ""),
+                                s,
+                                null
                         );
                     }
-                    //new downloadImage(UserFragment.this).execute();
                 } catch (Exception e) { e.printStackTrace(); }
             }
         });
-    }
-
-    // AsyncTask untuk download gambar dan simpan pada array
-    static class downloadImage extends AsyncTask<String, Void, Bitmap> {
-        private WeakReference<HomeFragment> mParentActivity;
-
-        downloadImage(HomeFragment parentActivity) {
-            mParentActivity = new WeakReference<>(parentActivity);
-        }
-
-        @Override
-        protected Bitmap doInBackground(String...url) {
-            Bitmap mIcon11 = null;
-            try {
-                File folder = Objects.requireNonNull(
-                        mParentActivity.get().getActivity()).getExternalFilesDir("Banner");
-                assert folder != null;
-                String dirLocation = folder.getAbsolutePath().concat("/");
-                if (new ImageCaching().isExist(
-                        Objects.requireNonNull(dirLocation.concat(url[1]))))
-                    mIcon11 = new ImageCaching().getImage(dirLocation.concat(url[1]));
-                else {
-                    InputStream in = new java.net.URL(url[0]).openStream();
-                    mIcon11 = BitmapFactory.decodeStream(in);
-                    new ImageCaching().putImageWithFullPath(url[1], mIcon11,
-                            mParentActivity.get().getContext(),"Banner");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            mParentActivity.get().addBanner(result);
-        }
     }
 
     private HomeBannerSliderPagerDataset imageSet;
@@ -236,5 +213,20 @@ public class HomeFragment extends Fragment {
 
             createSlideShow();
         }
+    }
+
+    private String getStringOfBannerDirLocation() {
+        File folder = null;
+        String location = "";
+        try {
+            folder = Objects.requireNonNull(this.getActivity()).getExternalFilesDir("Banner");
+            if (folder != null) {
+                location = folder.getAbsolutePath().concat("/");
+            }
+        } catch (Exception e) {
+            ImageCaching.createDir(folder);
+            location = getStringOfBannerDirLocation();
+        }
+        return location;
     }
 }

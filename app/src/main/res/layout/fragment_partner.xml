@@ -15,71 +15,13 @@
         android:layout_centerInParent="true" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/userLayout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtUser2"
-                android:layout_marginTop="20dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/circleimageviewUser_UserPhoto"
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
-                    android:layout_marginStart="14dp"
-                    android:src="@drawable/z_test_foto_user"
-                    app:civ_border_color="@color/colorPrimary"
-                    app:civ_border_width="2dp" />
-
-                <TextView
-                    android:id="@+id/textviewUser_Username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txtUser2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtUser1"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:text="Hanya sebuah preview dari halaman user Mitra, diperlukan konten mengenai apa2 saja fitur yang diinginkan didalam halaman ini"
-                android:textColor="@color/colorBlack"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtUser1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/toolbarCheckoutSetAddress"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:text="Selamat datang,"
-                android:textColor="@color/colorSecondary"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/toolbarCheckoutSetAddress"
-                android:background="#D6D6D6" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarCheckoutSetAddress"
@@ -109,6 +51,65 @@
                 </RelativeLayout>
 
             </androidx.appcompat.widget.Toolbar>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/toolbarCheckoutSetAddress"
+                android:background="#D6D6D6" />
+
+            <TextView
+                android:id="@+id/txtUser1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbarCheckoutSetAddress"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="Selamat datang,"
+                android:textColor="@color/colorSecondary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtUser2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtUser1"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="Hanya sebuah preview dari halaman user Mitra, diperlukan konten mengenai apa2 saja fitur yang diinginkan didalam halaman ini"
+                android:textColor="@color/colorBlack"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/userLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtUser2"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleimageviewUser_UserPhoto"
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginStart="14dp"
+                    android:src="@drawable/z_test_foto_user"
+                    app:civ_border_color="@color/colorPrimary"
+                    app:civ_border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/textviewUser_Username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerviewUserMenu"

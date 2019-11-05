@@ -1,9 +1,6 @@
 package com.kitku.kitku.List_Item;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,17 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
 import com.kitku.kitku.BackgroundProcess.ImageCaching;
+import com.kitku.kitku.BackgroundProcess.ImageDownloader;
 import com.kitku.kitku.R;
-import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
-import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
+import com.kitku.kitku.BackgroundProcess.AsyncServerAccess;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ListItemActivity extends AppCompatActivity {
 
@@ -56,37 +50,37 @@ public class ListItemActivity extends AppCompatActivity {
             txtTitle = bundle.getString("titletextVegetable");
             textviewListItemCategoryName.setText(txtTitle);
             newCategoryClick();
-            sendData.execute(z_BackendPreProcessing.URL_ProductCategory + "SAYUR", null);
+            sendData.execute(BackendPreProcessing.URL_ProductCategory + "SAYUR", null);
         }
         if (bundle != null && bundle.containsKey("titletextMeat")) {
             txtTitle = bundle.getString("titletextMeat");
             textviewListItemCategoryName.setText(txtTitle);
             newCategoryClick();
-            sendData.execute(z_BackendPreProcessing.URL_ProductCategory + "DAGING", null);
+            sendData.execute(BackendPreProcessing.URL_ProductCategory + "DAGING", null);
         }
         if (bundle != null && bundle.containsKey("titletextFish")) {
             txtTitle = bundle.getString("titletextFish");
             textviewListItemCategoryName.setText(txtTitle);
             newCategoryClick();
-            sendData.execute(z_BackendPreProcessing.URL_ProductCategory + "IKAN", null);
+            sendData.execute(BackendPreProcessing.URL_ProductCategory + "IKAN", null);
         }
         if (bundle != null && bundle.containsKey("titletextWheat")) {
             txtTitle = bundle.getString("titletextWheat");
             textviewListItemCategoryName.setText(txtTitle);
             newCategoryClick();
-            sendData.execute(z_BackendPreProcessing.URL_ProductCategory + "BIJI", null);
+            sendData.execute(BackendPreProcessing.URL_ProductCategory + "BIJI", null);
         }
         if (bundle != null && bundle.containsKey("titletextFastFood")) {
             txtTitle = bundle.getString("titletextFastFood");
             textviewListItemCategoryName.setText(txtTitle);
             newCategoryClick();
-            sendData.execute(z_BackendPreProcessing.URL_ProductCategory + "BIJI", null);
+            sendData.execute(BackendPreProcessing.URL_ProductCategory + "BIJI", null);
         }
         if (bundle != null && bundle.containsKey("titletextOthers")) {
             txtTitle = bundle.getString("titletextOthers");
             textviewListItemCategoryName.setText(txtTitle);
             newCategoryClick();
-            sendData.execute(z_BackendPreProcessing.URL_ProductCategory + "BIJI", null);
+            sendData.execute(BackendPreProcessing.URL_ProductCategory + "BIJI", null);
         }
 
         //showCategoryItemData();
@@ -133,8 +127,8 @@ public class ListItemActivity extends AppCompatActivity {
         runAsync();
     }
 
-    // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
-    static class backgroundTask extends z_AsyncServerAccess {
+    // Inisiasi AsyncTask dari AsyncServerAccess supaya dapat mengakses Activity
+    static class backgroundTask extends AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
     }
 
@@ -150,7 +144,7 @@ public class ListItemActivity extends AppCompatActivity {
                 String[][] data;
                 try {
                     // Parsing data dari JSON ke dalam array
-                    data = new z_BackendPreProcessing().readProductList(output);
+                    data = BackendPreProcessing.readProductList(output);
 
                     // Data dalam array dikelompokkan dalam array baru
                     id_barang   = data[0];
@@ -161,26 +155,15 @@ public class ListItemActivity extends AppCompatActivity {
                     url         = data[5];
                     listGambar = new Bitmap[url.length];
                     counterselesai = 0;
+                    String productPicLocation = getStringOfProductPicLocation();
                     for (int index = 0; index < url.length; index++) {
-                        //Log.d("url",url[index]);
-                        try {
-                            new downloadImage(ListItemActivity.this).execute(
-                                    url[index], String.valueOf(index), id_barang[index]);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        loadImage();
+                        downloadImage.execute(
+                                productPicLocation,
+                                id_barang[index],
+                                url[index],
+                                String.valueOf(index));
                     }
-
-                    /*for (int index = 0; index < id_barang.length; index++) {
-                        String print =
-                                id_barang[index]    + " , " +
-                                nama_barang[index]  + " , " +
-                                satuan[index]       + " , " +
-                                harga[index]        + " , " +
-                                jumlah[index]       + " , " +
-                                url[index];
-                        Log.d("Barang : ", print);
-                    }*/
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(
@@ -196,47 +179,20 @@ public class ListItemActivity extends AppCompatActivity {
     // AsyncTask untuk download gambar dan simpan pada array
     Bitmap[] listGambar;
     int counterselesai;
-    static class downloadImage extends AsyncTask<String, Void, Bitmap> {
-        private WeakReference<ListItemActivity> mParentActivity;
-        int indexnum;
 
-        downloadImage(ListItemActivity parentActivity) {
-            mParentActivity = new WeakReference<>(parentActivity);
-        }
+    static class backgroundImageDownloader extends ImageDownloader {
+        backgroundImageDownloader(AsyncResponse delegate) { this.delegate = delegate; }
+    }
+    private backgroundImageDownloader downloadImage;
 
-        @Override
-        protected Bitmap doInBackground(String...url) {
-            indexnum = Integer.parseInt(url[1]);
-            Bitmap mIcon11 = null;
-            try {
-                File folder = mParentActivity.get().getExternalFilesDir("Images");
-                assert folder != null;
-                String dirLocation = folder.getAbsolutePath().concat("/");
-                if (new ImageCaching().isExist(
-                        Objects.requireNonNull(dirLocation.concat(url[2]))))
-                    mIcon11 = new ImageCaching().getImage(dirLocation.concat(url[2]));
-                else {
-                    InputStream in = new java.net.URL(url[0]).openStream();
-                    mIcon11 = BitmapFactory.decodeStream(in);
-                    /*String imgLocation = Objects.requireNonNull(mParentActivity
-                            .get()
-                            .getExternalFilesDir("Images"))
-                            .getCanonicalPath() + url[2];*/
-                    new ImageCaching().putImageWithFullPath(url[2], mIcon11, mParentActivity.get().getBaseContext(),"Product");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+    private void loadImage() {
+        downloadImage = new backgroundImageDownloader(new backgroundImageDownloader.AsyncResponse() {
+            @Override
+            public void processFinish(Bitmap output, Integer index) {
+                listGambar[index] = output;
+                addCategoryItemData(index);
             }
-
-            return mIcon11;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            final ListItemActivity parentActivity = mParentActivity.get();
-            parentActivity.listGambar[indexnum] = result;
-            parentActivity.addCategoryItemData(indexnum);
-        }
+        });
     }
 
     // Memulai efek shimmer jika pengguna kembali menggunakan aplikasi
@@ -255,6 +211,20 @@ public class ListItemActivity extends AppCompatActivity {
 
     public void setbackButton(View v) {
         this.finish();
+    }
+
+    public String getStringOfProductPicLocation() {
+        File folder = null;
+        String location = "";
+        try {
+            folder = this.getExternalFilesDir("Images");
+            if (folder != null)
+                location = folder.getAbsolutePath().concat("/");
+        } catch (Exception e) {
+            ImageCaching.createDir(folder);
+            location = getStringOfProductPicLocation();
+        }
+        return location;
     }
 
     /*static Context getContext() {

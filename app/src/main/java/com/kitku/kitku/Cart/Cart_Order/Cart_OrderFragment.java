@@ -1,6 +1,6 @@
 package com.kitku.kitku.Cart.Cart_Order;
+import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
 import com.kitku.kitku.BackgroundProcess.ImageCaching;
-import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,8 +44,7 @@ public class Cart_OrderFragment extends Fragment {
     private ArrayList<Cart_Order_OrderListCardViewDataModel> orderListArrayList = new ArrayList<>();
     private TextView cartTotalPrice, totalItem;
 
-    private Button buttonToCheckout;
-    //private View orderViewPub;
+    private Button buttonToCheckout, buttonToHome;
 
     public Cart_OrderFragment() {
         // Required empty public constructor
@@ -61,23 +60,22 @@ public class Cart_OrderFragment extends Fragment {
         recyclerViewOrderList.setHasFixedSize(true);
 
         buttonToCheckout = orderView.findViewById(R.id.buttonCart_OrderGoToCheckout);
+        buttonToHome = orderView.findViewById(R.id.buttonCart_OrderGoToHome);
         cartTotalPrice = orderView.findViewById(R.id.cartTotalPrice);
         totalItem = orderView.findViewById(R.id.textCart_Order1);
 
         earlyProcedure();
-        orderView.findViewById(R.id.buttonCart_OrderGoToHome).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.default_home_button();
-            }
-        });
 
         return orderView;
     }
 
     private void earlyProcedure() {
-        addData();
-        showData();
+        buttonToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.default_home_button();
+            }
+        });
         buttonToCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +88,8 @@ public class Cart_OrderFragment extends Fragment {
                 v.getContext().startActivity(intent);*/
             }
         });
+        addData();
+        showData();
     }
 
     @Override
@@ -98,67 +98,17 @@ public class Cart_OrderFragment extends Fragment {
         earlyProcedure();
     }
 
-    /*@Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-
-        buttonToCheckout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Jika User belum mengisi Alamat, maka akan diarahkan ke Halaman Pengisian Alamat
-                Intent intent = new Intent(v.getContext(), Checkout_SetAddressActivity.class);
-                v.getContext().startActivity(intent);
-
-                /* Jika User sudah mengisi Alamat, maka akan langsung diarahkan ke Halaman Checkout
-                Intent intent = new Intent(v.getContext(), CheckoutActivity.class);
-                v.getContext().startActivity(intent);
-
-
-
-            }
-        });
-
-    }*/
-
     private void showData() {
         recyclerViewOrderList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         cartOrderListAdapter = new Cart_Order_OrderListCardViewAdapter(orderListArrayList);
         recyclerViewOrderList.setAdapter(cartOrderListAdapter);
+        recyclerViewOrderList.invalidate();
+        recyclerViewOrderList.refreshDrawableState();
     }
 
     private List<String> id_barang, jumlah, harga, nama, pack;//satuan, pack;
     private void addData() {
         new loadData(this).execute();
-        /*
-        orderListArrayList = new ArrayList<>();
-
-        orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
-                        "Rp 15.000", "/ 1 pack"));
-        orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
-                        "Rp 16.000", "/ 1 pack"));
-        orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
-                        "Rp 17.000", "/ 1 pack"));
-        orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
-                        "Rp 18.000", "/ 1 pack"));
-        orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
-                        "Rp 19.000", "/ 1 pack"));
-        orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
-                        "Rp 20.000", "/ 1 pack"));
-        orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
-                        "Rp 21.000", "/ 1 pack"));
-        orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel
-                (R.drawable.image_sayur_bawangbombay, "Bawang Bombay",
-                        "Rp 22.000", "/ 1 pack"));
-    */
     }
 
     static class loadData extends AsyncTask<String, Void, String> {
@@ -182,27 +132,27 @@ public class Cart_OrderFragment extends Fragment {
                     totalPrice = 0;
                     assert rawData != null;
                     jsonObject = new JSONObject(rawData);
-                    mParentActivity.get().id_barang  = new z_BackendPreProcessing()
+                    mParentActivity.get().id_barang  = new BackendPreProcessing()
                             .ItemListDeserialize(jsonObject.getJSONArray("id_barang"));
-                    mParentActivity.get().jumlah     = new z_BackendPreProcessing()
+                    mParentActivity.get().jumlah     = new BackendPreProcessing()
                             .ItemListDeserialize(jsonObject.getJSONArray("jumlah"));
-                    mParentActivity.get().harga      = new z_BackendPreProcessing()
+                    mParentActivity.get().harga      = new BackendPreProcessing()
                             .ItemListDeserialize(jsonObject.getJSONArray("harga"));
-                    mParentActivity.get().nama       = new z_BackendPreProcessing()
+                    mParentActivity.get().nama       = new BackendPreProcessing()
                             .ItemListDeserialize(jsonObject.getJSONArray("nama"));
-                    //mParentActivity.get().satuan     = new z_BackendPreProcessing()
+                    //mParentActivity.get().satuan     = new BackendPreProcessing()
                     //    .ItemListDeserialize(jsonObject.getJSONArray("satuan"));
-                    mParentActivity.get().pack       = new z_BackendPreProcessing()
+                    mParentActivity.get().pack       = new BackendPreProcessing()
                             .ItemListDeserialize(jsonObject.getJSONArray("pack"));
                     List<Bitmap> gambar = new ArrayList<>();
                     mParentActivity.get().orderListArrayList = new ArrayList<>();
+                    String productPicLocation = mParentActivity.get().getStringOfProductPicLocation();
                     for (int index = 0; index < mParentActivity.get().id_barang.size(); index++) {
                         try {
-                            File folder = Objects.requireNonNull(mParentActivity.get().getContext()).getExternalFilesDir("Images");
-                            assert folder != null;
-                            String dirLocation = folder.getAbsolutePath().concat("/");
-                            gambar.add(index, new ImageCaching().getImage(dirLocation.concat(
-                                            mParentActivity.get().id_barang.get(index))));
+                            Bitmap image = ImageCaching.getImageDirectly(
+                                    productPicLocation.concat("/")
+                                            .concat(mParentActivity.get().id_barang.get(index)));
+                            gambar.add(index, image);
                             mParentActivity.get().orderListArrayList.add(new Cart_Order_OrderListCardViewDataModel(
                                     gambar.get(index),
                                     mParentActivity.get().nama.get(index),
@@ -228,5 +178,19 @@ public class Cart_OrderFragment extends Fragment {
             mParentActivity.get().cartTotalPrice.setText(totalPriceString);
             mParentActivity.get().totalItem.setText(totalPesanan);
         }
+    }
+
+    public String getStringOfProductPicLocation() {
+        File folder = null;
+        String location = "";
+        try {
+            folder = this.getContext().getExternalFilesDir("Images");
+            if (folder != null)
+                location = folder.getAbsolutePath().concat("/");
+        } catch (Exception e) {
+            ImageCaching.createDir(folder);
+            location = getStringOfProductPicLocation();
+        }
+        return location;
     }
 }

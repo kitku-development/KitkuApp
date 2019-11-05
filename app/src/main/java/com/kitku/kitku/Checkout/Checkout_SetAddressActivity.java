@@ -16,14 +16,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.kitku.kitku.BackgroundProcess.AsyncServerAccess;
+import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
 import com.kitku.kitku.BackgroundProcess.ImageCaching;
-import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
-import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
 import com.kitku.kitku.Cart.Cart_Map.Cart_Map_Activity;
 import com.kitku.kitku.Checkout.SpinnerAdapter.Checkout_SetAdress_SpinnerAdapter;
 import com.kitku.kitku.R;
 
-import java.io.File;
 import java.util.Objects;
 
 public class Checkout_SetAddressActivity extends AppCompatActivity {
@@ -135,32 +134,15 @@ public class Checkout_SetAddressActivity extends AppCompatActivity {
         super.onResume();
         Log.d("info","resumed");
         setPredefinedSettings();
+        loadMapPreview();
     }
 
     public void onRestart() {
         super.onRestart();
         Log.d("info","restarted");
         setPredefinedSettings();
+        loadMapPreview();
     }
-
-    /*public void saveAddress(View view) {
-        Intent intent = new Intent(this, CheckoutActivity.class);
-        startActivity(intent);
-    }*/
-
-    /*public void warningBackgroundColor() {
-        spinnerSetProvince.setBackgroundColor(Color.RED);
-        spinnerSetCity.setBackgroundColor(Color.RED);
-        spinnerSetDistrict.setBackgroundColor(Color.RED);
-        spinnerSetSubDistrict.setBackgroundColor(Color.RED);
-    }
-
-    public void normalizeBackgroundColor(View v) {
-        spinnerSetProvince.setBackgroundColor(Color.WHITE);
-        spinnerSetCity.setBackgroundColor(Color.WHITE);
-        spinnerSetDistrict.setBackgroundColor(Color.WHITE);
-        spinnerSetSubDistrict.setBackgroundColor(Color.WHITE);
-    }*/
 
     private void setPredefinedSettings() {
         // set pre-defined setting
@@ -168,11 +150,11 @@ public class Checkout_SetAddressActivity extends AppCompatActivity {
         try {
             if (!userData.contains("namaPenerima")) {
                 runAsync();
-                sendData.execute(z_BackendPreProcessing.URL_UserData +
+                sendData.execute(BackendPreProcessing.URL_UserData +
                         userData.getString("ID_User", null), null);
                 //warningBackgroundColor();
             }
-            Log.d("fullAlamat", Objects.requireNonNull(userData.getString("fullAlamat", null)));
+
             if (userData.contains("fullAlamat")) {
                 int i;
                 // set label alamat
@@ -228,15 +210,21 @@ public class Checkout_SetAddressActivity extends AppCompatActivity {
             }
         } catch (Exception e) { /* */ }
 
-        try {
-            String locationImagePath = this.getExternalFilesDir("Location").toString().concat("/lokasi");
-            if (new ImageCaching().isExist(locationImagePath)) {
-                Bitmap imageBitmap = new ImageCaching().getImage(locationImagePath);
-                ImageView locationView = findViewById(R.id.locationView);
-                locationView.setImageBitmap(imageBitmap);
-                locationView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            }
-        } catch (Exception e) { /* */ }
+        // show map screenshot
+        loadMapPreview();
+    }
+
+    private void loadMapPreview() {
+        String locationImagePath = Objects.requireNonNull(
+                this.getExternalFilesDir("Location")).toString().concat("/lokasi");
+        if (ImageCaching.isExist(locationImagePath)) {
+            Bitmap imageBitmap = ImageCaching.getImageDirectly(locationImagePath);
+            ImageView locationView = findViewById(R.id.locationView);
+            locationView.setImageBitmap(imageBitmap);
+            locationView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            locationView.invalidate();
+            locationView.refreshDrawableState();
+        }
     }
 
     // button simpan alamat
@@ -275,18 +263,18 @@ public class Checkout_SetAddressActivity extends AppCompatActivity {
 
         String jsonData = "";
         try {
-            jsonData = new z_BackendPreProcessing().updateUserInfo(namaPenerima, alamatPenerima, kontakPenerima);
+            jsonData = BackendPreProcessing.updateUserInfo(namaPenerima, alamatPenerima, kontakPenerima);
         } catch (Exception e) { /* */ }
         runAsync();
         sendData.execute(
-                z_BackendPreProcessing.URL_UserUpdate + userData.getString("ID_User", null),
+                BackendPreProcessing.URL_UserUpdate + userData.getString("ID_User", null),
                 jsonData);
 
         Intent intent = new Intent(Checkout_SetAddressActivity.this, CheckoutActivity.class);
         startActivity(intent);
     }
 
-    public static class backgroundTask extends z_AsyncServerAccess {
+    public static class backgroundTask extends AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
     }
     private backgroundTask sendData;
@@ -296,7 +284,7 @@ public class Checkout_SetAddressActivity extends AppCompatActivity {
             @Override
             public void processFinish(String output) {
                 try {
-                    String[] userData = new z_BackendPreProcessing().readUserData(output);
+                    String[] userData = BackendPreProcessing.readUserData(output);
                     // set nama penerima
                     textSetReceiver.setText(userData[0]);
                     // set kontak penerima

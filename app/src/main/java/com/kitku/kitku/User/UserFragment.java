@@ -6,16 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+//import androidx.fragment.app.FragmentManager;
+//import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,13 +28,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kitku.kitku.MainActivity;
 import com.kitku.kitku.R;
 import com.kitku.kitku.BackgroundProcess.*;
-import com.kitku.kitku.Login.LoginFragment;
+//import com.kitku.kitku.Login.LoginFragment;
 
 import java.io.File;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -50,10 +47,11 @@ public class UserFragment extends Fragment {
     private View menuListView;
     private ImageView profilePic;
     private static SharedPreferences userData;
-    private static FragmentManager fragmentManager;
-    private static int FragmentLayout;
+    //private static FragmentManager fragmentManager;
+    //private static int FragmentLayout;
     private static int RESULT_LOAD_IMAGE = 1;
     private ProgressBar progressBar;
+    private String dirString;
     //private ImageView profilePic;
 
     public UserFragment() {
@@ -72,26 +70,30 @@ public class UserFragment extends Fragment {
         progressBar         = menuListView.findViewById(R.id.progressBar);
         profilePic          = menuListView.findViewById(R.id.circleimageviewUser_UserPhoto);
         loadingIndicator.setVisibility(View.INVISIBLE);
-        //userPicture         = menuListView.findViewById(R.id.circleimageviewUser_UserPhoto);
-        //userMenuLayout      = view.findViewById(R.id.FragmentLayout);
 
         // get userdata from app preferencemanager
         userData = PreferenceManager.getDefaultSharedPreferences(
                 Objects.requireNonNull(getContext()).getApplicationContext());
-        fragmentManager = this.getFragmentManager();
-        FragmentLayout = R.id.frameFragmentContainerLoginGoToUserDetailFragment;
+        //fragmentManager = this.getFragmentManager();
+        //FragmentLayout = R.id.frameFragmentContainerLoginGoToUserDetailFragment;
 
         // load data and image from server (if image cache exist, load it from memory instead)
         runAsync();
-        sendData.execute(z_BackendPreProcessing.URL_UserData +
+        sendData.execute(BackendPreProcessing.URL_UserData +
                 userData.getString("ID_User", null), null);
         loadingIndicator.setVisibility(View.VISIBLE);
         profilePic.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-        new downloadImage(UserFragment.this).execute(
-                z_BackendPreProcessing.URL_UserPicLoc,
-                userData.getString("ID_User", null));
-
+        dirString = Objects.requireNonNull(
+                this.getContext().getExternalFilesDir("UserPic")).getAbsolutePath().concat("/");
+        loadImage();
+        downloadImage.execute(
+            dirString,
+            userData.getString("ID_User", null),
+            BackendPreProcessing.URL_UserPicLoc.concat(
+                    Objects.requireNonNull(userData.getString("ID_User", null))),
+            null
+        );
         // show menu for user
         addMenuData();
         showMenuData();
@@ -105,43 +107,42 @@ public class UserFragment extends Fragment {
             }
         });
 
+        menuListView.findViewById(R.id.buttonToolbarCheckoutBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.default_home_button();
+            }
+        });
+
         return menuListView;
 
     }
 
-    /*@Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-
-    }*/
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     private void showMenuData() {
         recyclerViewMenu.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         userMenuListAdapter = new UserMenuListCardViewAdapter(menuListArrayList);
         recyclerViewMenu.setAdapter(userMenuListAdapter);
-
     }
 
     private void addMenuData() {
         menuListArrayList = new ArrayList<>();
-
-        menuListArrayList.add(new UserMenuListCardViewDataModel("Blog", menuListView));
-        menuListArrayList.add(new UserMenuListCardViewDataModel("Syarat dan Ketentuan", menuListView));
-        menuListArrayList.add(new UserMenuListCardViewDataModel("FAQ", menuListView));
-        menuListArrayList.add(new UserMenuListCardViewDataModel("Logout", menuListView));
+        String tag = "User";
+        menuListArrayList.add(new UserMenuListCardViewDataModel("Blog", menuListView, tag));
+        menuListArrayList.add(new UserMenuListCardViewDataModel("Syarat dan Ketentuan", menuListView, tag));
+        menuListArrayList.add(new UserMenuListCardViewDataModel("FAQ", menuListView, tag));
+        menuListArrayList.add(new UserMenuListCardViewDataModel("Logout", menuListView, tag));
     }
 
-
-//}
     private TextView usernameText;
     private ProgressBar loadingIndicator;
-    //private ImageView userPicture;
-    //private RelativeLayout userMenuLayout;
 
-    // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
-    public static class backgroundTask extends z_AsyncServerAccess {
+    // Inisiasi AsyncTask dari AsyncServerAccess supaya dapat mengakses Activity
+    public static class backgroundTask extends AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
     }
 
@@ -152,7 +153,7 @@ public class UserFragment extends Fragment {
             @Override
             public void processFinish(String output) {
                 try {
-                    String[] userData = new z_BackendPreProcessing().readUserData(output);
+                    String[] userData = new BackendPreProcessing().readUserData(output);
                     usernameText.setText(userData[0]);
                     loadingIndicator.setVisibility(View.GONE);
                     //new downloadImage(UserFragment.this).execute();
@@ -162,20 +163,40 @@ public class UserFragment extends Fragment {
     }
 
     // used to logout user and redirect to login fragment
-    static void loggingOut(View menuListView) {
+    public static void loggingOut(View menuListView) {
         SharedPreferences.Editor userDataEdit = userData.edit();
         userDataEdit.remove("ID_User");
         userDataEdit.apply();
         menuListView.setVisibility(View.GONE);
         //menuListView.setId(View.generateViewId());
-        Fragment LoginFragment = new LoginFragment();
+        /*Fragment LoginFragment = new LoginFragment();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(FragmentLayout, LoginFragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();*/
+        MainActivity.default_home_button();
+    }
+
+    static class backgroundImageDownloader extends ImageDownloader {
+        backgroundImageDownloader(AsyncResponse delegate) { this.delegate = delegate; }
+    }
+    private backgroundImageDownloader downloadImage;
+
+    private void loadImage() {
+        downloadImage = new backgroundImageDownloader(new backgroundImageDownloader.AsyncResponse() {
+            @Override
+            public void processFinish(Bitmap output, Integer index) {
+                if (output != null) {
+                    // set and show image
+                    profilePic.setImageBitmap(output);
+                }
+                progressBar.setVisibility(View.GONE);
+                profilePic.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     // declare for uploading image
-    public static class backgroundTask2 extends ImageUpload {
+    public static class backgroundTask2 extends ImageUploader {
         backgroundTask2(AsyncResponse delegate) { this.delegate = delegate; }
     }
 
@@ -218,20 +239,21 @@ public class UserFragment extends Fragment {
                             }
 
                             // delete existing picture cache
-                            String dirString = Objects.requireNonNull(
-                                    Objects.requireNonNull(UserFragment.this.getActivity())
-                                    .getExternalFilesDir("UserPic"))
-                                    .getAbsolutePath()
-                                    .concat("/")
-                                    .concat(Objects.requireNonNull(
-                                            userData.getString("ID_User", null)));
-                            File dir = new File(dirString);
-                            dir.delete();
+                            File dir = new File(dirString.concat(
+                                    Objects.requireNonNull(userData.getString("ID_User", null))));
+                            boolean delete = dir.delete();
 
                             // download new image from server
-                            new downloadImage(UserFragment.this).execute(
-                                    z_BackendPreProcessing.URL_UserPicLoc,
-                                    userData.getString("ID_User", null));
+                            loadImage();
+                            downloadImage.execute(
+                                    dirString,
+                                    userData.getString("ID_User", null),
+                                    BackendPreProcessing.URL_UserPicLoc
+                                            .concat(
+                                                    Objects.requireNonNull(
+                                                            userData.getString(
+                                                                    "ID_User", null))),
+                                    null);
                         } else
                             // show warning
                             Toast.makeText(
@@ -241,16 +263,10 @@ public class UserFragment extends Fragment {
                                     .show();
                     }
                 });
-            //};
-                //Log.d("url",z_BackendPreProcessing.URL_UserUploadImg + userData.getString("ID_User", null));
-                //Log.d("img", jsonString.toString());
-                //loadingIndicator.setVisibility(View.VISIBLE);
-                //progressDialog.show();
-                //top.setLayoutParams();
                 profilePic.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 // upload image
-                sendPicture.execute(z_BackendPreProcessing.URL_UserUploadImg +
+                sendPicture.execute(BackendPreProcessing.URL_UserUploadImg +
                         userData.getString("ID_User", null), picturePath);
             }
             else {
@@ -268,84 +284,4 @@ public class UserFragment extends Fragment {
             }
         }
     }
-
-    // declare async task to download image
-    static class downloadImage extends AsyncTask<String, Void, Bitmap> {
-        private WeakReference<UserFragment> mParentActivity;
-
-        downloadImage(UserFragment parentActivity) {
-            mParentActivity = new WeakReference<>(parentActivity);
-        }
-
-        @Override
-        protected Bitmap doInBackground(String...url) {
-            //indexnum = Integer.parseInt(url[1]);
-            Bitmap mIcon11 = null;
-            try {
-                File folder = Objects.requireNonNull(
-                        mParentActivity.get().getActivity()).getExternalFilesDir("UserPic");
-                assert folder != null;
-                if (!folder.exists()) folder.mkdir();
-                String dirLocation = folder.getAbsolutePath().concat("/");
-                // check if image is cached
-                if (new ImageCaching().isExist(dirLocation.concat(url[1])))
-                    mIcon11 = new ImageCaching().getImage(dirLocation.concat(url[1]));
-                else {
-                    // if not, download it
-                    InputStream in = new java.net.URL(url[0].concat(url[1]))
-                            .openStream();
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inMutable = true;
-                    mIcon11 = BitmapFactory.decodeStream(in, null, options);
-                    // save image as cache
-                    new ImageCaching().putImageWithFullPath(url[1], mIcon11,
-                            Objects.requireNonNull(
-                                    mParentActivity.get().getActivity()).getBaseContext(),"User");
-                }
-            } catch (Exception e) { e.printStackTrace(); }
-
-            return mIcon11;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            final UserFragment parentActivity = mParentActivity.get();
-            if (result != null) {
-                // set and show image
-                parentActivity.profilePic.setImageBitmap(result);
-            }
-            parentActivity.progressBar.setVisibility(View.GONE);
-            parentActivity.profilePic.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /*
-    // Menu user disetting disini
-    private void addUserMenu(View v, LayoutInflater inflater, ViewGroup container) {
-        String[] menuList   = new String[] {"Blog", "Syarat dan Ketentuan", "FAQ", "Logout"};
-        String[] pesanMenu  = new String[] {
-                "Ini menu blog",
-                "Ini menu S&K",
-                "Ini menu FAQ",
-                "Apakah anda ingin logout?"
-        };
-        int nextID = 0;
-        for (int index = 0; index < menuList.length; index++) {
-            UserMenuBuilder build = new UserMenuBuilder(
-                    userMenuLayout,
-                    getResources(),
-                    menuList[index],
-                    pesanMenu[index],
-                    nextID,
-                    v,
-                    this,
-                    getChildFragmentManager(),
-                    "User");//,
-            //new MainActivity());
-            nextID = build.getNextID();
-            //build.setAdditionalData(inflater, container);
-            //build.addMenu(userMenuLayout, getResources(), s);
-        }
-    }
-    */
 }

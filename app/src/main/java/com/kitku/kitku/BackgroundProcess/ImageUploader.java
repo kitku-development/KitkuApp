@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public abstract class ImageUpload extends AsyncTask<String, Void, String> {
+public abstract class ImageUploader extends AsyncTask<String, Void, String> {
     // source https://stackoverflow.com/questions/25398200/uploading-file-in-php-server-from-android-device
     @Override
     protected String doInBackground(String...strings) {

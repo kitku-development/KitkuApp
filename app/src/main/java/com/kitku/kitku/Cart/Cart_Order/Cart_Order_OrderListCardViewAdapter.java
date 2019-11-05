@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
 import com.kitku.kitku.R;
-import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
 
 import java.util.ArrayList;
 
@@ -23,9 +22,8 @@ public class Cart_Order_OrderListCardViewAdapter
         extends RecyclerView.Adapter<Cart_Order_OrderListCardViewAdapter.OrderListViewHolder> {
 
     private ArrayList<Cart_Order_OrderListCardViewDataModel> orderListDataModel;
-    private int defaultAmount = 1;
 
-    public void removeItem (int position) {
+    private void removeItem(int position) {
         orderListDataModel.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, orderListDataModel.size());
@@ -59,6 +57,7 @@ public class Cart_Order_OrderListCardViewAdapter
         orderListViewHolder.c = orderListDataModel.get(position).getContext();
         orderListViewHolder.textItemAmount.setText(orderListDataModel.get(position).getQuantity());
 
+        int defaultAmount = 1;
         orderListViewHolder.textItemAmount.setText(String.valueOf(defaultAmount));
 
         orderListViewHolder.imageButtonAddAmountItem.setOnClickListener(new View.OnClickListener() {
@@ -115,18 +114,18 @@ public class Cart_Order_OrderListCardViewAdapter
             textItemAmount = itemView.findViewById(R.id.textviewCheckout_OrderAmount);
 
             // ubah teks toal harga ketika jumlah item berubah
-
             textItemAmount.addTextChangedListener(new TextWatcher() {
                 int oldQuantity, newQuantity, oldPrice;
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     oldQuantity = Integer.valueOf(textItemAmount.getText().toString());
-                    //Log.d("oldq",String.valueOf(oldQuantity));
-                    if (!textTotalPrice.getText().toString().equals("Rp. 0"))
-                        oldPrice = Integer.valueOf(textTotalPrice.getText().toString().replace("Rp. ", ""));
+                    if (!textTotalPrice.getText().toString().equals("Rp. 0")) {
+                        oldPrice = Integer.valueOf(
+                                textTotalPrice.getText().toString()
+                                        .replace("Rp. ", ""));
+                    }
                     else
                         oldPrice = 0;
-                    //Log.d("oldp",String.valueOf(oldPrice));
                 }
 
                 @Override
@@ -144,7 +143,7 @@ public class Cart_Order_OrderListCardViewAdapter
 
                     // update data cart sharedpreference
                     try {
-                        new z_BackendPreProcessing().addItemToCart(
+                        new BackendPreProcessing().addItemToCart(
                                 id_barang,
                                 String.valueOf(itemAmount),
                                 String.valueOf(productPrice),

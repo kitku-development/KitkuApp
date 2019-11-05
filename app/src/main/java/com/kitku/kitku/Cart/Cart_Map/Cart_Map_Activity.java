@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -29,13 +28,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.kitku.kitku.BackgroundProcess.AsyncServerAccess;
+import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
 import com.kitku.kitku.BackgroundProcess.ImageCaching;
-import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
-import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
-import com.kitku.kitku.Checkout.CheckoutActivity;
-import com.kitku.kitku.Checkout.Checkout_SetAddressActivity;
 import com.kitku.kitku.R;
 
+import java.io.File;
 import java.util.Objects;
 
 public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCallback,
@@ -87,11 +85,18 @@ public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCal
     }
 
     public void buttonSaveLocation(View v) {
+        File folder = null;
+        try {
+            folder = getApplicationContext().getExternalFilesDir("Location");
+        } catch (Exception e) {
+            ImageCaching.createDir(folder);
+            folder = getApplicationContext().getExternalFilesDir("Location");
+        }
+        final String mapPictureLocation = folder.getAbsolutePath().concat("/lokasi");
         mMap.snapshot(new GoogleMap.SnapshotReadyCallback() {
             @Override
             public void onSnapshotReady(Bitmap bitmap) {
-                new ImageCaching().putImageWithFullPath("lokasi", bitmap,
-                        getApplicationContext(),"Location");
+                ImageCaching.saveImageIn(mapPictureLocation, bitmap);
             }
         });
         //startActivity(new Intent(this, Checkout_SetAddressActivity.class));
@@ -161,33 +166,39 @@ public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCal
                 .show();
     }
 
-    int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
+    int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 0;
     private void askPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
             MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_ACCESS_FINE_LOCATION);
-
+            // No explanation needed; request the permission
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_ACCESS_FINE_LOCATION);
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
-            }
-        } /*else {
+        } else {
             // Permission has already been granted
-        }*/
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
+        if ((grantResults[0] == PackageManager.PERMISSION_GRANTED) && (permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION))) {
+            Toast.makeText(
+                    this,
+                    "Jika lokasi tidak tampil, tekan tombol merah pada sudut kanan bawah layar anda.",
+                    Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(
+                    this,
+                    "Mohon aktifkan izin akses lokasi supaya dapat menampilkan lokasi anda.",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -208,8 +219,8 @@ public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCal
         setMarkerLocation(latLng);
     }
 
-    // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
-    static class backgroundTask extends z_AsyncServerAccess {
+    // Inisiasi AsyncTask dari AsyncServerAccess supaya dapat mengakses Activity
+    static class backgroundTask extends AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
     }
     backgroundTask sendData;
@@ -229,7 +240,7 @@ public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCal
         // Output format
         String output = "json";
         // Building the url to the web service
-        return z_BackendPreProcessing.URL_GetDistance + output + "?" + parameters;
+        return BackendPreProcessing.URL_GetDistance + output + "?" + parameters;
     }
 
     public void setMarkerLocation(Task<Location> mLastLocation) {
@@ -274,12 +285,12 @@ public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCal
         sendData = new backgroundTask(new backgroundTask.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                Log.d("output", output);
+                //Log.d("output", output);
                 try {
-                    new z_BackendPreProcessing().readDistance(output);
+                    BackendPreProcessing.readDistance(output);
                 } catch (Exception e) { /*e.printStackTrace();*/ }
             }
         });
-        sendData.execute(urlDistance);
+        sendData.execute(urlDistance, null);
     }
 }

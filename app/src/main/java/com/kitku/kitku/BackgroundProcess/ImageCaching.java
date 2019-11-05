@@ -1,9 +1,9 @@
 package com.kitku.kitku.BackgroundProcess;
 
-import android.content.Context;
+//import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
+//import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,7 +17,7 @@ public class ImageCaching {
     // 2. theBitmap -> the saved bitmap
     // 3. context -> to access getExternalDirectory()
     // 4. tag -> to choose whether to save product or userPic ("User", "Product", or "Location")
-    public void putImageWithFullPath(String fullPath, Bitmap theBitmap, Context c, String tag) {
+    /*public void putImageWithFullPath(String fullPath, Bitmap theBitmap, Context c, String tag) {
         if (!(fullPath == null || theBitmap == null)) {
             saveBitmap(fullPath, theBitmap, c, tag);
         }
@@ -56,7 +56,7 @@ public class ImageCaching {
             //fileCreated = imageFile.createNewFile();
             // create the cache file
             imageFile.createNewFile();
-        } catch (IOException e) { /*e.printStackTrace();*/ }
+        } catch (IOException e) { /*e.printStackTrace(); }
 
         Log.d("location",imageFile.getAbsolutePath());
 
@@ -85,24 +85,77 @@ public class ImageCaching {
                 }
             }
         }
+    }*/
+
+    public static void saveImageIn(String fullPath, Bitmap bitmap) {
+        // if image exist, delete it first
+        File imageFile = new File(fullPath);
+        if (imageFile.exists()) {
+            boolean delete = imageFile.delete();
+        }
+
+        try {
+            // create the cache file
+            boolean newFile = imageFile.createNewFile();
+        } catch (IOException e) { /*e.printStackTrace();*/ }
+
+        // get bitmap to FileOutputStream, then convert image as PNG (even though
+        // the file would have no extension later)
+        FileOutputStream out = null;
+        try {
+            // from FileOutputStream, write the bitmap to file
+            out = new FileOutputStream(imageFile);
+            //bitmapCompressed = bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            // compress and convert file as PNG type
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (Exception e) { /*e.printStackTrace();*/
+        } finally {
+            if (out != null) {
+                // dump all the resource used for FileOutputStream
+                try {
+                    out.flush();
+                    out.close();
+                    //streamClosed = true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    //streamClosed = false;
+                }
+            }
+        }
+    }
+
+    // this function is to create dir
+    public static void createDir(File path) {
+        boolean mkdir = path.mkdir();
+    }
+
+    public static Bitmap getImageDirectly(String path) {
+        Bitmap bitmapFromPath = null;
+        try {
+            bitmapFromPath = BitmapFactory.decodeFile(path);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmapFromPath;
     }
 
     // to get Image if exist as cache
-    public Bitmap getImage(String path) {
+    /*public Bitmap getImage(String path) {
         //path = c.getExternalFilesDir("Images").getAbsolutePath() + path;
         Bitmap bitmapFromPath = null;
         try {
             bitmapFromPath = BitmapFactory.decodeFile(path);
 
         } catch (Exception e) {
-            // TODO: handle exception
+            //
             e.printStackTrace();
         }
         return bitmapFromPath;
-    }
+    }*/
 
     // to check if cache is exist
-    public boolean isExist(String path) {
+    public static boolean isExist(String path) {
         File imageFile = new File(path);
         //Log.d("path", path);
         return imageFile.exists();

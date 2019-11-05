@@ -3,6 +3,7 @@ package com.kitku.kitku.Cart;
 
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
+import com.kitku.kitku.MainActivity;
 import com.kitku.kitku.R;
 
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,12 @@ public class CartFragment extends Fragment {
 
         TabLayout tablayoutCartFragmentNavigation = cartView.findViewById(R.id.tablayoutCartFragmentNavigation);
         tablayoutCartFragmentNavigation.setupWithViewPager(viewpagerCartFragmentNavigation);
+        cartView.findViewById(R.id.buttonToolbarCheckoutBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.default_home_button();
+            }
+        });
 
         return cartView;
     }

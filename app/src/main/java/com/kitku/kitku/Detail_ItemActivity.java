@@ -4,10 +4,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -18,14 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
 import com.kitku.kitku.BackgroundProcess.ImageCaching;
-import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
-import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
+import com.kitku.kitku.BackgroundProcess.ImageDownloader;
+import com.kitku.kitku.BackgroundProcess.AsyncServerAccess;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.Objects;
 
 public class Detail_ItemActivity extends AppCompatActivity {
@@ -59,14 +55,14 @@ public class Detail_ItemActivity extends AppCompatActivity {
             //Log.d("id",id_barang);
         }
         runAsync();
-        sendData.execute(z_BackendPreProcessing.URL_ProductDetail + id_barang, null);
+        sendData.execute(BackendPreProcessing.URL_ProductDetail + id_barang, null);
         findViewById(R.id.button).setVisibility(View.GONE);
     }
 
     public void buttonBuyItem(View view) {
         // tambah data ke dalam sharedpreference
         try {
-            new z_BackendPreProcessing().addItemToCart(
+            BackendPreProcessing.addItemToCart(
                     id_barang,
                     "1",
                     teksHarga.getText().toString(),
@@ -118,8 +114,26 @@ public class Detail_ItemActivity extends AppCompatActivity {
 
     }
 
-    // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
-    static class backgroundTask extends z_AsyncServerAccess {
+    // AsyncTask untuk download gambar
+    Bitmap gambar;
+
+    static class backgroundImageDownloader extends ImageDownloader {
+        backgroundImageDownloader(AsyncResponse delegate) { this.delegate = delegate; }
+    }
+    private backgroundImageDownloader downloadImage;
+
+    private void loadImage() {
+        downloadImage = new backgroundImageDownloader(new backgroundImageDownloader.AsyncResponse() {
+            @Override
+            public void processFinish(Bitmap output, Integer index) {
+                gambar = output;
+                loadFinish();
+            }
+        });
+    }
+
+    // Inisiasi AsyncTask dari AsyncServerAccess supaya dapat mengakses Activity
+    static class backgroundTask extends AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
     }
 
@@ -133,9 +147,10 @@ public class Detail_ItemActivity extends AppCompatActivity {
             public void processFinish(String output) {
                 //Log.d("out",output);
                 String[] data;
+                String productPicLocation = getStringOfProductPicLocation();
                 try {
                     // Parsing data dari JSON ke dalam array
-                    data = new z_BackendPreProcessing().readProductDetail(output);
+                    data = BackendPreProcessing.readProductDetail(output);
 
                     // Data dalam array dikelompokkan dalam array baru
                     nama_barang = data[0];
@@ -145,10 +160,13 @@ public class Detail_ItemActivity extends AppCompatActivity {
                     jumlah      = data[4];
                     review      = data[5];
                     url         = data[6];
-                    try {
-                        new downloadImage(Detail_ItemActivity.this).execute(
-                                url, id_barang);
-                    } catch (Exception e) { e.printStackTrace(); }
+                    loadImage();
+                    downloadImage.execute(
+                            productPicLocation,
+                            id_barang,
+                            url,
+                            null
+                    );
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(
@@ -159,48 +177,6 @@ public class Detail_ItemActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    // AsyncTask untuk download gambar dan simpan pada array
-    Bitmap gambar;
-    static class downloadImage extends AsyncTask<String, Void, Bitmap> {
-        private WeakReference<Detail_ItemActivity> mParentActivity;
-
-        downloadImage(Detail_ItemActivity parentActivity) {
-            mParentActivity = new WeakReference<>(parentActivity);
-        }
-
-        @Override
-        protected Bitmap doInBackground(String...url) {
-            Bitmap mIcon11 = null;
-            try {
-                File folder = mParentActivity.get().getExternalFilesDir("Images");
-                assert folder != null;
-                String dirLocation = folder.getAbsolutePath().concat("/");
-                if (new ImageCaching().isExist(
-                        dirLocation.concat(url[1])))
-                    mIcon11 = new ImageCaching().getImage(dirLocation.concat(url[1]));
-                else {
-                    InputStream in = new java.net.URL(url[0]).openStream();
-                    mIcon11 = BitmapFactory.decodeStream(in);
-                    /*String imgLocation = Objects.requireNonNull(mParentActivity
-                            .get()
-                            .getExternalFilesDir("Images"))
-                            .getCanonicalPath() + url[1];*/
-                    new ImageCaching().putImageWithFullPath(url[1], mIcon11, mParentActivity.get().getBaseContext(), "item");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            final Detail_ItemActivity parentActivity = mParentActivity.get();
-            parentActivity.gambar = result;
-            parentActivity.loadFinish();
-        }
     }
 
     protected void loadFinish() {
@@ -226,5 +202,19 @@ public class Detail_ItemActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this).edit();
         edit.remove("Cart");
         edit.apply();
+    }
+
+    public String getStringOfProductPicLocation() {
+        File folder = null;
+        String location = "";
+        try {
+            folder = this.getExternalFilesDir("Images");
+            if (folder != null)
+                location = folder.getAbsolutePath().concat("/");
+        } catch (Exception e) {
+            ImageCaching.createDir(folder);
+            location = getStringOfProductPicLocation();
+        }
+        return location;
     }
 }

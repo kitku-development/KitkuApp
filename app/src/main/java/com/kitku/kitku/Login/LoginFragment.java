@@ -56,4 +56,9 @@ public class LoginFragment extends Fragment {
             new LoginProcedure().gotoPage("Mitra", getChildFragmentManager(), view);*/
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }

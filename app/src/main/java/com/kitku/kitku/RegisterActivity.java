@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kitku.kitku.BackgroundProcess.z_AsyncServerAccess;
-import com.kitku.kitku.BackgroundProcess.z_BackendPreProcessing;
+import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
+import com.kitku.kitku.BackgroundProcess.AsyncServerAccess;
 
 import org.json.JSONObject;
 
@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
                     // Convert data dari string menjadi JSON
                     String json = null;
                     try {
-                        json = new z_BackendPreProcessing().registerUser(
+                        json = BackendPreProcessing.registerUser(
                                 namebox.getText().toString(),
                                 emailbox.getText().toString(),
                                 passbox.getText().toString(),
@@ -87,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     // Kirim data
                     register();
-                    sendData.execute(z_BackendPreProcessing.URL_UserRegister,json);
+                    sendData.execute(BackendPreProcessing.URL_UserRegister,json);
                     loadingIndicator.show();
                 }
             }
@@ -102,8 +102,8 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // Inisiasi AsyncTask dari z_AsyncServerAccess supaya dapat mengakses Activity
-    static class backgroundTask extends z_AsyncServerAccess {
+    // Inisiasi AsyncTask dari AsyncServerAccess supaya dapat mengakses Activity
+    static class backgroundTask extends AsyncServerAccess {
         backgroundTask(AsyncResponse delegate) { this.delegate = delegate; }
     }
 
