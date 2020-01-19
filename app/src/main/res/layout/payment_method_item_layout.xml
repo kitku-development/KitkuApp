@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageLogoPaymentItem"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:src="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/txtPaymentItem1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/imageLogoPaymentItem"
+        android:layout_marginStart="10dp"
+        android:layout_toRightOf="@id/imageLogoPaymentItem"
+        android:text="Kode bayar"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentCodeItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtPaymentItem1"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/imageLogoPaymentItem"
+        android:text="1234567890123456"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtPaymentItem2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageLogoPaymentItem"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:text="Nomor Rekening"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentAccountNumberItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/txtPaymentItem2"
+        android:layout_below="@id/txtPaymentItem1"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="16dp"
+        android:text="0123-4567-890"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtPaymentItem3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtPaymentItem2"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="18dp"
+        android:text="Jumlah pembayaran"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentTotalPriceItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/txtPaymentItem3"
+        android:layout_below="@id/txtPaymentItem2"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="16dp"
+        android:text="Rp. 30.000"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtPaymentItem4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtPaymentItem3"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="24dp"
+        android:text="Mohon untuk disimpan kode pembayaran diatas dan informasikan kepada teller saat pembayaran. Pesanan yang memenuhi persyaratan untuk 1 hari pengiriman hanya untuk pembayaran yang selesai dilakukan sebelum jam 4 sore. Jika anda telah melakukan pembayaran, maka silahkan abaikan pesan ini."
+        android:textSize="14sp"/>
+
+</RelativeLayout>

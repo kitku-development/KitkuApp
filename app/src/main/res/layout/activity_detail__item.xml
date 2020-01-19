@@ -28,13 +28,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/buttonToolbarCheckoutBack"
+                        android:layout_toEndOf="@id/buttonToolbarOrderTrackBack"
                         android:textSize="20sp"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"/>
 
                     <Button
-                        android:id="@+id/buttonToolbarCheckoutBack"
+                        android:id="@+id/buttonToolbarOrderTrackBack"
                         style="@style/ButtonToolbarBack"
                         android:layout_centerVertical="true"
                         android:onClick="setBackButton" />

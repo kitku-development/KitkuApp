@@ -86,6 +86,10 @@
     <string name="content_desc_add_imagebutton">Add Item</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_cart__map_">Map</string>
+    <string name="txtComingSoon">Hai! kami dari Kitku selalu berusaha untuk memberi anda pelayanan terbaik yang bisa anda dapatkan di dalam platform ini. Maka dari itu, kami sedang mengembangkan fitur yang dapat memudahkan anda berada di dalam platform ini.</string>
+
+    <string name="login"><u>Login</u></string>
+    <string name="daftar"><u>Daftar</u></string>
 
 
 </resources>

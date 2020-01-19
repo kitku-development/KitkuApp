@@ -2,12 +2,15 @@ package com.kitku.kitku.Cart.Cart_OnProgress;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kitku.kitku.OrderTrackingActivity;
 import com.kitku.kitku.R;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class Cart_OnProgress_OrderProgressCardViewAdapter
 
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cartonprogress_orderlistitem_rv_layout, viewGroup, false);
+
 
         return new ProgressListViewHolder(view);
 
@@ -51,12 +55,20 @@ public class Cart_OnProgress_OrderProgressCardViewAdapter
         ImageView itemImage;
         TextView textItemName, textItemProgress;
 
-        public ProgressListViewHolder(@NonNull View itemView) {
+        public ProgressListViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             itemImage = itemView.findViewById(R.id.imageOnProgressListItem);
             textItemName = itemView.findViewById(R.id.textnameOnProgressListItem);
             textItemProgress = itemView.findViewById(R.id.textprogressOnProgressListItem);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(itemView.getContext(), OrderTrackingActivity.class);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
 
         }
     }

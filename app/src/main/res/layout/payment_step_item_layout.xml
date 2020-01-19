@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/textPaymentStepItem1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.  Catat kode pembayaran anda"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem1"
+        android:layout_marginTop="8dp"
+        android:text="2.  Gunakan ATM Mandiri untuk menyelesaikan pembayaran"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem2"
+        android:layout_marginTop="8dp"
+        android:text="3.  Masukkan PIN kartu ATM"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem3"
+        android:layout_marginTop="8dp"
+        android:text="4.  Pilih \''Bayar/Beli\''"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem4"
+        android:layout_marginTop="8dp"
+        android:text="5.  Cari pilihan \''Multi Payment\''"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem5"
+        android:layout_marginTop="8dp"
+        android:text="6.  Masukkan kode perusahaan 12345"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem6"
+        android:layout_marginTop="8dp"
+        android:text="7.  Masukkan kode pembayaran"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem7"
+        android:layout_marginTop="8dp"
+        android:text="8.  Masukkan jumlah pembayaran sesuai dengan jumlah tagihan anda kemudian tekan \''Benar\''"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem8"
+        android:layout_marginTop="8dp"
+        android:text="9.  Pilih tagihan anda jika sudah sesuai dan tekan \''Ya\''"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem9"
+        android:layout_marginTop="8dp"
+        android:text="10.  Konfirmasukan tagihan anda apakah sudah sesuai lalu tekan \''Ya\''"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textPaymentStepItem11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPaymentStepItem10"
+        android:layout_marginTop="8dp"
+        android:text="11.  Harap simpan struk transaksi setelah pembayaran"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"/>
+
+</RelativeLayout>

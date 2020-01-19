@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kitku.kitku.ComingSoonActivity;
 import com.kitku.kitku.PartnerFragment;
 import com.kitku.kitku.User.UserMenu.BlogActivity;
 import com.kitku.kitku.User.UserMenu.FAQActivity;
@@ -49,15 +50,21 @@ public class UserMenuListCardViewAdapter extends RecyclerView.Adapter<UserMenuLi
             public void onClick(View v) {
                 if (menuListViewHolder.getAdapterPosition() == 0) {
                     // Event yang akan terjadi jika User menekan tombol Blog berada di sini
-                    Intent intent = new Intent(v.getContext(), BlogActivity.class);
+                    //Intent intent = new Intent(v.getContext(), BlogActivity.class);
+                    // Saat ini fitur2 yang masih dalam pengembangan akan dialihkan ke halaman coming soon
+                    Intent intent = new Intent(v.getContext(), ComingSoonActivity.class);
                     v.getContext().startActivity(intent);
                 } else if (menuListViewHolder.getAdapterPosition() == 1) {
                     // Event yang akan terjadi jika User menekan tombol Syarat & Ketentuan berada di sini
-                    Intent intent = new Intent(v.getContext(), TermsAndConditionsActivity.class);
+                    //Intent intent = new Intent(v.getContext(), TermsAndConditionsActivity.class);
+                    // Saat ini fitur2 yang masih dalam pengembangan akan dialihkan ke halaman coming soon
+                    Intent intent = new Intent(v.getContext(), ComingSoonActivity.class);
                     v.getContext().startActivity(intent);
                 } else if (menuListViewHolder.getAdapterPosition() == 2) {
                     // Event yang akan terjadi jika User menekan tombol FAQ berada di sini
-                    Intent intent = new Intent(v.getContext(), FAQActivity.class);
+                    //Intent intent = new Intent(v.getContext(), FAQActivity.class);
+                    // Saat ini fitur2 yang masih dalam pengembangan akan dialihkan ke halaman coming soon
+                    Intent intent = new Intent(v.getContext(), ComingSoonActivity.class);
                     v.getContext().startActivity(intent);
                 } else if (menuListViewHolder.getAdapterPosition() == 3) {
                     // Event yang akan terjadi jika User menekan tombol Logout berada di sini
@@ -71,15 +78,21 @@ public class UserMenuListCardViewAdapter extends RecyclerView.Adapter<UserMenuLi
             public void onClick(final View v) {
                 if (menuListViewHolder.getAdapterPosition() == 0) {
                     // Event yang akan terjadi jika User menekan tombol Blog berada di sini
-                    Intent intent = new Intent(v.getContext(), BlogActivity.class);
+                    //Intent intent = new Intent(v.getContext(), BlogActivity.class);
+                    // Saat ini fitur2 yang masih dalam pengembangan akan dialihkan ke halaman coming soon
+                    Intent intent = new Intent(v.getContext(), ComingSoonActivity.class);
                     v.getContext().startActivity(intent);
                 } else if (menuListViewHolder.getAdapterPosition() == 1) {
                     // Event yang akan terjadi jika User menekan tombol Syarat & Ketentuan berada di sini
-                    Intent intent = new Intent(v.getContext(), TermsAndConditionsActivity.class);
+                    //Intent intent = new Intent(v.getContext(), TermsAndConditionsActivity.class);
+                    // Saat ini fitur2 yang masih dalam pengembangan akan dialihkan ke halaman coming soon
+                    Intent intent = new Intent(v.getContext(), ComingSoonActivity.class);
                     v.getContext().startActivity(intent);
                 } else if (menuListViewHolder.getAdapterPosition() == 2) {
                     // Event yang akan terjadi jika User menekan tombol FAQ berada di sini
-                    Intent intent = new Intent(v.getContext(), FAQActivity.class);
+                    //Intent intent = new Intent(v.getContext(), FAQActivity.class);
+                    // Saat ini fitur2 yang masih dalam pengembangan akan dialihkan ke halaman coming soon
+                    Intent intent = new Intent(v.getContext(), ComingSoonActivity.class);
                     v.getContext().startActivity(intent);
                 } else if (menuListViewHolder.getAdapterPosition() == 3) {
                     // Event yang akan terjadi jika User menekan tombol Logout berada di sini

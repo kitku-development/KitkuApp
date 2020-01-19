@@ -24,7 +24,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarCheckoutSetAddress"
+                android:id="@+id/toolbarOrderTracking"
                 style="@style/Toolbar">
 
                 <RelativeLayout
@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:id="@+id/buttonToolbarCheckoutBack"
+                        android:id="@+id/buttonToolbarOrderTrackBack"
                         style="@style/ButtonToolbarBack"
                         android:layout_centerVertical="true" />
 
@@ -55,14 +55,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@id/toolbarCheckoutSetAddress"
+                android:layout_below="@id/toolbarOrderTracking"
                 android:background="#D6D6D6" />
 
             <TextView
                 android:id="@+id/txtUser1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/toolbarCheckoutSetAddress"
+                android:layout_below="@id/toolbarOrderTracking"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
                 android:text="Selamat datang,"

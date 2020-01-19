@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.botnav_menu_partner:
-                fragment = new PartnerFragment();
+                fragment = new ComingSoonFragment();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frameFragmentContainer, fragment)
                         .commit();

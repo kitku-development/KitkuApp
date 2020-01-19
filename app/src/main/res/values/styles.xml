@@ -63,6 +63,14 @@
         <item name="android:background">@drawable/ic_button_back</item>
     </style>
 
+    <style name="ButtonToolbarCancel">
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:background">@drawable/ic_button_cancel</item>
+    </style>
+
     <style name="EditTextRegisterLayout">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

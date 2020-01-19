@@ -7,7 +7,7 @@
     tools:context=".Cart.CartFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarCheckoutSetAddress"
+        android:id="@+id/toolbarOrderTracking"
         style="@style/Toolbar">
 
         <RelativeLayout
@@ -28,7 +28,7 @@
                 android:textStyle="bold"/>
 
             <Button
-                android:id="@+id/buttonToolbarCheckoutBack"
+                android:id="@+id/buttonToolbarOrderTrackBack"
                 style="@style/ButtonToolbarBack"
                 android:layout_centerVertical="true"/>
 
@@ -40,7 +40,7 @@
         android:id="@+id/lineCart1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/toolbarCheckoutSetAddress"
+        android:layout_below="@id/toolbarOrderTracking"
         android:background="#D6D6D6" />
 
     <com.google.android.material.tabs.TabLayout
