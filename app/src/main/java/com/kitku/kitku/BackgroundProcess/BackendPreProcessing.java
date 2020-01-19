@@ -26,24 +26,24 @@ public class BackendPreProcessing {
 
     //Deklarasi URL untuk diakses di berbagai activity
     public static String
-            URL_UserRegister        = "https://kitku.id/pelanggan/register",
-            URL_UserLogin           = "https://kitku.id/pelanggan/login",
-            URL_UserData            = "https://kitku.id/pelanggan/data/",
-            URL_UserUploadImg       = "https://kitku.id/pelanggan/picture/update/",
-            URL_UserUpdate          = "https://kitku.id/pelanggan/update/",
-            URL_UserPicLoc          = "https://kitku.id/pelangganpic/",
-            URL_SupplierLogin       = "https://kitku.id/supplier/login",
-            URL_SupplierData        = "https://kitku.id/supplier/data/",
-            URL_ProductCategory     = "https://kitku.id/produk/kategori/",
-            URL_ProductDetail       = "https://kitku.id/produk/detail/",
-            URL_ProductSupplier     = "https://kitku.id/produk/supplier/",
-            URL_InvoiceDetail       = "https://kitku.id/invoice/detail/",
-            URL_InvoiceListUser     = "https://kitku.id/invoice/pelanggan/",
-            URL_InvoiceInsert       = "https://kitku.id/invoice/add",
+            URL_Root                = "https://kitku.id/",
+            URL_UserRegister        = URL_Root + "pelanggan/register",
+            URL_UserLogin           = URL_Root + "pelanggan/login",
+            URL_UserData            = URL_Root + "pelanggan/data/",
+            URL_UserUploadImg       = URL_Root + "pelanggan/picture/update/",
+            URL_UserUpdate          = URL_Root + "pelanggan/update/",
+            URL_UserPicLoc          = URL_Root + "pelangganpic/",
+            URL_SupplierLogin       = URL_Root + "supplier/login",
+            URL_SupplierData        = URL_Root + "supplier/data/",
+            URL_ProductCategory     = URL_Root + "produk/kategori/",
+            URL_ProductDetail       = URL_Root + "produk/detail/",
+//            URL_ProductSupplier     = URL_Root + "produk/supplier/",
+//            URL_InvoiceDetail       = URL_Root + "invoice/detail/",
+//            URL_InvoiceListUser     = URL_Root + "invoice/pelanggan/",
+//            URL_InvoiceInsert       = URL_Root + "invoice/add",
             URL_GetDistance         = "https://maps.googleapis.com/maps/api/directions/",
-            URL_GetBannerList       = "https://kitku.id/bannerlist",
-            URL_LinkToBanner        = "https://kitku.id/bannerpic/",
-            URL_LinkToProductPic    = "https://kitku.id/productpic/";
+            URL_GetBannerList       = URL_Root + "bannerlist",
+            URL_LinkToBanner        = URL_Root + "bannerpic/";
 
     // convert JSON supaya bisa diakses
     // Example JSON
@@ -436,12 +436,18 @@ public class BackendPreProcessing {
     //   ],
     //   "status": "OK"
     //}
-    public static void readDistance(String raw) throws Exception {
+    public static String[] getAddressAndDistance(String raw) throws Exception {
         JSONObject routes = new JSONObject(raw);
         Log.d("routes", routes.toString());
-        JSONArray legs = new JSONArray(routes);
-        Log.d("legs", legs.getString(0));
-        //JSONObject distance = new JSONObject(legs.getJSONObject(0).getString())
+        JSONArray arrayOfRoutes = new JSONArray(routes);
+        JSONObject legs = arrayOfRoutes.getJSONObject(2);
+        JSONArray arrayOfLegs = new JSONArray(legs);
+        JSONObject distance = arrayOfLegs.getJSONObject(0);
+        JSONObject address = arrayOfLegs.getJSONObject(4);
+        return new String[] {
+                distance.getString("text"),
+                address.toString()
+        };
     }
 
     public static String updateUserInfo(String nama, String alamat, String kontak) throws Exception{
@@ -459,6 +465,7 @@ public class BackendPreProcessing {
     //   {"link":"https:\/\/kitku.id\/bannerpic\/banner2.png"}
     // ]}
     public static String[] readBannerInfo(String rawData) throws Exception {
+        Log.d("raw", rawData);
         JSONObject jsonObject       = new JSONObject(rawData);
         JSONArray jsonArray         = jsonObject.getJSONArray("Banners");
         JSONObject totalData        = jsonArray.getJSONObject(0);

@@ -1,8 +1,6 @@
 package com.kitku.kitku.Login;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -10,65 +8,55 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.preference.PreferenceManager;
 
 import com.kitku.kitku.BackgroundProcess.AsyncServerAccess;
 import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
+import com.kitku.kitku.Model.BaseModel;
 import com.kitku.kitku.PartnerFragment;
 import com.kitku.kitku.R;
 import com.kitku.kitku.User.UserFragment;
 
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 public class LoginProcedure {
 
     private View view;
-    private Toast notifikasi;
+    private Toast notification;
     private ProgressDialog loadingIndicator;
-    //private SharedPreferences userData;
-    private SharedPreferences.Editor userDataEdit, mitraDataEdit;
     private FragmentManager fManager;
     private String condition;
-    private Context context;
+    private BaseModel model;
 
-    public void loginActivity(View v, String condition, Context context, FragmentManager fragmentz){
+    public void loginActivity(View v, String condition, FragmentManager fragments,
+                              BaseModel model) throws Exception {
         this.condition  = condition;
         this.view       = v;
-        this.context    = context;
-        this.fManager   = fragmentz;
+        this.fManager   = fragments;
+        this.model      = model;
         loadingIndicator = new ProgressDialog(view.getContext());
         loadingIndicator.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loadingIndicator.setIndeterminate(true);
 
-        EditText emailbox = v.findViewById(R.id.edittextLoginEmail);
-        EditText passbox = v.findViewById(R.id.edittextLoginPassword);
+        EditText emailBox = v.findViewById(R.id.edittextLoginEmail);
+        EditText passBox = v.findViewById(R.id.edittextLoginPassword);
 
-        notifikasi = Toast.makeText(v.getContext()," ",Toast.LENGTH_LONG);
+        notification = Toast.makeText(v.getContext()," ",Toast.LENGTH_LONG);
 
         if(
-                emailbox.getText().toString().matches("") ||
-                passbox.getText().toString().matches("")
+                emailBox.getText().toString().matches("") ||
+                passBox.getText().toString().matches("")
         ){
-            notifikasi.setText("Silakan isi email dan password anda.");
-            notifikasi.show();
+            notification.setText("Silakan isi email dan password anda.");
+            notification.show();
         }
         else {
-            // Ubah data menjadi JSON
-            String json = null;
-            try {
-                json = BackendPreProcessing.loginUserAndMitra(
-                        emailbox.getText().toString(),
-                        passbox.getText().toString()
-                );
-            } catch (Exception e) { e.printStackTrace(); }
-
             // Kirim data
             login();
-            if (condition.equals("User"))
-                sendData.execute(BackendPreProcessing.URL_UserLogin,json);
-            else sendData.execute(BackendPreProcessing.URL_SupplierLogin,json);
+            if (condition.equals("User")) {
+                sendData.execute(BackendPreProcessing.URL_UserLogin, model.loginJson());
+            } else {
+                sendData.execute(BackendPreProcessing.URL_SupplierLogin, model.loginJson());
+            }
             loadingIndicator.show();
         }
     }
@@ -101,25 +89,14 @@ public class LoginProcedure {
                 try {
                     response = new JSONObject(output).getString("message");
                     if (response.contains("PEL-") && condition.equals("User")) {
-                        SharedPreferences userData = PreferenceManager.getDefaultSharedPreferences(
-                                Objects.requireNonNull(context.getApplicationContext()));
-                        userDataEdit = userData.edit();
-                        userDataEdit.putString("ID_User", response);
-                        userDataEdit.apply();
+                        model.setId(response);
                         gotoPage(condition, fManager, view);
-                    }
-                    else if (response.contains("SUP-") && condition.equals("Mitra")) {
-                        SharedPreferences mitraData = PreferenceManager.getDefaultSharedPreferences(
-                                Objects.requireNonNull(context.getApplicationContext()));
-                        mitraDataEdit = mitraData.edit();
-                        mitraDataEdit.putString("ID_Mitra", response);
-                        mitraDataEdit.apply();
+                    } else if (response.contains("SUP-") && condition.equals("Mitra")) {
+                        model.setId(response);
                         gotoPage(condition, fManager, view);
-                    }
-                    else {
-                        notifikasi.setText("Login gagal!\n" +
-                                "Silakan periksa kembali data anda.");
-                        notifikasi.show();
+                    } else {
+                        notification.setText("Login gagal!\n" + "Silakan periksa kembali data anda.");
+                        notification.show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

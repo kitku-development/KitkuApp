@@ -1,17 +1,7 @@
 package com.kitku.kitku;
 
 
-import android.content.SharedPreferences;
-//import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +9,24 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.kitku.kitku.BackgroundProcess.AsyncServerAccess;
 import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
-//import com.kitku.kitku.Login.LoginFragment;
 import com.kitku.kitku.Login.LoginProcedure;
+import com.kitku.kitku.Model.MerchantModel;
 import com.kitku.kitku.User.UserMenuListCardViewAdapter;
 import com.kitku.kitku.User.UserMenuListCardViewDataModel;
 
-//import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Objects;
+
+//import android.os.AsyncTask;
+//import android.util.Log;
+//import com.kitku.kitku.Login.LoginFragment;
+//import java.lang.ref.WeakReference;
 
 
 /**
@@ -42,7 +40,8 @@ public class PartnerFragment extends Fragment {
     private ArrayList<UserMenuListCardViewDataModel> menuListArrayList = new ArrayList<>();
     private UserMenuListCardViewAdapter userMenuListAdapter;
     private View menuListView;
-    private static SharedPreferences data;
+
+    private static MerchantModel merchant;
 
     public PartnerFragment() {
         // Required empty public constructor
@@ -52,17 +51,17 @@ public class PartnerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view;
-        data = PreferenceManager.getDefaultSharedPreferences(
-                Objects.requireNonNull(getContext()).getApplicationContext());
+
+        merchant = new MerchantModel(this.getContext());
+
         // Jika mitra sudah login -> load layout fragment partner,
         // jika tidak -> load layout fragment login
-        if (data.contains("ID_Mitra")) {
+        if (!merchant.getId().equals("")) {
             view = inflater.inflate(R.layout.fragment_partner, container, false);
             userNameText     = view.findViewById(R.id.textviewUser_Username);
             loadingIndicator = view.findViewById(R.id.loadingIndicator);
             runAsync();
-            loadData.execute(BackendPreProcessing.URL_SupplierData +
-                    data.getString("ID_Mitra", null), null);
+            loadData.execute(BackendPreProcessing.URL_SupplierData + merchant.getId(), null);
             view.findViewById(R.id.buttonToolbarOrderTrackBack).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -130,11 +129,12 @@ public class PartnerFragment extends Fragment {
         v.findViewById(R.id.buttonfragmentlogin_Login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new LoginProcedure().loginActivity(
-                        v,
-                        "Mitra",
-                        getContext(),
-                        getChildFragmentManager());
+                try {
+                    new LoginProcedure().loginActivity(v, "Mitra",
+                            getChildFragmentManager(), merchant);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -156,15 +156,8 @@ public class PartnerFragment extends Fragment {
 
     // used to logout mitra
     public static void loggingOut(View menuListView) {
-        SharedPreferences.Editor userDataEdit = data.edit();
-        userDataEdit.remove("ID_Mitra");
-        userDataEdit.apply();
+        merchant.logout();
         menuListView.setVisibility(View.GONE);
-        //menuListView.setId(View.generateViewId());
-        /*Fragment LoginFragment = new LoginFragment();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(FragmentLayout, LoginFragment);
-        fragmentTransaction.commit();*/
         MainActivity.default_home_button();
     }
 }

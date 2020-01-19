@@ -14,6 +14,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.kitku.kitku.BackgroundProcess.BackendPreProcessing;
 import com.kitku.kitku.BackgroundProcess.ImageCaching;
 import com.kitku.kitku.BackgroundProcess.ImageDownloader;
+import com.kitku.kitku.Model.ItemModel;
 import com.kitku.kitku.R;
 import com.kitku.kitku.BackgroundProcess.AsyncServerAccess;
 
@@ -109,7 +110,7 @@ public class ListItemActivity extends AppCompatActivity {
             packed += satuan[index];
         packed += " pack";*/
         listItemCategoryCardViewDataModelArrayList.add(new ListItemCategoryCardViewDataModel(
-                listGambar[index],
+                pictureList[index],
                 String.valueOf(nama_barang[index]),
                 String.valueOf(harga[index]),
                 "/ pack",
@@ -117,8 +118,8 @@ public class ListItemActivity extends AppCompatActivity {
                 Integer.valueOf(jumlah[index])
         ));
 
-        counterselesai++;
-        if (counterselesai == listGambar.length)
+        finishCounter++;
+        if (finishCounter == pictureList.length)
             showCategoryItemData();
     }
 
@@ -153,8 +154,8 @@ public class ListItemActivity extends AppCompatActivity {
                     harga       = data[3];
                     jumlah      = data[4];
                     url         = data[5];
-                    listGambar = new Bitmap[url.length];
-                    counterselesai = 0;
+                    pictureList = new Bitmap[url.length];
+                    finishCounter = 0;
                     String productPicLocation = getStringOfProductPicLocation();
                     for (int index = 0; index < url.length; index++) {
                         loadImage();
@@ -177,8 +178,8 @@ public class ListItemActivity extends AppCompatActivity {
     }
 
     // AsyncTask untuk download gambar dan simpan pada array
-    Bitmap[] listGambar;
-    int counterselesai;
+    Bitmap[] pictureList;
+    int finishCounter;
 
     static class backgroundImageDownloader extends ImageDownloader {
         backgroundImageDownloader(AsyncResponse delegate) { this.delegate = delegate; }
@@ -189,7 +190,7 @@ public class ListItemActivity extends AppCompatActivity {
         downloadImage = new backgroundImageDownloader(new backgroundImageDownloader.AsyncResponse() {
             @Override
             public void processFinish(Bitmap output, Integer index) {
-                listGambar[index] = output;
+                pictureList[index] = output;
                 addCategoryItemData(index);
             }
         });

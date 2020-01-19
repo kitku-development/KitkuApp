@@ -16,44 +16,45 @@ public abstract class AsyncServerAccess extends AsyncTask<String, Void, String> 
     //          url[1] is to determine whether we use GET or POST (define url[1] null if using GET)
     @Override
     protected String doInBackground(String...strings) {
-        //Log.d("data",strings[0]);
-        //Log.d("data",strings[1]);
+
         URL url;
         try {
             // Get URL from object 1st index
             url = new URL(strings[0]);
-        } catch (Exception e) {return e.getMessage();}
+        } catch (Exception e) {
+            return e.getMessage();
+        }
 
         // Preparation (look back at PHP requirement for the RequestProperty)
         HttpsURLConnection con;
         try {
             con = (HttpsURLConnection) url.openConnection();
-        } catch (Exception e) {return e.getMessage();}
+        } catch (Exception e) {
+            return e.getMessage();
+        }
         con.setDoOutput(true);
         con.setDoInput(true);
         con.setRequestProperty("Content-Type", "application/json");
         con.setRequestProperty("Accept", "application/json");
 
-        //Log.d("test",objects[1].toString());
         // if no data are going to be sent set OutputStreamWriter and send JSON along it
         // else just get data for response from host
         try {
             // JSON are from objects 2nd index
             if (strings[1] != null) {
                 // Use POST to send data and insert/update data to host
-                //Log.d("method","POST");
                 con.setRequestMethod("POST");
                 OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
                 wr.write(strings[1]);
                 wr.flush();
-            }
-            else {
+            } else {
                 // Use GET only to read data on host
-                //Log.d("method","GET");
                 con.setRequestMethod("GET");
                 con.getOutputStream();
             }
-        } catch (Exception e) {return e.getMessage();}
+        } catch (Exception e) {
+            return e.getMessage();
+        }
 
 
         // Get and read the response
@@ -61,7 +62,9 @@ public abstract class AsyncServerAccess extends AsyncTask<String, Void, String> 
         int HttpResult;
         try {
             HttpResult = con.getResponseCode();
-        } catch (Exception e) {return e.getMessage();}
+        } catch (Exception e) {
+            return e.getMessage();
+        }
 
         // Parse the response
         if (HttpResult != HttpsURLConnection.HTTP_INTERNAL_ERROR) {
@@ -78,15 +81,18 @@ public abstract class AsyncServerAccess extends AsyncTask<String, Void, String> 
                     stringBuilder.append(line).append("\n");
                 }
                 bufferedReader.close();
-            } catch (Exception e) {return e.getMessage();}
-            //Log.d("test",stringBuilder.toString());
+            } catch (Exception e) {
+                return e.getMessage();
+            }
 
             // Return the response
             return stringBuilder.toString();
         } else {
             try {
                 return con.getResponseMessage();
-            } catch (Exception e) {return e.getMessage();}
+            } catch (Exception e) {
+                return e.getMessage();
+            }
         }
     }
 

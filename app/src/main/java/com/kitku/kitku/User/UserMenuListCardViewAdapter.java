@@ -123,33 +123,7 @@ public class UserMenuListCardViewAdapter extends RecyclerView.Adapter<UserMenuLi
                 })
                 .show();
     }
-                                    /*if (!menuText.equals("Logout")) dialogInterface.dismiss();
-                                    else {
-                                        SharedPreferences userData =
-                                                PreferenceManager.getDefaultSharedPreferences(v.getContext());
-                                        SharedPreferences.Editor userDataEdit = userData.edit();
-                                        if (tag.equals("User"))
-                                            userDataEdit.remove("ID_User");
-                                        else userDataEdit.remove("ID_Mitra");
-                                        userDataEdit.apply();
-                                        pageview.setVisibility(View.GONE);
-                                        pageview.setId(View.generateViewId());
-                                        Fragment LoginFragment = new LoginFragment();
-                                        FragmentManager fragmentManager = childfragment;
-                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                        fragmentTransaction.replace(pageview.getId(), LoginFragment);
-                                        fragmentTransaction.commit();
-                                        //pageview = inflater.inflate(R.layout.fragment_login, container, false);
-                                    //}
-                            }})
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();}})
-                            .show();
-                                     */
-                //}
-
+    
     @Override
     public int getItemCount() {
         return menuListDataModel.size();

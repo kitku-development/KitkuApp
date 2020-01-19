@@ -3,7 +3,6 @@ package com.kitku.kitku.User;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,9 +11,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-//import androidx.fragment.app.FragmentManager;
-//import androidx.fragment.app.FragmentTransaction;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kitku.kitku.MainActivity;
+import com.kitku.kitku.Model.CustomerModel;
 import com.kitku.kitku.R;
 import com.kitku.kitku.BackgroundProcess.*;
 //import com.kitku.kitku.Login.LoginFragment;
@@ -46,12 +43,11 @@ public class UserFragment extends Fragment {
     private UserMenuListCardViewAdapter userMenuListAdapter;
     private View menuListView;
     private ImageView profilePic;
-    private static SharedPreferences userData;
-    //private static FragmentManager fragmentManager;
-    //private static int FragmentLayout;
     private static int RESULT_LOAD_IMAGE = 1;
     private ProgressBar progressBar;
     private String dirString;
+
+    private static CustomerModel customer;
     //private ImageView profilePic;
 
     public UserFragment() {
@@ -72,27 +68,19 @@ public class UserFragment extends Fragment {
         loadingIndicator.setVisibility(View.INVISIBLE);
 
         // get userdata from app preferencemanager
-        userData = PreferenceManager.getDefaultSharedPreferences(
-                Objects.requireNonNull(getContext()).getApplicationContext());
-        //fragmentManager = this.getFragmentManager();
-        //FragmentLayout = R.id.frameFragmentContainerLoginGoToUserDetailFragment;
+        customer = new CustomerModel(Objects.requireNonNull(this.getContext()));
 
         // load data and image from server (if image cache exist, load it from memory instead)
         runAsync();
-        sendData.execute(BackendPreProcessing.URL_UserData +
-                userData.getString("ID_User", null), null);
+        sendData.execute(BackendPreProcessing.URL_UserData + customer.getId(), null);
         loadingIndicator.setVisibility(View.VISIBLE);
         profilePic.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         dirString = Objects.requireNonNull(
                 this.getContext().getExternalFilesDir("UserPic")).getAbsolutePath().concat("/");
         loadImage();
-        downloadImage.execute(
-            dirString,
-            userData.getString("ID_User", null),
-            BackendPreProcessing.URL_UserPicLoc.concat(
-                    Objects.requireNonNull(userData.getString("ID_User", null))),
-            null
+        downloadImage.execute(dirString, customer.getId(),
+                BackendPreProcessing.URL_UserPicLoc.concat(customer.getId()), null
         );
         // show menu for user
         addMenuData();
@@ -153,7 +141,8 @@ public class UserFragment extends Fragment {
             @Override
             public void processFinish(String output) {
                 try {
-                    String[] userData = new BackendPreProcessing().readUserData(output);
+                    new BackendPreProcessing();
+                    String[] userData = BackendPreProcessing.readUserData(output);
                     usernameText.setText(userData[0]);
                     loadingIndicator.setVisibility(View.GONE);
                     //new downloadImage(UserFragment.this).execute();
@@ -163,16 +152,9 @@ public class UserFragment extends Fragment {
     }
 
     // used to logout user and redirect to login fragment
-    public static void loggingOut(View menuListView) {
-        SharedPreferences.Editor userDataEdit = userData.edit();
-        userDataEdit.remove("ID_User");
-        userDataEdit.apply();
+    static void loggingOut(View menuListView) {
+        customer.logout();
         menuListView.setVisibility(View.GONE);
-        //menuListView.setId(View.generateViewId());
-        /*Fragment LoginFragment = new LoginFragment();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(FragmentLayout, LoginFragment);
-        fragmentTransaction.commit();*/
         MainActivity.default_home_button();
     }
 
@@ -210,7 +192,7 @@ public class UserFragment extends Fragment {
             String[] filePathColumn={MediaStore.Images.Media.DATA};
 
             assert selectedImage != null;
-            Cursor cursor = Objects.requireNonNull(
+            final Cursor cursor = Objects.requireNonNull(
                     getContext()).getContentResolver().query(
                             selectedImage, filePathColumn, null, null, null);
             assert cursor != null;
@@ -239,37 +221,30 @@ public class UserFragment extends Fragment {
                             }
 
                             // delete existing picture cache
-                            File dir = new File(dirString.concat(
-                                    Objects.requireNonNull(userData.getString("ID_User", null))));
-                            boolean delete = dir.delete();
+                            File dir = new File(dirString.concat(customer.getId()));
+                            dir.delete();
 
                             // download new image from server
                             loadImage();
-                            downloadImage.execute(
-                                    dirString,
-                                    userData.getString("ID_User", null),
-                                    BackendPreProcessing.URL_UserPicLoc
-                                            .concat(
-                                                    Objects.requireNonNull(
-                                                            userData.getString(
-                                                                    "ID_User", null))),
+                            downloadImage.execute(dirString, customer.getId(),
+                                    BackendPreProcessing.URL_UserPicLoc.concat(customer.getId()),
                                     null);
-                        } else
+                        } else {
                             // show warning
                             Toast.makeText(
                                     UserFragment.this.getContext(),
                                     "Upload gambar gagal. Periksa kembali koneksi anda.",
                                     Toast.LENGTH_LONG)
                                     .show();
+                        }
                     }
                 });
                 profilePic.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 // upload image
-                sendPicture.execute(BackendPreProcessing.URL_UserUploadImg +
-                        userData.getString("ID_User", null), picturePath);
-            }
-            else {
+                sendPicture.execute(BackendPreProcessing.URL_UserUploadImg + customer.getId(),
+                        picturePath);
+            } else {
                 // error message if image exceed 500kb
                 new AlertDialog.Builder(getContext())
                         .setTitle("Error")

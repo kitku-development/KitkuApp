@@ -13,6 +13,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -37,11 +38,15 @@ import java.io.File;
 import java.util.Objects;
 
 public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationSource.OnLocationChangedListener, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        LocationSource.OnLocationChangedListener, GoogleMap.OnMapClickListener,
+        GoogleMap.OnMapLongClickListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     MapView mapView;
+    private TextView addressText;
+
     // set storage location
     LatLng storageLocation = new LatLng(-0.9238126,100.3645052);
 
@@ -49,6 +54,7 @@ public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart__map_);
+        addressText = findViewById(R.id.addressText);
 
         // check whether location access is permitted
         askPermission();
@@ -180,9 +186,8 @@ public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCal
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
-        } else {
-            // Permission has already been granted
         }
+
     }
 
     @Override
@@ -287,8 +292,13 @@ public class Cart_Map_Activity extends FragmentActivity implements OnMapReadyCal
             public void processFinish(String output) {
                 //Log.d("output", output);
                 try {
-                    BackendPreProcessing.readDistance(output);
-                } catch (Exception e) { /*e.printStackTrace();*/ }
+                    String[] result = BackendPreProcessing.getAddressAndDistance(output);
+                    Toast.makeText(Cart_Map_Activity.this,
+                            "Jarak pengiriman: ".concat(result[0]), Toast.LENGTH_LONG).show();
+                    addressText.setText(addressText.getText().toString().concat(result[1]));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         sendData.execute(urlDistance, null);
