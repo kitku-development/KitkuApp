@@ -90,6 +90,7 @@
 
     <string name="login"><u>Login</u></string>
     <string name="daftar"><u>Daftar</u></string>
+    <string name="detail_item_price_before_text"><strike>Rp. 30.000,00</strike></string>
 
 
 </resources>

@@ -97,12 +97,22 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/textitempriceDetail_Item"
+                android:id="@+id/textitempricebeforeDetail_Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textitempackDetail_Item"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:text="@string/detail_item_price_before_text" />
+
+            <TextView
+                android:id="@+id/textitempriceDetail_Item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textitempricebeforeDetail_Item"
+                android:layout_marginStart="12dp"
                 android:textColor="@color/colorSecondary"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -123,11 +133,22 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="14sp" />
 
+            <TextView
+                android:id="@+id/textitempackminimalDetail_Item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textitempriceDetail_Item"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="2dp"
+                android:text="Pembelian min. 1 pack"
+                android:textColor="@color/colorBlack"
+                android:textSize="12sp" />
+
             <View
                 android:id="@+id/lineDetail_Item3"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:layout_below="@id/textpackDetail_Item"
+                android:layout_below="@id/textitempackminimalDetail_Item"
                 android:layout_centerHorizontal="true"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"

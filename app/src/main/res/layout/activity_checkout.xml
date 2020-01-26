@@ -170,34 +170,14 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cvOrderListItemImageLayout"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        app:cardCornerRadius="8dp">
-
-                        <ImageView
-                            android:id="@+id/imageviewCheckout_OrderImage"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="@string/content_desc_image_item"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/image_sayur_bawangbombay_compressed" />
-                    </androidx.cardview.widget.CardView>
+                    android:layout_height="80dp">
 
                     <TextView
                         android:id="@+id/textviewCheckout_OrderName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/cvOrderListItemImageLayout"
                         android:layout_marginStart="12dp"
-                        android:layout_toEndOf="@id/cvOrderListItemImageLayout"
+                        android:layout_marginTop="8dp"
                         android:text="Bawang Bombay"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp"
@@ -210,7 +190,6 @@
                         android:layout_below="@id/textviewCheckout_OrderName"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@id/cvOrderListItemImageLayout"
                         android:text="Rp 15.000"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
@@ -222,7 +201,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textviewCheckout_OrderPrice"
                         android:layout_marginStart="12dp"
-                        android:layout_toEndOf="@id/cvOrderListItemImageLayout"
                         android:text="/pack"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
@@ -373,7 +351,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="6dp"
-                            android:text="Siang (ETA. 12:00 - 15:00 WIB)"
+                            android:text="Pagi (ETA. 09:00 - 12:00 WIB)"
                             android:textStyle="bold"/>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -395,7 +373,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="6dp"
-                            android:text="Sore (ETA. 17:00 - 20:00 WIB)"
+                            android:text="Siang (ETA. 14:00 - 20:00 WIB)"
                             android:textStyle="bold"/>
                     </com.google.android.material.card.MaterialCardView>
 

@@ -9,10 +9,43 @@
         android:id="@+id/toolbarMain"
         style="@style/Toolbar">
 
-        <ImageView
-            android:id="@+id/imageLogoToolbar"
-            style="@style/ImageToolbar"
-            android:contentDescription="@string/main_content_desc_image_toolbar"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imageLogoToolbar"
+                style="@style/ImageToolbar"
+                android:contentDescription="@string/main_content_desc_image_toolbar"/>
+
+            <TextView
+                android:id="@+id/textviewHomeTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/textviewHomeUsername"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="4dp"
+                android:text="Selamat Pagi,"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/textviewHomeUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:text="Evan"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+
+
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView

@@ -2,9 +2,11 @@ package com.kitku.kitku;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class PaymentActivity extends AppCompatActivity {
 
     private ExpandableListView listViewMethod, listViewStep;
+    private Button buttonToTracking;
 
     private PaymentMethodListViewAdapter paymentMethodAdapter;
     private PaymentStepListViewAdapter paymentStepAdapter;
@@ -32,6 +35,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         listViewMethod = findViewById(R.id.listviewPayment_PaymentMethod);
         listViewStep = findViewById(R.id.listviewPayment_PaymentSteps);
+        buttonToTracking = findViewById(R.id.buttonPaymentGoToTracking);
 
         this.methodListDatas = getMethodData();
         this.stepListDatas = getStepData();
@@ -100,20 +104,6 @@ public class PaymentActivity extends AppCompatActivity {
                         "10.  Konfirmasukan tagihan anda apakah sudah sesuai lalu tekan \''Ya\''",
                         "11.  Harap simpan struk transaksi setelah pembayaran"));
 
-        stepListData.put("Bank", new PaymentStepChildDataModel
-                (R.drawable.payment_bank_icon,
-                        "1.  Catat kode pembayaran anda",
-                        "2.  Gunakan ATM Mandiri untuk menyelesaikan pembayaran",
-                        "3.  Masukkan PIN kartu ATM",
-                        "4.  Pilih \''Bayar/Beli\''",
-                        "5.  Cari pilihan \''Multi Payment\''",
-                        "6.  Masukkan kode perusahaan 12345",
-                        "7.  Masukkan kode pembayaran",
-                        "8.  Masukkan jumlah pembayaran sesuai dengan jumlah tagihan anda kemudian tekan \''Benar\''",
-                        "9.  Pilih tagihan anda jika sudah sesuai dan tekan \''Ya\''",
-                        "10.  Konfirmasukan tagihan anda apakah sudah sesuai lalu tekan \''Ya\''",
-                        "11.  Harap simpan struk transaksi setelah pembayaran"));
-
         stepListData.put("Internet Banking", new PaymentStepChildDataModel
                 (R.drawable.payment_mobile_bank_icon,
                         "1.  Catat kode pembayaran anda",
@@ -164,4 +154,8 @@ public class PaymentActivity extends AppCompatActivity {
 
     }
 
+    public void goToTrackingClick(View view) {
+        Intent intent = new Intent(PaymentActivity.this, OrderTrackingActivity.class);
+        startActivity(intent);
+    }
 }
